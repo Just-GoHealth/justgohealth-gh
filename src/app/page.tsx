@@ -1,103 +1,143 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { Button } from "@/components/ui/button";
+import { PlayIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import GirlHero from "@/components/GirlHero";
+import ContactsModal from "@/components/ContactsModal";
+import { useEffect, useMemo, useState } from "react";
+import SethHero from "@/components/SethHero";
+import DoctorHero from "@/components/DoctorHero";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [showContacts, setShowContacts] = useState(false);
+  const heroes = useMemo(() => [GirlHero, SethHero, DoctorHero], []);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+  useEffect(() => {
+    if (!isPlaying) return;
+    const id = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % heroes.length);
+    }, 3500);
+    return () => clearInterval(id);
+  }, [isPlaying, heroes.length]);
+
+  const CurrentHero = heroes[activeIndex] as React.ComponentType<any>;
+
+  const variants = {
+    fadeScale: {
+      initial: { opacity: 0, scale: 0.96 },
+      animate: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+      exit: { opacity: 0, scale: 1.04, transition: { duration: 0.6, ease: "easeInOut" } },
+    },
+    slide: {
+      initial: { x: "10%", opacity: 0 },
+      animate: { x: 0, opacity: 1, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
+      exit: { x: "-10%", opacity: 0, transition: { duration: 0.6, ease: "easeInOut" } },
+    },
+    rotateReveal: {
+      initial: { rotate: -8, opacity: 0.0, filter: "blur(4px)" },
+      animate: { rotate: 0, opacity: 1, filter: "blur(0px)", transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
+      exit: { rotate: 8, opacity: 0, filter: "blur(4px)", transition: { duration: 0.6, ease: "easeInOut" } },
+    },
+  } as const;
+
+  const pickVariantKey = (index: number) => (index % 3 === 0 ? "fadeScale" : index % 3 === 1 ? "slide" : "rotateReveal");
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Main Content */}
+      <main className="flex flex-col lg:flex-row flex-1">
+        {/* Header elements as part of main content */}
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
+          <Link href="/manifesto">
+            <Button 
+              variant="ghost" 
+              className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+            >
+              Manifesto
+            </Button>
+          </Link>
+          
+          <div className="flex items-center justify-center flex-1">
+          <Link href="/">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/logos/logo-black.png"
+              alt="JustGo Health Logo"
+              width={220}
+              height={40}
+              className="h-10 object-contain"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            </Link>
+          </div>
+          
+        <Link href="/join-us">
+          <Button 
+            variant="ghost" 
+            className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
           >
-            Read our docs
-          </a>
+            Join Us
+          </Button>
+        </Link>
+        </div>
+        {/* Left Content Block */}
+        <div className="w-2/5 flex items-center justify-center p-8 lg:p-12 order-2 lg:order-1">
+          <div className="max-w-md w-[300px]">
+            <div className="bg-green-200 px-8 py-22 rounded-lg">
+              <div className="space-y-2 text-center">
+                <p className="text-black text-2xl">It all starts</p>
+                <p className="text-black text-2xl">with your</p>
+                <h1 className="text-black text-5xl lg:text-6xl font-bold leading-tight">
+                  Mental
+                  <br />
+                  Health.
+                </h1>
+                <Button className="bg-red-600 text-2xl text-white px-8 py-6 rounded-full font-medium hover:bg-red-700 transition-colors mt-8">
+                  Try it for free
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Content - Hero slot with animated transitions. Layout/positioning preserved by wrapping motion.div only. */}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={activeIndex}
+            variants={variants[pickVariantKey(activeIndex)]}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="contents"
+          >
+            <CurrentHero isPlaying={isPlaying} />
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Footer elements as part of main content */}
+        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
+          <Button 
+            variant="ghost" 
+            className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+            onClick={() => setShowContacts(true)}
+          >
+            Contacts
+          </Button>
+          
+          <Button onClick={() => setIsPlaying((p) => !p)} className="w-[70px] h-[70px] rounded-full flex items-center justify-center hover:opacity-90 transition-all" style={{ backgroundColor: '#2b3990' }}>
+            <PlayIcon fill="white" className={`w-16 h-16 scale-[2.4] ${isPlaying ? '' : 'opacity-60'}`} />
+          </Button>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      {/* Contacts Modal */}
+      <ContactsModal 
+        isOpen={showContacts} 
+        onClose={() => setShowContacts(false)} 
+      />
     </div>
   );
 }
