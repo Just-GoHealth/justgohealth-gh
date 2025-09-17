@@ -4,9 +4,11 @@ import { CheckCircle, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ContactsModal from "@/components/ContactsModal";
+import { useIsMobile } from "@/components/use-mobile";
 import { useState } from "react";
 
 export default function JoinUsPage() {
+  const isMobile = useIsMobile();
   const [formData, setFormData] = useState({
     joiningAs: "Ambassador",
     fullName: "",
@@ -62,7 +64,7 @@ export default function JoinUsPage() {
         <Link href="/manifesto">
           <Button 
             variant="ghost" 
-            className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+            className={`text-black font-medium hover:opacity-70 transition-opacity ${isMobile ? "text-lg" : "text-2xl"}`}
           >
             Manifesto
           </Button>
@@ -75,7 +77,7 @@ export default function JoinUsPage() {
             alt="JustGo Health Logo"
             width={220}
             height={40}
-            className="h-10 object-contain"
+            className={`object-contain ${isMobile ? "h-8" : "h-10"}`}
           />
           </Link>
         </div>
@@ -83,7 +85,7 @@ export default function JoinUsPage() {
         <Link href="/join-us">
           <Button 
           variant="ghost" 
-          className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+          className={`text-black font-medium hover:opacity-70 transition-opacity ${isMobile ? "text-lg" : "text-2xl"}`}
           >
             Join Us
           </Button>
@@ -91,10 +93,10 @@ export default function JoinUsPage() {
       </div>
 
       {/* Main Content */}
-      <main className="flex flex-1 pt-20">
-        {/* Left Side - Form */}
-        <div className="w-1/2 flex items-center justify-center p-8">
-          <div className="max-w-md w-full">
+      <main className={`flex flex-1 pt-20 ${isMobile ? "flex-col" : ""}`}>
+        {/* Form Section */}
+        <div className={`flex items-center justify-center p-8 ${isMobile ? "w-full" : "w-1/2"}`}>
+          <div className={`max-w-md w-full ${isMobile ? "-mt-8 scale-90" : "-mt-10"}`}>
             <h1 className="text-4xl font-bold text-black mb-8">
               If you care about mental health, come on board.
             </h1>
@@ -177,17 +179,17 @@ export default function JoinUsPage() {
           </div>
         </div>
 
-        {/* Right Side - Partners Lists */}
-        <div className="w-1/2 p-8 overflow-auto scale-[0.9] -mt-6">
-          <div className="space-y-12">
+        {/* Partners Lists Section */}
+        <div className={`p-4 overflow-auto ${isMobile ? "w-full scale-75 -mt-24 -ml-6" : "w-1/2 scale-[0.9] -mt-10"}`}>
+          <div className={`${isMobile ? "flex gap-12" : "space-y-12"}`}>
             {/* Medicine Partners */}
-            <div>
-              <h2 className="text-5xl font-bold text-green-600 mb-6">
+            <div className={`${isMobile ? "flex-1" : ""}`}>
+              <h2 className={`font-bold text-green-600 text-nowrap mb-6 ${isMobile ? "text-3xl" : "text-5xl"}`}>
                 Medicine . {medicinePartners.length}
               </h2>
-              <div className="space-y-1 -mt-4">
+              <div className={`space-y-1 ${isMobile ? "-mt-2" : "-mt-4"}`}>
                 {medicinePartners.map((partner, index) => (
-                  <div key={index} className="text-3xl text-green-500">
+                  <div key={index} className={`text-green-500 ${isMobile ? "text-lg" : "text-3xl"}`}>
                     {partner}
                   </div>
                 ))}
@@ -195,13 +197,13 @@ export default function JoinUsPage() {
             </div>
 
             {/* Technology Partners */}
-            <div>
-              <h2 className="text-5xl font-bold text-blue-600 mb-6">
+            <div className={`${isMobile ? "flex-1 ml-2" : ""}`}>
+              <h2 className={`font-bold text-blue-600 text-nowrap mb-6 ${isMobile ? "text-3xl" : "text-5xl"}`}>
                 Technology . {technologyPartners.length}
               </h2>
-              <div className="space-y-1 -mt-4">
+              <div className={`space-y-1 ${isMobile ? "-mt-2" : "-mt-4"}`}>
                 {technologyPartners.map((partner, index) => (
-                  <div key={index} className="text-3xl text-blue-500">
+                  <div key={index} className={`text-blue-500 ${isMobile ? "text-lg" : "text-3xl"}`}>
                     {partner}
                   </div>
                 ))}
@@ -215,7 +217,7 @@ export default function JoinUsPage() {
       <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
         <Button 
           variant="ghost" 
-          className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+          className={`text-black font-medium hover:opacity-70 transition-opacity ${isMobile ? "text-lg" : "text-2xl"}`}
           onClick={() => setShowContacts(true)}
         >
           Contacts
