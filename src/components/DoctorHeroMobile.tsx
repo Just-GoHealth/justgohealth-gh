@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { useEffect, useRef } from "react";
 
-export default function DoctorHeroMobile() {
+export default function DoctorHeroMobile({ isPlaying = true }: { isPlaying?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function DoctorHeroMobile() {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
-              transition={{ delay: 5.0 + i * 1.0, duration: 1.0 }}
+              transition={{ delay: 3.0 + i * 1.0, duration: 1.0 }}
               className="flex items-center justify-between px-4 py-3 rounded-full border-2 border-gray-200 bg-white shadow-sm"
             >
               <span className="font-semibold text-gray-900">{text}</span>
@@ -69,7 +69,7 @@ export default function DoctorHeroMobile() {
           initial={{ y: -40, opacity: 0 }} 
           whileInView={{ y: 0, opacity: 1 }} 
           viewport={{ once: true }}
-          transition={{ delay: 9.5, duration: 1.2 }}
+          transition={{ delay: 7.5, duration: 1.2 }}
         >
           <p className="text-white text-2xl font-bold italic text-center">
             First Ghanaian to achieve this
@@ -82,7 +82,7 @@ export default function DoctorHeroMobile() {
           initial={{ opacity: 0 }} 
           whileInView={{ opacity: 1 }} 
           viewport={{ once: true }}
-          transition={{ delay: 11.0, duration: 1.2 }}
+          transition={{ delay: 9.0, duration: 1.2 }}
         >
           JustGo Health Ambassador
         </motion.p>

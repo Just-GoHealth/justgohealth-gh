@@ -31,9 +31,9 @@ export default function Home() {
     if (!isPlaying) return;
     const id = setInterval(() => {
       setActiveIndex((i) => (i + 1) % heroes.length);
-    }, 15000); // 15 seconds per slide for ~1 minute total
+    }, isMobile ? (activeIndex === 0 ? 3000 : 12000) : 15000); // 3 seconds for intro, 12 seconds for others on mobile
     return () => clearInterval(id);
-  }, [isPlaying, heroes.length]);
+  }, [isPlaying, heroes.length, isMobile, activeIndex]);
 
   const CurrentHero = heroes[activeIndex] as React.ComponentType<any>;
 
@@ -139,8 +139,8 @@ export default function Home() {
             Contacts
           </Button>
 
-          <Button onClick={() => setIsPlaying((p) => !p)} className="w-[56px] h-[56px] lg:w-[70px] lg:h-[70px] rounded-full items-center justify-center hover:opacity-90 transition-all" style={{ backgroundColor: '#2b3990' }}>
-            <PlayIcon fill="white" className={`w-8 h-8 lg:w-16 lg:h-16 ${isPlaying ? '' : 'opacity-60'}`} />
+          <Button onClick={() => setIsPlaying((p) => !p)} className="w-[76px] h-[76px] lg:w-[70px] lg:h-[70px] -mt-8 rounded-full items-center justify-center hover:opacity-90 transition-all" style={{ backgroundColor: '#2b3990' }}>
+            <PlayIcon fill="white" className={`w-22 h-22 ${isPlaying ? '' : 'opacity-60'}`} />
           </Button>
         </div>
 
@@ -152,7 +152,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, y: 24, transition: { duration: 0.3 } }}
-              className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20"
+              className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20 scale-[0.8] text-xl"
             >
               Try it for free
             </motion.button>

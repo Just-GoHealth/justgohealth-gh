@@ -47,6 +47,30 @@ export default function JoinUsPage() {
     "Prince Kwabena Baadu"
   ];
 
+  const ambassadors = [
+    "Akosua Animwaa Ofori-Agyei",
+    "Akua Bowaa Essah",
+    "Ama Serwaa Ankobea",
+    "Antoinette Eyram Kudroha",
+    "Antoinette Owusu",
+    "Christabel Ago Boakye",
+    "Dufe Joshua Mawuden Kwadzor",
+    "Emmanuella Obenewaa Adade",
+    "Fatoh Mariama Abdul",
+    "Godfred Dzidefo Amoah",
+    "Jennifer Semebia Adde",
+    "Joshua Lante Lamptey",
+    "Julian Nii Amartey Amamoo",
+    "Kelvin Mawuena Blewsi",
+    "Maud Nana Yaa Amankwah Opoku",
+    "Peace Hodiyah Nathanya Omenogor",
+    "Queen Manuella L. V. Tongar",
+    "Rahinatu Suleman",
+    "Roberta Emmanuella Tachie-Menson",
+    "Romeo Worlako Akakpo",
+    "Tembil Yinpala Ella"
+  ];
+
   return (
     <div className={`h-screen flex flex-col bg-white ${isMobile ? "overflow-y-auto" : "overflow-hidden"}`}>
       {/* Success Overlay */}
@@ -209,20 +233,34 @@ export default function JoinUsPage() {
                 ))}
               </div>
             </div>
+
+            {/* Ambassadors */}
+            <div className={`${isMobile ? "flex-1" : ""}`}>
+              <h2 className={`font-bold text-nowrap mb-6 ${isMobile ? "text-3xl" : "text-5xl"}`} style={{ color: '#2b3990' }}>
+                Ambassadors . {ambassadors.length}
+              </h2>
+              <div className={`space-y-1 ${isMobile ? "-mt-2" : "-mt-4"}`}>
+                {ambassadors.map((ambassador, index) => (
+                  <div key={index} className={`${isMobile ? "text-lg" : "text-3xl"}`} style={{ color: '#2b3990' }}>
+                    {ambassador}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Contacts Button */}
+            <div className={`${isMobile ? "flex-1 -mt-8" : "mt-8"}`}>
+              <Button 
+                variant="ghost" 
+                className={`text-black font-medium hover:opacity-70 transition-opacity ${isMobile ? "text-lg" : "text-2xl"}`}
+                onClick={() => setShowContacts(true)}
+              >
+                Contacts
+              </Button>
+            </div>
           </div>
         </div>
       </main>
-
-      {/* Footer elements as part of main content */}
-      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
-        <Button 
-          variant="ghost" 
-          className={`text-black font-medium hover:opacity-70 transition-opacity ${isMobile ? "text-lg" : "text-2xl"}`}
-          onClick={() => setShowContacts(true)}
-        >
-          Contacts
-        </Button>
-      </div>
 
       {/* Contacts Modal */}
       <ContactsModal 

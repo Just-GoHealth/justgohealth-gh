@@ -21,7 +21,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
       <div 
         className={`bg-white rounded-[28px] shadow-xl mx-auto relative border-red-500 border-[5px] ${
           isMobile 
-            ? "p-6 max-w-[640px] w-[calc(100%-2rem)] mx-4 scale-[0.9] origin-top overflow-auto max-h-[90vh]" 
+            ? "p-6 max-w-[440px] w-[calc(100%-2rem)] mx-4 scale-[0.99] overflow-auto max-h-[90vh]" 
             : "p-10 max-w-xl w-[calc(100%-4rem)]"
         }`}
         onClick={(e) => e.stopPropagation()}
@@ -58,25 +58,25 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
 
           {/* Call Section */}
           <div className="mb-8">
-            <p className={`text-black font-semibold mb-4 ${isMobile ? "text-lg" : "text-2xl text-nowrap"}`}>
+            <p className={`text-black font-semibold mb-4 ${isMobile ? "text-xl" : "text-2xl text-nowrap"}`}>
               Call Prince & Dr. Obed
             </p>
             
-            <div className={`flex ${isMobile ? "flex-col gap-6" : "gap-10"}`}>
+            <div className={`flex ${isMobile ? "flex-row gap-4" : "gap-10"}`}>
               <div>
-                <p className={`text-black font-semibold ${isMobile ? "text-lg" : "text-2xl text-nowrap"}`}>
+                <p className={`text-black font-semibold text-nowrap ${isMobile ? "text-sm" : "text-2xl text-nowrap"}`}>
                   JustGo Health Ghana
                 </p>
-                <p className={`text-gray-700 ${isMobile ? "text-lg" : "text-2xl"}`}>
+                <p className={`text-gray-700 ${isMobile ? "text-sm" : "text-2xl"}`}>
                   +233 (0) 538 920 991
                 </p>
               </div>
               
               <div>
-                <p className={`text-black font-semibold ${isMobile ? "text-lg" : "text-2xl text-nowrap"}`}>
+                <p className={`text-black font-semibold text-nowrap ${isMobile ? "text-sm" : "text-2xl text-nowrap"}`}>
                   JustGo Health USA
                 </p>
-                <p className={`text-gray-700 ${isMobile ? "text-lg" : "text-2xl"}`}>
+                <p className={`text-gray-700 ${isMobile ? "text-sm" : "text-2xl"}`}>
                   +1 (720) 492-7660
                 </p>
               </div>
@@ -85,23 +85,23 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
 
           {/* Social Media Section */}
           <div className="">
-            <div className={`flex ${isMobile ? "flex-col gap-4" : "gap-6"}`}>
-              <p className={`text-red-500 font-semibold mt-2 ${isMobile ? "text-lg" : "text-2xl"}`}>
+            <div className={`flex ${isMobile ? "flex-row items-center gap-3" : "flex-col gap-6"}`}>
+              <p className={`text-red-500 font-semibold ${isMobile ? "text-sm" : "text-2xl"}`}>
                 Follow us
               </p>
-              <div className={`flex ${isMobile ? "flex-col gap-3" : "gap-6"}`}>
-                <button onClick={() => window.open("https://www.instagram.com/justgo_health/", "_blank")} className={`flex items-center gap-4 bg-gray-800 text-white px-5 py-2.5 rounded-full hover:bg-gray-700 transition-colors ${
-                  isMobile ? "text-base justify-center" : "text-lg"
+              <div className={`flex ${isMobile ? "flex-row gap-2" : "flex-col gap-6"}`}>
+                <button onClick={() => window.open("https://www.instagram.com/justgo_health/", "_blank")} className={`flex items-center gap-2 bg-gray-800 text-white px-3 py-1.5 rounded-full hover:bg-gray-700 transition-colors ${
+                  isMobile ? "text-xs" : "text-lg"
                 }`}>
                   <span>Instagram</span>
-                  <Instagram className="w-5 h-5" />
+                  <Instagram className="w-4 h-4" />
                 </button>
                 
-                <button onClick={() => window.open("https://www.linkedin.com/company/justgotech/", "_blank")} className={`flex items-center gap-6 bg-gray-800 text-white px-5 py-2.5 rounded-full hover:bg-gray-700 transition-colors ${
-                  isMobile ? "text-base justify-center" : "text-lg"
+                <button onClick={() => window.open("https://www.linkedin.com/company/justgotech/", "_blank")} className={`flex items-center gap-2 bg-gray-800 text-white px-3 py-1.5 rounded-full hover:bg-gray-700 transition-colors ${
+                  isMobile ? "text-xs" : "text-lg"
                 }`}>
                   <span>LinkedIn</span>
-                  <Image src="/linkedin.svg" alt="LinkedIn" width={20} height={20} />
+                  <Image src="/linkedin.svg" alt="LinkedIn" width={16} height={16} />
                 </button>
               </div>
             </div>
