@@ -48,7 +48,7 @@ export default function JoinUsPage() {
   ];
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col bg-white">
+    <div className={`h-screen flex flex-col bg-white ${isMobile ? "overflow-y-auto" : "overflow-hidden"}`}>
       {/* Success Overlay */}
       {showSuccess && (
         <div className="fixed inset-0 bg-white/30 backdrop-blur-sm flex items-center justify-center z-50">
@@ -180,8 +180,8 @@ export default function JoinUsPage() {
         </div>
 
         {/* Partners Lists Section */}
-        <div className={`p-4 overflow-auto ${isMobile ? "w-full scale-75 -mt-24 -ml-6" : "w-1/2 scale-[0.9] -mt-10"}`}>
-          <div className={`${isMobile ? "flex gap-12" : "space-y-12"}`}>
+        <div className={`p-4 overflow-auto ${isMobile ? "w-full scale-100 -mt-16 ml-6" : "w-1/2 scale-[0.9] -mt-10"}`}>
+          <div className={`${isMobile ? "flex flex-col space-y-12" : "space-y-12"}`}>
             {/* Medicine Partners */}
             <div className={`${isMobile ? "flex-1" : ""}`}>
               <h2 className={`font-bold text-green-600 text-nowrap mb-6 ${isMobile ? "text-3xl" : "text-5xl"}`}>

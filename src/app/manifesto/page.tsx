@@ -41,9 +41,9 @@ export default function ManifestoPage() {
       </div>
 
       {/* Main Content - Manifesto Text */}
-      <main className={`flex-1 flex items-center justify-center px-8 py-20 ${isMobile ? "-mt-8" : "-mt-14"}`}>
-        <div className={`max-w-4xl w-full text-center ${isMobile ? "scale-90 -mt-[280px]" : ""}`}>
-          <h1 className={`text-nowrap font-bold text-red-600 mb-8 mt-14 ${isMobile ? "text-4xl -ml-8" : "text-8xl -ml-28"}`}>
+      <main className={`flex-1 flex items-center justify-center px-8 py-20 ${isMobile ? "mt-14" : "-mt-14"}`}>
+        <div className={`max-w-4xl w-full text-center ${isMobile ? "scale-90 -mt-[250px]" : ""}`}>
+          <h1 className={`text-nowrap font-bold text-red-600 mb-8 mt-14 ${isMobile ? "text-3xl -ml-8" : "text-8xl -ml-28"}`}>
             The Best. Ever. Anywhere.
           </h1>
           

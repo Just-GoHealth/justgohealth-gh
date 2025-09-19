@@ -10,10 +10,20 @@ import { useEffect, useMemo, useState } from "react";
 import SethHero from "@/components/SethHero";
 import DoctorHero from "@/components/DoctorHero";
 import { AnimatePresence, motion } from "framer-motion";
+import IntroMessageHero from "@/components/IntroMessageHero";
+import GirlHeroMobile from "@/components/GirlHeroMobile";
+import SethHeroMobile from "@/components/SethHeroMobile";
+import DoctorHeroMobile from "@/components/DoctorHeroMobile";
+import { useIsMobile } from "@/components/use-mobile";
 
 export default function Home() {
   const [showContacts, setShowContacts] = useState(false);
-  const heroes = useMemo(() => [GirlHero, SethHero, DoctorHero], []);
+  const isMobile = useIsMobile();
+  const heroes = useMemo(() => (
+    isMobile 
+      ? [IntroMessageHero, GirlHeroMobile, SethHeroMobile, DoctorHeroMobile]
+      : [IntroMessageHero, GirlHero, SethHero, DoctorHero]
+  ), [isMobile]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -21,7 +31,7 @@ export default function Home() {
     if (!isPlaying) return;
     const id = setInterval(() => {
       setActiveIndex((i) => (i + 1) % heroes.length);
-    }, 3500);
+    }, 15000); // 15 seconds per slide for ~1 minute total
     return () => clearInterval(id);
   }, [isPlaying, heroes.length]);
 
@@ -52,11 +62,11 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex flex-col lg:flex-row flex-1">
         {/* Header elements as part of main content */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 z-10">
           <Link href="/manifesto">
             <Button 
               variant="ghost" 
-              className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+              className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
             >
               Manifesto
             </Button>
@@ -64,27 +74,29 @@ export default function Home() {
           
           <div className="flex items-center justify-center flex-1">
           <Link href="/">
-            <Image
-              src="/logos/logo-black.png"
-              alt="JustGo Health Logo"
-              width={220}
-              height={40}
-              className="h-10 object-contain"
-            />
+            <Button variant="ghost" className="cursor-pointer p-0 hover:opacity-100">
+              <Image
+                src="/logos/logo-black.png"
+                alt="JustGo Health Logo"
+                width={220}
+                height={40}
+                className="h-8 lg:h-10 object-contain"
+              />
+              </Button>
             </Link>
           </div>
           
         <Link href="/join-us">
           <Button 
             variant="ghost" 
-            className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+            className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
           >
             Join Us
           </Button>
         </Link>
         </div>
         {/* Left Content Block */}
-        <div className="w-2/5 flex items-center justify-center p-8 lg:p-12 order-2 lg:order-1">
+        <div className="hidden lg:flex w-2/5 items-center justify-center p-8 lg:p-12 order-2 lg:order-1">
           <div className="max-w-md w-[300px]">
             <div className="bg-green-200 px-8 py-22 rounded-lg">
               <div className="space-y-2 text-center">
@@ -121,16 +133,31 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
           <Button 
             variant="ghost" 
-            className="text-black text-2xl font-medium hover:opacity-70 transition-opacity"
+            className="text-black text-xl lg:text-2xl font-medium hover:opacity-70 transition-opacity"
             onClick={() => setShowContacts(true)}
           >
             Contacts
           </Button>
-          
-          <Button onClick={() => setIsPlaying((p) => !p)} className="w-[70px] h-[70px] rounded-full flex items-center justify-center hover:opacity-90 transition-all" style={{ backgroundColor: '#2b3990' }}>
-            <PlayIcon fill="white" className={`w-16 h-16 scale-[2.4] ${isPlaying ? '' : 'opacity-60'}`} />
+
+          <Button onClick={() => setIsPlaying((p) => !p)} className="w-[56px] h-[56px] lg:w-[70px] lg:h-[70px] rounded-full items-center justify-center hover:opacity-90 transition-all" style={{ backgroundColor: '#2b3990' }}>
+            <PlayIcon fill="white" className={`w-8 h-8 lg:w-16 lg:h-16 ${isPlaying ? '' : 'opacity-60'}`} />
           </Button>
         </div>
+
+        {/* Mobile-only bottom CTA with animation, appears after intro */}
+        <AnimatePresence>
+          {isMobile && activeIndex >= 1 && (
+            <motion.button
+              key="mobile-cta"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
+              exit={{ opacity: 0, y: 24, transition: { duration: 0.3 } }}
+              className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20"
+            >
+              Try it for free
+            </motion.button>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Contacts Modal */}

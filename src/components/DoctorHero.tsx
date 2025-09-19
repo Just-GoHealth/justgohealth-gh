@@ -8,8 +8,9 @@ import { motion } from "framer-motion";
 
 
 export default function DoctorHero() {
+  const isMobile = typeof window !== "undefined" && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
   return (
-    <div className="relative h-screen order-1 lg:order-2 overflow-hidden">
+    <div className={`relative h-screen order-1 lg:order-2 overflow-hidden ${isMobile ? 'hidden' : ''}`}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}>
       <Image
         src="/hero/doc-boy.png"

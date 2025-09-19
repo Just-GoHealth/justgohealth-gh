@@ -6,6 +6,7 @@ import { useEffect } from "react";
 export default function GirlHero({ isPlaying = true }: { isPlaying?: boolean }) {
   const [scope, animate] = useAnimate();
   const anim = animate as unknown as (target: any, keyframes?: any, options?: any) => any;
+  const isMobile = typeof window !== "undefined" && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
 
   useEffect(() => {
     const run = async () => {
@@ -49,7 +50,7 @@ export default function GirlHero({ isPlaying = true }: { isPlaying?: boolean }) 
   }, [isPlaying, scope]);
 
   return (
-    <div ref={scope} className="relative h-screen order-1 lg:order-2 overflow-hidden">
+    <div ref={scope} className={`relative h-screen order-1 lg:order-2 overflow-hidden ${isMobile ? 'hidden' : ''}`}>
       <Image
         src="/hero/girl.png"
         alt="Portrait of a woman"

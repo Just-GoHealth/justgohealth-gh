@@ -21,7 +21,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
       <div 
         className={`bg-white rounded-[28px] shadow-xl mx-auto relative border-red-500 border-[5px] ${
           isMobile 
-            ? "p-6 max-w-[calc(100%-2rem)] w-full mx-4" 
+            ? "p-6 max-w-[640px] w-[calc(100%-2rem)] mx-4 scale-[0.9] origin-top overflow-auto max-h-[90vh]" 
             : "p-10 max-w-xl w-[calc(100%-4rem)]"
         }`}
         onClick={(e) => e.stopPropagation()}
