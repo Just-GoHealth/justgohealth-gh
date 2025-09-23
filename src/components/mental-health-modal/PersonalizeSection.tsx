@@ -3,63 +3,7 @@
 
 import { QuestionCarousel } from './QuestionCarousel';
 import { useMentalHealthStore } from '@/stores/useMentalHealthStore';
-
-const personalizeQuestions = [
-  {
-    id: 'campus',
-    title: 'Select your current campus:',
-    color: 'pink' as const,
-    options: [
-      'Ashesi University',
-      'KNUST',
-      'Achimota High School',
-      'Accra Technical University',
-      'Pentecost University',
-      'University of Ghana',
-    ],
-  },
-  {
-    id: 'reason',
-    title: 'Why are you locking in right now?',
-    color: 'yellow' as const,
-    options: [
-      'WASSCE', 'BECE', 'NSMQ', 'Exam/Quiz', 'GPA/CWA', 'INTERVIEW',
-      'DEFENSE', 'BREAKUP', 'FAILURE', 'DEATH', 'After A Loss', 'STRESS',
-      'GRIEF', 'REJECTION',
-    ],
-  },
-  {
-    id: 'timeframe',
-    title: 'How long before the exam/quiz?',
-    color: 'blue' as const,
-    options: ['24 Hours', '7 Days', '3 Weeks'],
-  },
-  {
-    id: 'fullName',
-    title: "What's your official name?",
-    color: 'pink' as const,
-    inputType: 'text' as const,
-    placeholder: 'Enter your full name',
-  },
-  {
-    id: 'age',
-    title: 'How old are you this year?',
-    color: 'yellow' as const,
-    options: ['16-17', '18', '19', '20', '21', '22', '23', '24', '25', '26+'],
-  },
-  {
-    id: 'sex',
-    title: "What's your biological sex?",
-    color: 'blue' as const,
-    options: ['MALE', 'FEMALE'],
-  },
-  {
-    id: 'gradeLevel',
-    title: 'Which level or form are you currently in?',
-    color: 'pink' as const,
-    options: ['1', '2', '3', '4', '5', '6'],
-  },
-];
+import { Question } from '@/types/mental-health';
 
 export const PersonalizeSection: React.FC = () => {
   const {
@@ -78,6 +22,8 @@ export const PersonalizeSection: React.FC = () => {
     setAge,
     setSex,
     setGradeLevel,
+    personalizeQuestions,
+    nextStep,
   } = useMentalHealthStore();
 
   const answers = {
@@ -114,6 +60,14 @@ export const PersonalizeSection: React.FC = () => {
         setGradeLevel(parseInt(answer) as any);
         break;
     }
+    const currentQuestion = personalizeQuestions[currentStep];
+    if (currentQuestion && currentQuestion.inputType !== 'text') {
+      nextStep();
+    }
+  };
+
+  const handleAdvanceInput = () => {
+    nextStep();
   };
 
   return (
@@ -126,6 +80,7 @@ export const PersonalizeSection: React.FC = () => {
         currentStep={currentStep}
         answers={answers}
         onAnswer={handleAnswer}
+        onAdvanceInput={handleAdvanceInput}
       />
     </div>
   );

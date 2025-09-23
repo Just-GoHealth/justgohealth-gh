@@ -4,21 +4,6 @@
 import { QuestionCarousel } from './QuestionCarousel';
 import { useMentalHealthStore } from '@/stores/useMentalHealthStore';
 
-const generalHealthQuestions = [
-  {
-    id: 'depression',
-    title: 'In the past two weeks, how often do you feel sad, down or hopeless?',
-    color: 'pink' as const,
-    options: ['Not at all', 'A few days', 'Sometimes', 'Almost everyday'],
-  },
-  {
-    id: 'suicidal',
-    title: 'In the past month, have you wished you were dead or actually had thoughts of killing yourself?',
-    color: 'yellow' as const,
-    options: ['Yes', 'No'],
-  },
-];
-
 export const GeneralHealthSection: React.FC = () => {
   const {
     depressionFrequency,
@@ -26,13 +11,10 @@ export const GeneralHealthSection: React.FC = () => {
     setDepressionFrequency,
     setSuicidalThoughts,
     currentStep,
+    generalHealthQuestions,
+    nextStep,
+    currentSubStep,
   } = useMentalHealthStore();
-
-  // Calculate step for general health section (steps 8 and 9)
-  const generalStep = currentStep - 8;
-  
-  // Ensure generalStep is within bounds
-  const safeGeneralStep = Math.max(0, Math.min(generalStep, generalHealthQuestions.length - 1));
 
   const answers = {
     depression: depressionFrequency || '',
@@ -48,7 +30,26 @@ export const GeneralHealthSection: React.FC = () => {
         setSuicidalThoughts(answer === 'Yes');
         break;
     }
+    const currentQuestion = generalHealthQuestions[currentStep];
+    if (currentQuestion && currentQuestion.inputType !== 'text') {
+      nextStep();
+    }
   };
+
+  const mainQuestion = generalHealthQuestions[currentStep];
+  const questionToRender = 
+    mainQuestion?.isMainQuestion && mainQuestion.subQuestions && currentSubStep < mainQuestion.subQuestions.length
+      ? mainQuestion.subQuestions[currentSubStep]
+      : mainQuestion;
+  
+  // If no questions available or current question is undefined, return null or a loading state
+  if (!questionToRender) {
+    return (
+      <div className="relative h-64 overflow-hidden flex items-center justify-center">
+        <p className="text-gray-500">No questions available</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -56,8 +57,8 @@ export const GeneralHealthSection: React.FC = () => {
         General Mental Health
       </h2>
       <QuestionCarousel
-        questions={generalHealthQuestions}
-        currentStep={safeGeneralStep}
+        questions={[questionToRender]}
+        currentStep={0} // Always 0 since we pass one question at a time
         answers={answers}
         onAnswer={handleAnswer}
       />
