@@ -38,7 +38,7 @@ export default function SethHero() {
       </motion.div>
       
       {/* Text Overlays */}
-      <div className="absolute inset-0 flex items-center -left-24 justify-center mr-[100px] z-20">
+      <div className="absolute inset-0 flex items-center -left-20 justify-center mr-[100px] z-20">
         <div className="text-left">
           {/* Meet and Jimmy Newton on same line */}
           <motion.div className="flex items-center -ml-36 gap-4 mt-32 scale-[0.8]" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }}>

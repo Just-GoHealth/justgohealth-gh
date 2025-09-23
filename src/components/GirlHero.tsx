@@ -54,17 +54,17 @@ export default function GirlHero({ isPlaying = true }: { isPlaying?: boolean }) 
       <Image
         src="/hero/girl.png"
         alt="Portrait of a woman"
-        width={900}
-        height={300}
-        className="object-contain object-left ml-[335px] w-[870px] h-[725px]"
+        width={700}
+        height={120}
+        className="object-contain object-left ml-[300px] w-[700px] h-[650px]"
         data-girl-image
         priority
       />
       
       {/* LOCK IN Text Overlay with text underneath */}
-      <div className="absolute inset-0 flex items-center -left-24 justify-center mr-[100px] z-20">
+      <div className="absolute inset-0 flex items-center -left-24 justify-center mb-20 mr-[100px] z-20">
         <div className="text-center">
-          <h2 className="text-[230px] text-left font-bold leading-none mt-56 -mb-10 text-[#2bb573]">
+          <h2 className="text-[200px] ml-20 text-left font-extrabold leading-none mt-56 mb-10 text-[#2bb573]">
             <span data-lock>LOCK</span>
             <p className="bottom-24" data-in>
               IN
@@ -72,7 +72,7 @@ export default function GirlHero({ isPlaying = true }: { isPlaying?: boolean }) 
           </h2>
           
           {/* White Text Overlay - Under LOCK IN */}
-          <div className="text-white text-nowrap text-3xl underline underline-offset-4 -mt-38 ml-[340px] font-bold text-left space-y-1">
+          <div className="text-white text-nowrap text-3xl underline underline-offset-4 -mt-65 ml-[400px] font-bold text-left space-y-1">
             <p data-line className="">Feeling depressed or sad?</p>
             <p data-line className="">Screen yourself with our App.</p>
             <p data-line className="">Connect with care.</p>

@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 export default function DoctorHero() {
   const isMobile = typeof window !== "undefined" && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
   return (
-    <div className={`relative h-screen order-1 lg:order-2 overflow-hidden ${isMobile ? 'hidden' : ''}`}>
+    <div className={`relative  h-screen order-1 lg:order-2 overflow-hidden ${isMobile ? 'hidden' : ''}`}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}>
       <Image
         src="/hero/doc-boy.png"
@@ -41,7 +41,7 @@ export default function DoctorHero() {
       <div className="absolute inset-0 flex items-center -left-24 justify-center mr-[100px] z-20 mt-[80px]">
         <div className="text-left">
           {/* Meet and Dr. Nathaniel Codjoe on same line */}
-          <motion.div className="flex items-center -ml-36 gap-4 mt-32 scale-[0.8]" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }}>
+          <motion.div className="flex items-center -ml-20 gap-4 mt-32 scale-[0.8]" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }}>
             <h2 className="text-[60px] text-black font-bold">
               meet
             </h2>
@@ -58,7 +58,7 @@ export default function DoctorHero() {
           </motion.p>
           
           {/* Achievements List - all same width with dark blue background */}
-          <div className="relative text-red-500 text-nowrap text-xl font-bold text-left -space-y-4 mt-8 ml-9 scale-[1.4]">
+          <div className="relative text-red-500 text-nowrap text-xl font-bold  -space-y-2 mt-10 ml-30 scale-[1.4]">
             {/* White cover that wipes up */}
             <motion.div className="absolute inset-0 bg-white" initial={{ height: "90%", width: "70%" }} animate={{ height: 0 }} transition={{ delay: 1.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} />
             <motion.div className="flex items-center justify-between px-4 py-2 w-[400px]" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.7, duration: 0.4 }}>
@@ -80,8 +80,8 @@ export default function DoctorHero() {
           </div>
 
           {/* First Ghanaian to achieve this */}
-          <motion.div className="bg-blue-900 px-16 py-2 rounded-full w-fit mt-6 -ml-24 scale-[0.9]" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
-            <p className="text-white -ml-13 text-4xl font-bold italic">
+          <motion.div className="bg-blue-900 px-16 py-2 rounded-full w-fit mt-6 -ml-15 scale-[0.9]" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
+            <p className="text-white -ml-1 -mr-10 text-4xl font-bold italic">
               First Ghanaian to achieve this
             </p>
           </motion.div>
