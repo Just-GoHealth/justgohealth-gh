@@ -3,7 +3,13 @@ import Image from "next/image";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect } from "react";
 
-export default function GirlHeroMobile({ isPlaying = true }: { isPlaying?: boolean }) {
+export default function GirlHeroMobile({ 
+  isPlaying = true, 
+  triggerOutro = false 
+}: { 
+  isPlaying?: boolean, 
+  triggerOutro?: boolean 
+}) {
   const lockControls = useAnimationControls();
   const text1Controls = useAnimationControls();
   const text2Controls = useAnimationControls();
@@ -11,11 +17,30 @@ export default function GirlHeroMobile({ isPlaying = true }: { isPlaying?: boole
 
   useEffect(() => {
     if (isPlaying) {
-      // Start animations in sequence
-      lockControls.start({ opacity: 1, y: 0 });
-      setTimeout(() => text1Controls.start({ opacity: 1, y: 0 }), 2000);
-      setTimeout(() => text2Controls.start({ opacity: 1, y: 0 }), 2500);
-      setTimeout(() => text3Controls.start({ opacity: 1, y: 0 }), 3000);
+      // Start animations in sequence with smoother timing
+      lockControls.start({ 
+        opacity: 1, 
+        y: 0,
+        transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+      });
+      
+      setTimeout(() => text1Controls.start({ 
+        opacity: 1, 
+        y: 0,
+        transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+      }), 1500);
+      
+      setTimeout(() => text2Controls.start({ 
+        opacity: 1, 
+        y: 0,
+        transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+      }), 2000);
+      
+      setTimeout(() => text3Controls.start({ 
+        opacity: 1, 
+        y: 0,
+        transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+      }), 2500);
     } else {
       // Pause all animations
       lockControls.stop();
@@ -24,58 +49,73 @@ export default function GirlHeroMobile({ isPlaying = true }: { isPlaying?: boole
       text3Controls.stop();
     }
   }, [isPlaying, lockControls, text1Controls, text2Controls, text3Controls]);
+
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden">
-      <div className="relative h-screen">
-        <Image
-          src="/hero/girl.png"
-          alt="Portrait of a woman"
-          fill
-          className="object-contain w-[100%%] scale-[1.3] -mt-14"
-          priority
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="px-6 text-left">
-            <motion.h2
+    <motion.div 
+      initial={{ opacity: 1 }} 
+      animate={triggerOutro ? { opacity: 0 } : {}} 
+      transition={{ duration: 0.5 }} 
+      className="relative w-full overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 min-h-[calc(100vh - 60px - 76px)]"
+    >
+      {/* Background Image - Properly positioned */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="relative w-full h-full max-w-sm mx-auto">
+          <Image
+            src="/hero/girl.png"
+            alt="Portrait of a woman"
+            fill
+            className="object-contain object-center scale-110"
+            priority
+          />
+        </div>
+      </div>
+
+      {/* Content Overlay - Positioned to avoid scrolling */}
+      <div className="absolute inset-0 flex flex-col justify-center items-center px-6">
+        {/* LOCK IN Text - Positioned in upper portion */}
+        <div className="flex-shrink-0 mt-auto pb-4">
+          <motion.h2
+            initial={{ opacity: 0, y: 40, scale: 0.9 }}
+            animate={lockControls}
+            className="text-[#2bb573] text-7xl sm:text-8xl font-extrabold leading-[0.8] text-center drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]"
+          >
+            LOCK
+            <div className="-mt-2">IN</div>
+          </motion.h2>
+        </div>
+
+        {/* Text Content - Positioned in lower portion */}
+        <div className="flex-shrink-0 mt-auto pt-4">
+          <div className="space-y-3 text-center">
+            <motion.p
               initial={{ opacity: 0, y: 30 }}
-              animate={lockControls}
-              transition={{ duration: 1.5 }}
-              className="text-[#2bb573] text-9xl font-extrabold leading-none drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]"
+              animate={text1Controls}
+              className="text-white text-xl sm:text-2xl font-bold underline underline-offset-4 decoration-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
             >
-              LOCK
-              <div className="-mt-6">IN</div>
-            </motion.h2>
-            <motion.div
-              className="mt-8 text-white text-2xl font-semibold underline underline-offset-4 space-y-2"
+              Feeling depressed or sad?
+            </motion.p>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={text2Controls}
+              className="text-white text-xl sm:text-2xl font-bold underline underline-offset-4 decoration-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
             >
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={text1Controls}
-                transition={{ duration: 0.8 }}
-              >
-                Feeling depressed or sad?
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={text2Controls}
-                transition={{ duration: 0.8 }}
-              >
-                Screen yourself with our App.
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={text3Controls}
-                transition={{ duration: 0.8 }}
-              >
-                Connect with care.
-              </motion.p>
-            </motion.div>
+              Screen yourself with our App.
+            </motion.p>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={text3Controls}
+              className="text-white text-xl sm:text-2xl font-bold underline underline-offset-4 decoration-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+            >
+              Connect with care.
+            </motion.p>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Subtle gradient overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+    </motion.div>
   );
 }
-
-
-

@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import GirlHero from "@/components/GirlHero";
 import ContactsModal from "@/components/ContactsModal";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import SethHero from "@/components/SethHero";
 import DoctorHero from "@/components/DoctorHero";
 import { AnimatePresence, motion } from "framer-motion";
@@ -16,6 +16,7 @@ import DoctorHeroMobile from "@/components/DoctorHeroMobile";
 import { useIsMobile } from "@/components/use-mobile";
 import CTAButton from "@/components/ui/CTAButton";
 import MentalHealthModal from "@/components/modalcarousel/modal/MentalHealthModal";
+import IntroMessageHeroMobile from "@/components/IntroMessageHeroMobile";
 
 export default function Home() {
   const [showContacts, setShowContacts] = useState(false);
@@ -28,14 +29,34 @@ export default function Home() {
   ), [isMobile]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const mainContentRef = useRef<HTMLDivElement>(null);
+  // const [showIntro, setShowIntro] = useState(isMobile); // Re-added showIntro state
 
   useEffect(() => {
     if (!isPlaying) return;
+
+    // Re-added intro screen timing for mobile
+    // if (isMobile && showIntro) {
+    //   const introTimer = setTimeout(() => {
+    //     setShowIntro(false);
+    //   }, 3000); // Intro screen displays for 3 seconds
+    //   return () => clearTimeout(introTimer);
+    // }
+
     const id = setInterval(() => {
       setActiveIndex((i) => (i + 1) % heroes.length);
-    }, isMobile ? (activeIndex === 0 ? 2000 : 6000) : 8000); // Reduced: 2s for intro, 6s for others on mobile, 8s on desktop
+    }, isMobile ? (activeIndex === 0 ? 3000 : 6000) : 8000); // Animated heroes: 6s on mobile, 8s on desktop
     return () => clearInterval(id);
   }, [isPlaying, heroes.length, isMobile, activeIndex]);
+
+  // const handleScrollToAnimations = () => {
+  //   if (mainContentRef.current) {
+  //     mainContentRef.current.scrollTo({
+  //       top: window.innerHeight, // Scroll down one full viewport height
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // };
 
   const CurrentHero = heroes[activeIndex] as React.ComponentType<any>;
 
@@ -61,43 +82,52 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Main Content */}
-      <main className="flex flex-col lg:flex-row flex-1">
-        {/* Header elements as part of main content */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 z-10">
-          <Link href="/manifesto">
-            <Button
-              variant="ghost"
-              className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
-            >
-              Manifesto
-            </Button>
-          </Link>
+      {/* Header (Manifesto, Logo, Join Us) - Conditionally hidden on mobile when intro is showing */}
+      <div className={`absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 z-10`}>
+        <Link href="/manifesto">
+          <Button
+            variant="ghost"
+            className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
+          >
+            Manifesto
+          </Button>
+        </Link>
 
-          <div className="flex items-center justify-center flex-1">
-            <Link href="/">
-              <Button variant="ghost" className="cursor-pointer p-0 hover:opacity-100">
-                <Image
-                  src="/logos/logo-black.png"
-                  alt="JustGo Health Logo"
-                  width={220}
-                  height={40}
-                  className="h-8 lg:h-10 object-contain"
-                />
-              </Button>
-            </Link>
-          </div>
-
-          <Link href="/join-us">
-            <Button
-              variant="ghost"
-              className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
-            >
-              Join Us
+        <div className="flex items-center justify-center flex-1">
+          <Link href="/">
+            <Button variant="ghost" className="cursor-pointer p-0 hover:opacity-100">
+              <Image
+                src="/logos/logo-black.png"
+                alt="JustGo Health Logo"
+                width={220}
+                height={40}
+                className="h-8 lg:h-10 object-contain"
+              />
             </Button>
           </Link>
         </div>
-        {/* Left Content Block */}
+
+        <Link href="/join-us">
+          <Button
+            variant="ghost"
+            className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
+          >
+            Join Us
+          </Button>
+        </Link>
+      </div>
+
+      {/* Intro Message Hero (Mobile Only, Fixed) */}
+      {/* {isMobile && showIntro && (
+        <div className="fixed inset-0 z-40 bg-white">
+          <IntroMessageHeroMobile onScrollToAnimations={handleScrollToAnimations} />
+        </div>
+      )} */}
+
+      {/* Main Content Area - Scrollable on mobile after intro */}
+      <main ref={mainContentRef} className={`flex flex-col lg:flex-row flex-1 overflow-x-hidden`}>
+        {isMobile? <IntroMessageHeroMobile /> : null}
+        {/* Left Content Block (Desktop Only) */}
         <div className="hidden lg:flex w-2/5 items-center justify-center p-8 lg:p-12 order-2 lg:order-1">
           <div className="max-w-md w-[300px]">
             <div className="bg-[#F6F9E6] px-8 py-22 rounded-lg">
@@ -120,7 +150,23 @@ export default function Home() {
           onClose={() => setOpen(false)}
         />
 
-        {/* Right Content - Hero slot with animated transitions. Layout/positioning preserved by wrapping motion.div only. */}
+        {/* Right Content - Hero slot with animated transitions. Conditionally rendered */}
+        {/* {!(isMobile && showIntro) && (
+          <div className="relative flex-1">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeIndex}
+                variants={variants[pickVariantKey(activeIndex)]}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="contents"
+              >
+                <CurrentHero isPlaying={isPlaying} triggerOutro={!isPlaying} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        )} */}
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={activeIndex}
@@ -133,37 +179,37 @@ export default function Home() {
             <CurrentHero isPlaying={isPlaying} />
           </motion.div>
         </AnimatePresence>
-
-        {/* Footer elements as part of main content */}
-        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
-          <Button
-            variant="ghost"
-            className="text-black text-xl lg:text-2xl font-medium hover:opacity-70 transition-opacity"
-            onClick={() => setShowContacts(true)}
-          >
-            Contacts
-          </Button>
-
-          <Button onClick={() => setIsPlaying((p) => !p)} className="w-[76px] h-[76px] lg:w-[70px] lg:h-[70px] -mt-8 rounded-full items-center justify-center hover:opacity-90 transition-all" style={{ backgroundColor: '#2b3990' }}>
-            <PlayIcon fill="white" className={`w-22 h-22 ${isPlaying ? '' : 'opacity-60'}`} />
-          </Button>
-        </div>
-
-        {/* Mobile-only bottom CTA with animation, appears after intro */}
-        <AnimatePresence>
-          {isMobile && activeIndex >= 1 && (
-            <motion.button
-              key="mobile-cta"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }} // Reduced from 0.5s
-              exit={{ opacity: 0, y: 24, transition: { duration: 0.2 } }} // Reduced from 0.3s
-              className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20 scale-[0.8] text-xl"
-            >
-              Try it for free
-            </motion.button>
-          )}
-        </AnimatePresence>
       </main>
+
+      {/* Footer (Contacts, Play Button) - Conditionally hidden on mobile when intro is showing */}
+      <div className={`absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10`}>
+        <Button
+          variant="ghost"
+          className="text-black text-xl lg:text-2xl font-medium hover:opacity-70 transition-opacity"
+          onClick={() => setShowContacts(true)}
+        >
+          Contacts
+        </Button>
+
+        <Button onClick={() => setIsPlaying((p) => !p)} className="w-[76px] h-[76px] lg:w-[70px] lg:h-[70px] -mt-8 rounded-full items-center justify-center hover:opacity-90 transition-all" style={{ backgroundColor: '#2b3990' }}>
+          <PlayIcon fill="white" className={`w-22 h-22 ${isPlaying ? '' : 'opacity-60'}`} />
+        </Button>
+      </div>
+
+      {/* Mobile-only bottom CTA with animation, appears after intro */}
+      {/* <AnimatePresence>
+        {isMobile && !showIntro && activeIndex >= 0 && (
+          <motion.button
+            key="mobile-cta"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }} // Reduced from 0.5s
+            exit={{ opacity: 0, y: 24, transition: { duration: 0.2 } }} // Reduced from 0.3s
+            className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20 scale-[0.8] text-xl"
+          >
+            Try it for free
+          </motion.button>
+        )}
+      </AnimatePresence> */}
 
       {/* Contacts Modal */}
       <ContactsModal
