@@ -52,7 +52,7 @@ export default function DoctorHeroMobile({
         >
           <div className="relative w-48 h-full">
             <Image
-              src="/hero/doctor.png"
+              src="/hero/doc-boy.png"
               alt="Dr. Nathaniel Codjoe"
               fill
               className="object-contain"
