@@ -38,11 +38,11 @@ export default function SethHero() {
       </motion.div>
       
       {/* Text Overlays */}
-      <div className="absolute inset-0 flex items-center -left-24 justify-center mr-[100px] z-20">
+      <div className="absolute inset-0 flex items-center -left-20 justify-center mr-[100px] z-20">
         <div className="text-left">
           {/* Meet and Jimmy Newton on same line */}
           <motion.div className="flex items-center -ml-36 gap-4 mt-32 scale-[0.8]" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }}>
-            <h2 className="text-[60px] text-red-500 font-bold">
+            <h2 className="text-[60px]  font-bold">
               meet
             </h2>
             
@@ -53,12 +53,12 @@ export default function SethHero() {
           </motion.div>
           
           {/* Question */}
-          <motion.p className="text-[28px] text-red-500 font-bold mt-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.5 }}>
+          <motion.p className="text-[28px]  font-bold mt-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.5 }}>
             What does it mean to lock in?
           </motion.p>
           
           {/* Achievements List - all same width with green background */}
-          <div className="relative text-red-500 text-nowrap text-xl font-bold text-left -space-y-2 mt-8 -ml-9 scale-[1.2]">
+          <div className="relative  text-nowrap text-xl font-bold text-left -space-y-2 mt-8 -ml-9 scale-[1.2]">
             {/* White cover that wipes up to reveal items */}
             <motion.div className="absolute inset-0 bg-white" initial={{ height: "80%", width: "70%" }} animate={{ height: 0 }} transition={{ delay: 1.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} />
             <motion.div className="flex items-center justify-between px-4 py-2 rounded-full w-[400px]" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.7, duration: 0.4 }}>
