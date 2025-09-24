@@ -6,37 +6,45 @@ interface Props {
     total: number;
     onNext: () => void;
     onPrev: () => void;
+    disabledNext?: boolean;
+    showDone?: boolean;
 }
 
-export default function CarouselControls({ page, total, onNext, onPrev }: Props) {
+export default function CarouselControls({ page, total, onNext, onPrev, disabledNext = false, showDone = false }: Props) {
     return (
-        <div className="absolute bottom-4 left-0 w-full flex justify-between px-6 items-center">
+        <div
+            className="
+        absolute bottom-2 sm:bottom-4 left-0 w-full 
+        flex justify-between items-center 
+        px-3 sm:px-6
+      "
+        >
             <Button
                 variant="outline"
                 disabled={page === 0}
                 onClick={onPrev}
-                className="rounded-xl px-6"
+                className="
+          rounded-xl 
+          px-3 py-1 text-sm 
+          sm:px-6 sm:py-2 sm:text-base
+        "
             >
                 Previous
             </Button>
 
-            <div className="flex gap-2">
-                {Array.from({ length: total }).map((_, i) => (
-                    <div
-                        key={i}
-                        className={`w-3 h-3 rounded-full ${i === page ? "bg-blue-600" : "bg-gray-400"
-                            }`}
-                    />
-                ))}
-            </div>
+            {/* Counter moved to header; no center indicator */}
 
             <Button
                 variant="default"
-                disabled={page === total - 1}
                 onClick={onNext}
-                className="rounded-xl px-6"
+                disabled={disabledNext}
+                className="
+          rounded-xl 
+          px-3 py-1 text-sm 
+          sm:px-6 sm:py-2 sm:text-base
+        "
             >
-                Next
+                {showDone ? 'Done' : 'Next'}
             </Button>
         </div>
     );

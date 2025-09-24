@@ -7,6 +7,7 @@ import Question2 from "./Question2";
 
 type Props = {
     onComplete: () => void; // called when Form2 finishes
+    onStateChange?: (s: { canProceed: boolean }) => void;
 };
 
 export type QuestionProps = {
@@ -15,7 +16,7 @@ export type QuestionProps = {
 
 const questions = [Question1, Question2];
 
-export default function Form2({ onComplete }: Props) {
+export default function Form2({ onComplete, onStateChange }: Props) {
     const [step, setStep] = useState(0);
 
     const handleNext = () => {
@@ -43,9 +44,9 @@ export default function Form2({ onComplete }: Props) {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="absolute top-0 left-0 w-full h-full"
+                    className="absolute top-0 left-0 w-full h-full flex items-stretch justify-center"
                 >
-                    <CurrentQuestion onNext={handleNext} />
+                    <CurrentQuestion onNext={handleNext} onStateChange={onStateChange} />
                 </motion.div>
             </AnimatePresence>
         </div>

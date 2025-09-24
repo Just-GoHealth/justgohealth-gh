@@ -6,6 +6,7 @@ import Question1 from "./Question1";
 
 type Props = {
     onComplete: () => void; // called when Form1 finishes
+    onStateChange?: (s: { canProceed: boolean }) => void;
 };
 
 // Define the props each Question component expects
@@ -16,7 +17,7 @@ export type QuestionProps = {
 // Instead of JSX, we store the component itself
 const questions = [Question1];
 
-export default function Form1({ onComplete }: Props) {
+export default function Form1({ onComplete, onStateChange }: Props) {
     const [step, setStep] = useState(0);
 
     const handleNext = () => {
@@ -44,9 +45,9 @@ export default function Form1({ onComplete }: Props) {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="absolute top-0 left-0 w-full h-full"
+                    className="absolute top-0 left-0 w-full h-full flex items-stretch justify-center"
                 >
-                    <CurrentQuestion onNext={handleNext} />
+                    <CurrentQuestion onNext={handleNext} onStateChange={onStateChange} />
                 </motion.div>
             </AnimatePresence>
         </div>
