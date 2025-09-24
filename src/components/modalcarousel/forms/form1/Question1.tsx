@@ -1,26 +1,45 @@
 import QuestionCard from "@/components/modalcarousel/ui/QuestionCard";
+import { useMentalHealthStore } from "@/stores/useMentalHealthStore";
 
 type Question1Props = {
     onNext: () => void;
+    onStateChange?: (s: { canProceed: boolean }) => void;
 };
 
-export default function Question1({ onNext }: Question1Props) {
+export default function Question1({ onNext, onStateChange }: Question1Props) {
+    const setCampus = useMentalHealthStore((s) => s.setCampus);
+    const selectedCampus = useMentalHealthStore((s) => s.campus);
+    if (onStateChange) onStateChange({ canProceed: !!selectedCampus });
+    const options = [
+        "Ashesi University",
+        "Accra Technical University",
+        "KNUST",
+        "Pentecost University",
+        "Achimota High School",
+        "University of Ghana",
+    ];
+
     return (
         <QuestionCard className="bg-[#fcf1e9] text-black">
-            <h2 className="text-4xl font-bold mt-[-20] mb-25">Select your current campus:</h2>
-            <div className="grid grid-cols-2 gap-4 w-full">
-                {[
-                    "Ashesi University",
-                    "Accra Technical University",
-                    "KNUST",
-                    "Pentecost University",
-                    "Achimota High School",
-                    "University of Ghana",
-                ].map((opt) => (
+            <h2 className="text-2xl sm:text-4xl font-bold mb-6 text-center">
+                Select your current campus:
+            </h2>
+
+            <div className="flex flex-col gap-3 w-full sm:grid sm:grid-cols-2 sm:gap-4">
+                {options.map((opt) => (
                     <button
                         key={opt}
-                        onClick={onNext}
-                        className="px-6 py-2 mx-10 h-20 rounded-full bg-black text-white text-3xl font-bold mb-3 hover:bg-green-600"
+                        onClick={() => { setCampus(opt as any); if (onStateChange) onStateChange({ canProceed: true }); onNext(); }}
+                        className="
+              px-5 py-3 sm:px-6 sm:py-4 w-full sm:w-auto
+              rounded-full font-bold
+              text-base sm:text-2xl
+              hover:bg-green-600 transition
+            "
+                        style={{
+                            backgroundColor: selectedCampus === (opt as any) ? '#16a34a' : '#000',
+                            color: '#fff'
+                        }}
                     >
                         {opt}
                     </button>

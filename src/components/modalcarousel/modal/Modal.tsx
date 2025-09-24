@@ -13,20 +13,24 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
             {isOpen && (
                 <motion.div
                     className="fixed inset-0 flex items-center justify-center bg-black/30 z-50"
-                    // 👆 backdrop: use bg-black/30 (modern Tailwind syntax for 30% opacity)
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    onClick={onClose}
+                    onClick={onClose} // closes modal when backdrop is clicked
                 >
                     <motion.div
-                        className="bg-white/80 backdrop-blur-md rounded-2xl w-[80%] h-[80%] p-6 relative"
-                        // 👆 white box with 80% opacity and a slight blur effect
-                        initial={{ scale: 0.8, opacity: 0 }}
+                        className="
+              bg-white/80 backdrop-blur-md rounded-2xl 
+              w-[96%] sm:w-[90%] md:w-[85%] lg:w-[80%] max-w-5xl 
+              h-[92vh] sm:h-auto max-h-[95vh] 
+              p-3 sm:p-6 relative 
+              overflow-y-auto
+            "
+                        initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
                     >
                         {children}
                     </motion.div>

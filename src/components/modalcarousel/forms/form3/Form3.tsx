@@ -10,6 +10,7 @@ import Question4 from "./Question4";
 
 type Props = {
     onComplete: () => void; // called when Form3 finishes
+    onStateChange?: (s: { canProceed: boolean; isFinalStep?: boolean }) => void;
 };
 
 export type QuestionProps = {
@@ -19,7 +20,7 @@ export type QuestionProps = {
 
 const questions = [Question1, Question2, Question3, Question4];
 
-export default function Form3({ onComplete }: Props) {
+export default function Form3({ onComplete, onStateChange }: Props) {
     const [step, setStep] = useState(0);
 
     const handleNext = () => {
@@ -38,6 +39,11 @@ export default function Form3({ onComplete }: Props) {
 
     const CurrentQuestion = questions[step];
 
+    // Report canProceed and final step based on store-driven selections via question components
+    const handleStateChange = (s: { canProceed: boolean }) => {
+        if (onStateChange) onStateChange({ canProceed: s.canProceed, isFinalStep: step === questions.length - 1 });
+    };
+
     return (
         <div className="relative w-full h-full overflow-hidden">
             <AnimatePresence mode="wait">
@@ -47,9 +53,9 @@ export default function Form3({ onComplete }: Props) {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    className="absolute top-0 left-0 w-full h-full"
+                    className="absolute top-0 left-0 w-full h-full flex items-stretch justify-center"
                 >
-                    <CurrentQuestion onNext={handleNext} onClose={onComplete} />
+                    <CurrentQuestion onNext={handleNext} onClose={onComplete} onStateChange={handleStateChange} />
                 </motion.div>
             </AnimatePresence>
         </div>

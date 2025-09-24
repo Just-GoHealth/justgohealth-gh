@@ -154,6 +154,7 @@ export default function Home() {
           {isMobile && activeIndex >= 1 && (
             <motion.button
               key="mobile-cta"
+              onClick={() => setOpen(true)}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }} // Reduced from 0.5s
               exit={{ opacity: 0, y: 24, transition: { duration: 0.2 } }} // Reduced from 0.3s
