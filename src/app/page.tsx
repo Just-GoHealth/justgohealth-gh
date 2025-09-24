@@ -15,16 +15,16 @@ import SethHeroMobile from "@/components/SethHeroMobile";
 import DoctorHeroMobile from "@/components/DoctorHeroMobile";
 import { useIsMobile } from "@/components/use-mobile";
 import CTAButton from "@/components/ui/CTAButton";
-import { MentalHealthModal } from "@/components/mental-health-modal/MentalHealthModal";
+import MentalHealthModal from "@/components/modalcarousel/modal/MentalHealthModal";
 
 export default function Home() {
   const [showContacts, setShowContacts] = useState(false);
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const heroes = useMemo(() => (
-    isMobile 
-      ? [ GirlHeroMobile, SethHeroMobile, DoctorHeroMobile]
-      : [ GirlHero, SethHero, DoctorHero]
+    isMobile
+      ? [GirlHeroMobile, SethHeroMobile, DoctorHeroMobile]
+      : [GirlHero, SethHero, DoctorHero]
   ), [isMobile]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -66,36 +66,36 @@ export default function Home() {
         {/* Header elements as part of main content */}
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 z-10">
           <Link href="/manifesto">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
             >
               Manifesto
             </Button>
           </Link>
-          
+
           <div className="flex items-center justify-center flex-1">
-          <Link href="/">
-            <Button variant="ghost" className="cursor-pointer p-0 hover:opacity-100">
-              <Image
-                src="/logos/logo-black.png"
-                alt="JustGo Health Logo"
-                width={220}
-                height={40}
-                className="h-8 lg:h-10 object-contain"
-              />
+            <Link href="/">
+              <Button variant="ghost" className="cursor-pointer p-0 hover:opacity-100">
+                <Image
+                  src="/logos/logo-black.png"
+                  alt="JustGo Health Logo"
+                  width={220}
+                  height={40}
+                  className="h-8 lg:h-10 object-contain"
+                />
               </Button>
             </Link>
           </div>
-          
-        <Link href="/join-us">
-          <Button 
-            variant="ghost" 
-            className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
-          >
-            Join Us
-          </Button>
-        </Link>
+
+          <Link href="/join-us">
+            <Button
+              variant="ghost"
+              className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
+            >
+              Join Us
+            </Button>
+          </Link>
         </div>
         {/* Left Content Block */}
         <div className="hidden lg:flex w-2/5 items-center justify-center p-8 lg:p-12 order-2 lg:order-1">
@@ -116,9 +116,9 @@ export default function Home() {
         </div>
 
         <MentalHealthModal
-        isOpen={open} 
-        onClose={() => setOpen(false)} 
-      />
+          isOpen={open}
+          onClose={() => setOpen(false)}
+        />
 
         {/* Right Content - Hero slot with animated transitions. Layout/positioning preserved by wrapping motion.div only. */}
         <AnimatePresence mode="wait" initial={false}>
@@ -136,8 +136,8 @@ export default function Home() {
 
         {/* Footer elements as part of main content */}
         <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             className="text-black text-xl lg:text-2xl font-medium hover:opacity-70 transition-opacity"
             onClick={() => setShowContacts(true)}
           >
@@ -166,9 +166,9 @@ export default function Home() {
       </main>
 
       {/* Contacts Modal */}
-      <ContactsModal 
-        isOpen={showContacts} 
-        onClose={() => setShowContacts(false)} 
+      <ContactsModal
+        isOpen={showContacts}
+        onClose={() => setShowContacts(false)}
       />
     </div>
   );
