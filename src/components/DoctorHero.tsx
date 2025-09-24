@@ -17,7 +17,7 @@ export default function DoctorHero() {
         alt="Dr. Nathaniel Codjoe holding book"
         width={900}
         height={300}
-        className="object-contain object-left ml-[574px] w-[870px] h-[665px] mt-[60px]"
+        className="object-contain object-left ml-[500px] w-[870px] h-[665px] mt-[40px]"
         priority
       />
       </motion.div>
@@ -58,7 +58,7 @@ export default function DoctorHero() {
           </motion.p>
           
           {/* Achievements List - all same width with dark blue background */}
-          <div className="relative text-red-500 text-nowrap text-xl font-bold  -space-y-2 mt-10 ml-30 scale-[1.4]">
+          <div className="relative  text-nowrap text-xl font-bold  -space-y-2 mt-10 ml-30 scale-[1.4]">
             {/* White cover that wipes up */}
             <motion.div className="absolute inset-0 bg-white" initial={{ height: "90%", width: "70%" }} animate={{ height: 0 }} transition={{ delay: 1.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }} />
             <motion.div className="flex items-center justify-between px-4 py-2 w-[400px]" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.7, duration: 0.4 }}>
@@ -80,7 +80,7 @@ export default function DoctorHero() {
           </div>
 
           {/* First Ghanaian to achieve this */}
-          <motion.div className="bg-blue-900 px-16 py-2 rounded-full w-fit mt-6 -ml-15 scale-[0.9]" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div className="bg-blue-900 px-16 py-2 rounded-full w-fit mt-6 -ml-6 scale-[0.9]" initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
             <p className="text-white -ml-1 -mr-10 text-4xl font-bold italic">
               First Ghanaian to achieve this
             </p>

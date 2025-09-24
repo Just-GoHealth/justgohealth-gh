@@ -51,7 +51,7 @@ export default function ManifestoPage() {
             <p className="mt-12">
               We, at JustGo Health, promise on our honor to ensure that the mental health of every Ghanaian student is <span className="text-red-600 font-bold">the best ever, anywhere on earth.</span>
               
-              <p className="mt-6">{`Our target is clear: to build stronger mental health support in Ghanaian schools than even at Harvard University. On Harvard's campus, a student has`} <span className="text-red-600 font-bold">15 options for mental health care, all digital</span> and <span className="text-red-600 font-bold">available 24/7.</span></p>
+              <span className="mt-6">{`Our target is clear: to build stronger mental health support in Ghanaian schools than even at Harvard University. On Harvard's campus, a student has`} <span className="text-red-600 font-bold">15 options for mental health care, all digital</span> and <span className="text-red-600 font-bold">available 24/7.</span></span>
             </p>
               <p className={`text-red-500 font-semibold -mt-4 -mb-4 text-center ${isMobile ? "text-lg" : "text-3xl"}`}>We have studied. We are prepared. We are committed.</p>
           </div>
