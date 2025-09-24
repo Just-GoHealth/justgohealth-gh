@@ -35,7 +35,7 @@ export default function Question3({ onNext, onStateChange }: QuestionProps & { o
                         px-8 sm:px-12 py-3 sm:py-4 rounded-full text-lg sm:text-xl font-bold w-full sm:w-auto
                         transition-all duration-200 transform
                         ${selectedSex === 'male'
-                            ? 'bg-black text-white scale-105'
+                            ? 'bg-green-500 text-white scale-105'
                             : 'bg-gray-800 text-white hover:bg-gray-700 hover:scale-105'
                         }
                         active:scale-95 min-w-[240px] sm:min-w-[270px]
@@ -51,7 +51,7 @@ export default function Question3({ onNext, onStateChange }: QuestionProps & { o
                         transition-all duration-200 transform
                         ${selectedSex === 'female'
                             ? 'bg-green-500 text-white scale-105'
-                            : 'bg-green-400 text-white hover:bg-green-500 hover:scale-105'
+                            : 'bg-gray-800 text-white hover:bg-gray-700 hover:scale-105'
                         }
                         active:scale-95 min-w-[240px] sm:min-w-[270px]
                     `}
