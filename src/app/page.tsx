@@ -16,6 +16,8 @@ import SethHeroMobile from "@/components/SethHeroMobile";
 import DoctorHeroMobile from "@/components/DoctorHeroMobile";
 import { useIsMobile } from "@/components/use-mobile";
 
+import Trial from "@/components/Trial";
+
 export default function Home() {
   const [showContacts, setShowContacts] = useState(false);
   const isMobile = useIsMobile();
@@ -28,6 +30,8 @@ export default function Home() {
   );
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  const [showTrialModal, setShowTrialModal] = useState(false);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -144,7 +148,10 @@ export default function Home() {
                   <br />
                   Health.
                 </h1>
-                <Button className="bg-red-600 text-2xl text-white px-8 py-6 rounded-full font-medium hover:bg-red-700 transition-colors mt-8">
+                <Button
+                  className="bg-red-600 hover:cursor-pointer text-2xl text-white px-8 py-6 rounded-full font-medium hover:bg-red-700 transition-colors mt-8"
+                  onClick={() => setShowTrialModal(true)}
+                >
                   Try it for free
                 </Button>
               </div>
@@ -211,6 +218,8 @@ export default function Home() {
         isOpen={showContacts}
         onClose={() => setShowContacts(false)}
       />
+
+      {showTrialModal && <Trial setShowTrialModal={setShowTrialModal} />}
     </div>
   );
 }
