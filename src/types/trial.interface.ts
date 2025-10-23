@@ -23,3 +23,11 @@ export interface ITrial {
   activeRecall: string;
   lastMinuteStudying: string;
 }
+
+export interface IModalData {
+  title: string;
+  description?: string;
+  options: string[];
+  property: keyof ITrial;
+  bgColor: string;
+}

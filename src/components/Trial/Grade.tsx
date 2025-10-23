@@ -5,10 +5,12 @@ import { useTrial } from "@/contexts/trial.context";
 const Grade = () => {
   const grades = ["1", "2", "3", "4", "5", "6"];
 
-  const { onTrialDataChange, trialData } = useTrial();
+  const { onTrialDataChange, trialData, setStep, setInnerStep } = useTrial();
   const handleGradeChange = (grade: string) => {
     // Handle grade change logic here
     onTrialDataChange("level", grade);
+    setStep((prev) => ++prev);
+    setInnerStep(0);
   };
   return (
     <div>

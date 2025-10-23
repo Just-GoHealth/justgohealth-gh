@@ -44,11 +44,12 @@ const Reason = () => {
                 key={index}
                 onClick={() => handleReasonSelect(s[3])}
                 variant="outline"
+                disabled={index == 1}
                 className={`p-12 h-86 w-86 text-xl font-bold ${
                   trialData.reasonForLockin == s[3]
-                    ? "bg-[#2bb573] text-white hover:bg-[#2bb573] hover:text-white border-white gap-2 border-8 ring-8 ring-[#2bb573] hover:text-white"
+                    ? "bg-[#2bb573] text-white  hover:bg-[#2bb573] hover:text-white border-white gap-2 border-8 ring-8 ring-[#2bb573] hover:text-white"
                     : "gap-6 bg-black/90 text-white hover:bg-[#2bb573]/70 hover:text-white/50"
-                } flex flex-col items-center justify-center hover:cursor-pointer rounded-full`}
+                } cursor-not-allowed flex flex-col items-center justify-center hover:cursor-pointer rounded-full`}
               >
                 {trialData.reasonForLockin != s[3] && (
                   <>

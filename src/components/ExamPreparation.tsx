@@ -4,51 +4,53 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { useTrial } from "@/contexts/trial.context";
 
-import { IModalData } from "@/types/trial.interface";
 import TrialModal from "./TrialModal";
+import { IModalData } from "@/types/trial.interface";
 
 const data: IModalData[] = [
   {
-    title: "Loss of Interest ",
+    title: "Motivation to Study",
     description:
-      "In the past 2 weeks, how often do you have little interest or pleasure in doing things?",
-    options: ["Not At All", "A few days ", "Sometimes", "Almost everyday"],
-    property: "lossOfInterest",
+      "How interested or motivated are you in studying the material for this exam?",
+    options: ["Not at all", "Slightly", "Moderately", "Very interested "],
+    property: "motivationToStudy",
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Feeling Depressed",
+    title: "Focus While Studying",
     description:
-      "In the past 2 weeks, how often do you feel sad, down or hopeless? ",
-    options: ["Not At All", "A few days ", "Sometimes", "Almost everyday"],
-    property: "feelingDepressed",
+      "During studying, how often are you able to stay focused without being easily distracted?",
+    options: ["Never", "Occassionally", "Often", "Always"],
+    property: "focusWhileStudying",
     bgColor: "bg-[#ECF1F9]",
   },
   {
-    title: "Loneliness",
-    description: "In the past 2 weeks, how often do you feel lonely? ",
+    title: "Active Studying",
+    description:
+      "During studying, how often do you rephrase ideas into your own words, summarize or explain the material to yourself or others? ",
     options: ["Never", "Sometimes", "Often", "Always"],
-    property: "feelingLonely",
+    property: "activeStudying",
     bgColor: "bg-[#F6F9E6]",
   },
   {
-    title: "Suicidal Thoughts ",
+    title: "Active Recall",
     description:
-      "In the last month, have you wished you were dead or actually had thoughts of killing yourself? ",
-    options: ["Yes", "No"],
-    property: "suicidalThoughts",
+      "During studying, how often do you test yourself with Pasco (past or practice questions) or self-quiz rather than only reading the notes? ",
+    options: ["Never", "Sometimes", "Often", "Always"],
+    property: "activeRecall",
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Suicide Plans/Attempts",
+    title: "Last-Minute Studying",
     description:
-      "In the last month, have you had plans or tried to kill yourself? ",
-    options: ["Yes", "No"],
+      "How often do you usually do most of your studying the night before an exam?",
+    options: ["Not At All", "A few times", "Frequently", "Almost every exam"],
     property: "sweatingOrHeartRacing",
     bgColor: "bg-[#ECF1F9]",
   },
 ];
-export default function MentalHealth() {
+
+export default function ExamPreparation() {
   const { step, prev, innerStep, done } = useTrial(); // 0..2
 
   const handlePrev = () => {
@@ -57,7 +59,7 @@ export default function MentalHealth() {
   return (
     <div className="w-full bg-white p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="font-black text-5xl">General Mental Health</h1>
+        <h1 className="font-black text-5xl">Exam Preparation</h1>
         <p className="text-white mb-4 bg-[red] tracking-tighter text-sm rounded-full w-8 h-8 flex items-center justify-center">
           {innerStep + 1} /{5}
         </p>
@@ -70,8 +72,8 @@ export default function MentalHealth() {
           {data.map((d, index: number) => (
             <div className={`rounded-[20px] w-1/5 ${d.bgColor} p-8`}>
               <TrialModal
+                isComplete={index == data.length - 1}
                 {...d}
-                key={index}
                 description={d.description as string}
                 isLast={index === data.length - 1}
               />

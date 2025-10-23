@@ -55,20 +55,21 @@ export function TrialProvider({
     setTrialData((prev) => ({ ...prev, [property]: value }));
   };
 
-  const next = React.useCallback(() => setStep((s) => Math.min(2, s + 1)), []);
-
   const prev = (currentStep: number) => {
-    console.log("currentStep", currentStep);
-    // console.log(currentStep);
     // Check the step and then set the last inner step of the previous component
     if (step === 0) return;
     if (currentStep > 0) {
       setInnerStep(currentStep - 1);
     }
+
+    // console.log(currentStep);
     if (currentStep == 0) {
       // Check current step and setInnerStep as required
       if (step == 1) setInnerStep(0);
       if (step == 2) setInnerStep(1);
+      if (step == 3) setInnerStep(3);
+      if (step == 4) setInnerStep(4);
+      if (step == 5) setInnerStep(5);
       setStep(step - 1);
     }
   };

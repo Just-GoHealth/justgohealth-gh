@@ -12,11 +12,9 @@ export default function Details({
 }: {
   setTrialStep: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const { step, prev, innerStep } = useTrial(); // 0..2
+  const { step, prev, innerStep, setInnerStep } = useTrial(); // 0..2
 
-  const handlePrev = () => {
-    prev(innerStep);
-  };
+ 
   return (
     <div className="w-full bg-white p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
       <div className="flex items-center justify-between mb-4">
@@ -40,31 +38,6 @@ export default function Details({
             <Profile />
           </div>
         </div>
-      </div>
-
-      <div className="flex items-center justify-between absolute bottom-[10dvh] left-0 w-full max-w-6xl right-0 mx-auto pr-12 gap-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handlePrev}
-          disabled={step === 0}
-          className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer"
-          aria-label="Previous"
-        >
-          <ChevronLeft className="!w-6 !h-6 text-white" />
-        </Button>
-
-        {step == 2 && innerStep == 3 && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setTrialStep((prev) => ++prev)}
-            className="rounded-full text-white py-4 text-2xl font-bold bg-black px-12 h-12"
-            aria-label="Done"
-          >
-            Done
-          </Button>
-        )}
       </div>
     </div>
   );
