@@ -14,7 +14,7 @@ export const Component = ({
 }: {
   setShowTrialModal?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { step, setStep, innerStep, trialData, prev } = useTrial();
+  const { step, innerStep, trialData, prev } = useTrial();
 
   const handlePrev = () => {
     prev(innerStep);
@@ -29,7 +29,7 @@ export const Component = ({
       >
         <X className="text-white" />
       </button>
-      {step < 3 && <Details setTrialStep={setStep} />}
+      {step < 3 && <Details />}
       {step == 3 && <MentalHealth />}
       {step == 4 && <ExamAnxiety />}
       {step == 5 && <ExamPreparation />}
@@ -46,7 +46,7 @@ export const Component = ({
           <ChevronLeft className="!w-6 !h-6 text-white" />
         </Button>
 
-        {step == 5 && (
+        {step == 5 && innerStep == 4 && trialData.lastMinuteStudying && (
           <Button
             variant="outline"
             size="sm"

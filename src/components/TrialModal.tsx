@@ -41,10 +41,10 @@ const TrialModal = ({
       </p>
       <div className="w-full max-w-2xl grid grid-cols-2  gap-4 mt-12">
         {/** Use a schools array of objects so each campus has an id and a name */}
-        {options.map((s: string) => (
+        {options.map((s: string, index: number) => (
           <Button
             onClick={() => handleSelect(s)}
-            key={s}
+            key={index}
             variant="outline"
             className={`w-full py-4 h-20 text-xl font-bold ${
               trialData[property] === s

@@ -45,7 +45,7 @@ const data: IModalData[] = [
     description:
       "How often do you usually do most of your studying the night before an exam?",
     options: ["Not At All", "A few times", "Frequently", "Almost every exam"],
-    property: "sweatingOrHeartRacing",
+    property: "lastMinuteStudying",
     bgColor: "bg-[#ECF1F9]",
   },
 ];
@@ -70,7 +70,10 @@ export default function ExamPreparation() {
           style={{ marginLeft: `-${innerStep * 95}%` }}
         >
           {data.map((d, index: number) => (
-            <div className={`rounded-[20px] w-1/5 ${d.bgColor} p-8`}>
+            <div
+              className={`rounded-[20px] w-1/5 ${d.bgColor} p-8`}
+              key={index}
+            >
               <TrialModal
                 isComplete={index == data.length - 1}
                 {...d}

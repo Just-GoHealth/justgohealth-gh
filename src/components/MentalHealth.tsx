@@ -42,9 +42,9 @@ const data: IModalData[] = [
   {
     title: "Suicide Plans/Attempts",
     description:
-      "In the last month, have you had plans or tried to kill yourself? ",
+      "In the last month, have you had plans or tried to kill yourself?",
     options: ["Yes", "No"],
-    property: "sweatingOrHeartRacing",
+    property: "suicidalPlans",
     bgColor: "bg-[#ECF1F9]",
   },
 ];
@@ -68,7 +68,10 @@ export default function MentalHealth() {
           style={{ marginLeft: `-${innerStep * 95}%` }}
         >
           {data.map((d, index: number) => (
-            <div className={`rounded-[20px] w-1/5 ${d.bgColor} p-8`}>
+            <div
+              className={`rounded-[20px] w-1/5 ${d.bgColor} p-8`}
+              key={index}
+            >
               <TrialModal
                 {...d}
                 key={index}

@@ -1,20 +1,13 @@
 "use client";
-import { ChevronLeft } from "lucide-react";
 import React from "react";
 import School from "./Trial/School";
-import { Button } from "@/components/ui/button";
 import Reason from "./Trial/Reason";
 import Profile from "./Trial/Profile";
 import { useTrial } from "@/contexts/trial.context";
 
-export default function Details({
-  setTrialStep,
-}: {
-  setTrialStep: React.Dispatch<React.SetStateAction<number>>;
-}) {
-  const { step, prev, innerStep, setInnerStep } = useTrial(); // 0..2
+export default function Details() {
+  const { step } = useTrial(); // 0..2
 
- 
   return (
     <div className="w-full bg-white p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
       <div className="flex items-center justify-between mb-4">

@@ -9,7 +9,7 @@ const Name = ({
 }: {
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { onTrialDataChange, trialData, setInnerStep } = useTrial();
+  const { onTrialDataChange, trialData } = useTrial();
 
   const [name, setName] = useState(trialData.fullName || "");
   const errors = { fullname: "" };

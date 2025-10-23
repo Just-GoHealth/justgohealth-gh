@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Age from "./Age";
 import Sex from "./Sex";
 import Grade from "./Grade";

@@ -76,7 +76,10 @@ export default function ExamAnxiety() {
           style={{ marginLeft: `-${innerStep * 95}%` }}
         >
           {data.map((d, index: number) => (
-            <div className={`rounded-[20px] w-1/6 ${d.bgColor} p-8`}>
+            <div
+              className={`rounded-[20px] w-1/6 ${d.bgColor} p-8`}
+              key={index}
+            >
               <TrialModal
                 {...d}
                 description={d.description as string}
