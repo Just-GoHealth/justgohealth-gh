@@ -31,7 +31,7 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const [showTrialModal, setShowTrialModal] = useState(false);
+  const [showTrialModal, setShowTrialModal] = useState(true);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -205,6 +205,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, y: 24, transition: { duration: 0.3 } }}
+              onClick={() => setShowTrialModal(true)}
               className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20 scale-[0.8] text-xl"
             >
               Try it for free

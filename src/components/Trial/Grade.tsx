@@ -14,17 +14,17 @@ const Grade = () => {
   };
   return (
     <div>
-      <h3 className="text-[80px] text-black/90 leading-[80px] font-black mb-6">
+      <h3 className="text-3xl md:text-[80px] text-black/90 leading-2xl md:eading-[80px] font-black mb-6">
         What level or form are you currently in?
       </h3>
 
-      <div className="w-full flex items-center justify-start gap-4">
+      <div className="w-full md:w-4/5 grid grid-cols-3 md:flex items-center justify-start gap-4">
         {grades.map((grade: string) => (
           <Button
             key={grade}
             onClick={() => handleGradeChange(grade)}
             variant="outline"
-            className={`h-20 w-20 text-xl font-bold bg-white/90 gap-3 flex flex-col items-center justify-center hover:cursor-pointer text-black border-3 ${
+            className={`h-18 md:h-20 w-18 md:w-20 text-xl font-bold bg-white/90 gap-3 flex flex-col items-center justify-center hover:cursor-pointer text-black border-3 ${
               trialData.level == grade
                 ? "bg-[#2bb573] border-[#2bb573] text-white hover:bg-[#2bb573] hover:text-white"
                 : "hover:border-[#2bb573] border-black hover:bg-[#2bb573] hover:text-white"

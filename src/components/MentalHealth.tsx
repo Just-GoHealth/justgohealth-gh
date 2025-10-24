@@ -1,11 +1,10 @@
 "use client";
-import { ChevronLeft } from "lucide-react";
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { useTrial } from "@/contexts/trial.context";
 
 import { IModalData } from "@/types/trial.interface";
 import TrialModal from "./TrialModal";
+import { useIsMobile } from "./use-mobile";
 
 const data: IModalData[] = [
   {
@@ -49,27 +48,27 @@ const data: IModalData[] = [
   },
 ];
 export default function MentalHealth() {
-  const { step, prev, innerStep, done } = useTrial(); // 0..2
+  const { innerStep } = useTrial(); // 0..2
+  const isMobile = useIsMobile();
 
-  const handlePrev = () => {
-    prev(innerStep);
-  };
   return (
-    <div className="w-full bg-white p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
+    <div className="w-full bg-white p-4 md:p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="font-black text-5xl">General Mental Health</h1>
+        <h1 className="font-black text-3xl md:text-5xl">
+          General Mental Health
+        </h1>
         <p className="text-white mb-4 bg-[red] tracking-tighter text-sm rounded-full w-8 h-8 flex items-center justify-center">
           {innerStep + 1} /{5}
         </p>
       </div>
       <div className="w-full overflow-x-hidden h-[90%] mb-2">
         <div
-          className="w-[475%] h-full  flex items-stretch transition-all gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
-          style={{ marginLeft: `-${innerStep * 95}%` }}
+          className="w-[500%] md:w-[475%] h-full  flex items-stretch transition-all md:gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
+          style={{ marginLeft: `-${innerStep * (!isMobile ? 95 : 100)}%` }}
         >
           {data.map((d, index: number) => (
             <div
-              className={`rounded-[20px] w-1/5 ${d.bgColor} p-8`}
+              className={`rounded-[20px] w-1/5 ${d.bgColor} p-6 md:p-8`}
               key={index}
             >
               <TrialModal
@@ -81,31 +80,6 @@ export default function MentalHealth() {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="flex items-center justify-between absolute bottom-[10dvh] left-0 w-full max-w-6xl right-0 mx-auto pr-12 gap-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handlePrev}
-          disabled={step === 0}
-          className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer"
-          aria-label="Previous"
-        >
-          <ChevronLeft className="!w-6 !h-6 text-white" />
-        </Button>
-
-        {step == 2 && innerStep == 3 && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={done}
-            className="rounded-full text-white py-4 text-2xl font-bold bg-black px-12 h-12"
-            aria-label="Done"
-          >
-            Done
-          </Button>
-        )}
       </div>
     </div>
   );

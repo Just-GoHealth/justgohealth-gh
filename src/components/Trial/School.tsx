@@ -21,17 +21,17 @@ const School = () => {
   };
   return (
     <div className="w-full h-full flex flex-col items-center justify-start">
-      <h3 className="text-5xl font-black text-black/80">
+      <h3 className="text-3xl md:text-5xl font-black text-black/80">
         Select your current campus:{" "}
       </h3>
-      <div className="w-full grid grid-cols-2  gap-4 mt-12">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-4 mt-12">
         {/** Use a schools array of objects so each campus has an id and a name */}
         {schools.map((s) => (
           <Button
             onClick={() => handleSelect(s.id)}
             key={s.id}
             variant="outline"
-            className={`w-full py-4 h-20 text-xl font-bold ${
+            className={`w-full py-4 h-12 md:h-20 text-sm md:text-xl font-bold ${
               trialData.campus === s.id
                 ? "bg-[#2bb573] text-white  hover:bg-[#2bb573] hover:text-white"
                 : "bg-black text-white hover:bg-[#2bb573]/70 hover:text-white/50"

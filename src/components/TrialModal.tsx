@@ -33,13 +33,13 @@ const TrialModal = ({
   };
   return (
     <div className="w-ful  h-full flex flex-col items-center justify-start">
-      <h3 className="w-full text-[70px] 2xl:text-[90px] 2xl:mb-4 font-bold text-black">
+      <h3 className="text-[26px] text-center md:text-7xl 2xl:text-[90px] md:mb-4 font-bold text-black">
         {title}
       </h3>
-      <p className="max-w-[90%)] text-4xl font-medium text-black/90 text-center">
+      <p className="max-w-[90%)] text-xl mt-2 md:mt-0 md:text-4xl font-medium text-black/90 text-center">
         {description}
       </p>
-      <div className="w-full max-w-2xl grid grid-cols-2  gap-4 mt-12">
+      <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mt-10">
         {/** Use a schools array of objects so each campus has an id and a name */}
         {options.map((s: string, index: number) => (
           <Button

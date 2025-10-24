@@ -22,19 +22,23 @@ export const Component = ({
   // const [step, setStep] = useState(1);
 
   return (
-    <div className="w-full h-screen fixed z-50 top-0 left-0 bg-white/50 flex items-center justify-center px-4 md: px-24  lg:right-8 lg:bottom-8">
+    // Trial modal takes entire screen and uses px to allow space on the sides
+    <div className="bg-[red] w-full h-screen fixed z-50 top-0 left-0 bg-white/50 flex items-center justify-center px-4 lg:px-24  lg:right-8 lg:bottom-8">
       <button
         onClick={() => setShowTrialModal && setShowTrialModal(false)}
         className="bg-[red] h-10 flex items-center justify-center w-10 hover:cursor-pointer hover:bg-[red]/70 absolute top-4 rounded-full right-4"
       >
         <X className="text-white" />
       </button>
+      {/* <div className="bg-[red]"> */}
       {step < 3 && <Details />}
       {step == 3 && <MentalHealth />}
       {step == 4 && <ExamAnxiety />}
       {step == 5 && <ExamPreparation />}
+      {/* </div> */}
 
-      <div className="flex items-center justify-between absolute bottom-[10dvh] left-0 w-full max-w-6xl right-0 mx-auto pr-12 gap-4">
+      {/* The controls at the bottom */}
+      <div className="flex items-center justify-between absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] left-0 w-full px-12 lg:px-40 lg:pr-56 gap-4">
         <Button
           variant="outline"
           size="sm"
@@ -46,19 +50,19 @@ export const Component = ({
           <ChevronLeft className="!w-6 !h-6 text-white" />
         </Button>
 
-        {step == 5 && innerStep == 4 && trialData.lastMinuteStudying && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              console.log(trialData);
-            }}
-            className="rounded-full text-white py-4 text-2xl font-bold bg-black px-12 h-12"
-            aria-label="Done"
-          >
-            Done
-          </Button>
-        )}
+        {/* {step == 5 && innerStep == 4 && trialData.lastMinuteStudying && ( */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            console.log(trialData);
+          }}
+          className="rounded-full text-white py-4 text-2xl font-bold bg-black px-12 h-12"
+          aria-label="Done"
+        >
+          Done
+        </Button>
+        {/* )} */}
       </div>
     </div>
   );

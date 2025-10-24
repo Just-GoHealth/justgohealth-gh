@@ -22,23 +22,23 @@ const Name = ({
   };
   return (
     <div>
-      <h3 className="text-[80px] text-black/90 font-black mb-6">
+      <h3 className="text-2xl md:text-[80px] text-black/90 font-black mb-6">
         What&apos;s your official name?
       </h3>
-      <div className="flex rounded-2xl p-1 h-22 gap-2 overflow-hidden backdrop-blur-sm bg-[#2bb573] border border-white/30 shadow-lg">
+      <div className="flex rounded-2xl p-1 h-16 md:h-22 gap-2 overflow-hidden backdrop-blur-sm bg-[#2bb573] border border-white/30 shadow-lg">
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           type="text"
           placeholder="John Doe"
-          className={`flex-1 px-6 py-5 bg-white rounded-xl text-gray-700 font-semibold text-3xl placeholder-gray-500 focus:outline-none ${
+          className={`w-[90%] md:flex-1 px-2 md:px-6 py-5 bg-white rounded-xl text-gray-700 font-semibold text-xl md:text-3xl placeholder-gray-500 focus:outline-none ${
             errors?.fullname ? "text-red-600" : "text-green-600"
           }`}
         />
         <Button
           type="submit"
           onClick={() => handleNameChange()}
-          className={`px-6 h-auto hover:cursor-pointer bg-transparent duration-300 ${
+          className={`px-2 md:px-6 h-auto hover:cursor-pointer bg-transparent duration-300 ${
             !errors?.fullname && !isLoading
               ? " text-white transform hover:black/50"
               : "bg-gray-400/50 text-gray-500 cursor-not-allowed"

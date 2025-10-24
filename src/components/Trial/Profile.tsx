@@ -18,11 +18,11 @@ const Profile = () => {
   const labels = ["Full Name", "Age", "Sex", "Grade/Level"];
   return (
     <div>
-      <h3 className="text-4xl font-[900] text-black/90">
+      <h3 className="text-3xl md:text-4xl font-[900] text-black/90">
         Profile: <span>{labels[step]}</span>
       </h3>
 
-      <div className="w-full mt-16">{steps[step]}</div>
+      <div className="w-full mt-8 md:mt-12">{steps[step]}</div>
     </div>
   );
 };
