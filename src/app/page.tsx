@@ -15,11 +15,14 @@ import GirlHeroMobile from "@/components/GirlHeroMobile";
 import SethHeroMobile from "@/components/SethHeroMobile";
 import DoctorHeroMobile from "@/components/DoctorHeroMobile";
 import { useIsMobile } from "@/components/use-mobile";
+import { getSchools } from "@/actions/trial.action";
 
 import Trial from "@/components/Trial";
+import { ISchool } from "@/types/school.interface";
 
 export default function Home() {
   const [showContacts, setShowContacts] = useState(false);
+  const [schools, setSchools] = useState<ISchool[]>([]);
   const isMobile = useIsMobile();
   const heroes = useMemo(
     () =>
@@ -31,7 +34,7 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const [showTrialModal, setShowTrialModal] = useState(true);
+  const [showTrialModal, setShowTrialModal] = useState(false);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -47,6 +50,14 @@ export default function Home() {
   }, [isPlaying, heroes.length, isMobile, activeIndex]);
 
   const CurrentHero = heroes[activeIndex] as React.ComponentType<any>;
+
+  // Fetch schools
+  useEffect(() => {
+    (async function () {
+      const res = await getSchools();
+      setSchools(res);
+    })();
+  }, []);
 
   const variants = {
     fadeScale: {
@@ -220,7 +231,9 @@ export default function Home() {
         onClose={() => setShowContacts(false)}
       />
 
-      {showTrialModal && <Trial setShowTrialModal={setShowTrialModal} />}
+      {showTrialModal && (
+        <Trial setShowTrialModal={setShowTrialModal} schools={schools} />
+      )}
     </div>
   );
 }

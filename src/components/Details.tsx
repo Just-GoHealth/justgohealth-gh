@@ -1,12 +1,13 @@
 "use client";
-import React, { useMemo } from "react";
+import React from "react";
 import School from "./Trial/School";
 import Reason from "./Trial/Reason";
 import Profile from "./Trial/Profile";
 import { useTrial } from "@/contexts/trial.context";
 import { useIsMobile } from "./use-mobile";
+import { ISchool } from "@/types/school.interface";
 
-export default function Details() {
+export default function Details({ schools }: { schools: ISchool[] }) {
   const { step } = useTrial(); // 0..2
   const isMobile = useIsMobile();
 
@@ -26,7 +27,7 @@ export default function Details() {
           style={{ marginLeft: `-${step * (isMobile ? 100 : 95)}%` }}
         >
           <div className="rounded-[20px] w-1/3 bg-[#FAF5F9] p-4 md:p-16">
-            <School />
+            <School schools={schools} />
           </div>
           <div className="rounded-[20px] w-1/3 bg-[#ECF1F9] p-4 md:p-16">
             <Reason />

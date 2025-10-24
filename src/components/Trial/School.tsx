@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useTrial } from "@/contexts/trial.context";
+import { ISchool } from "@/types/school.interface";
 
-const schools = [
+const dummySchools = [
   { id: "campus-a", name: "Campus A" },
   { id: "campus-b", name: "Campus B" },
   { id: "campus-c", name: "Campus C" },
@@ -11,7 +12,7 @@ const schools = [
   { id: "campus-f", name: "Campus F" },
 ];
 
-const School = () => {
+const School = ({ schools }: { schools: ISchool[] }) => {
   const { onTrialDataChange, setStep, setInnerStep, trialData } = useTrial();
 
   const handleSelect = (id: string) => {
@@ -26,13 +27,13 @@ const School = () => {
       </h3>
       <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-4 mt-12">
         {/** Use a schools array of objects so each campus has an id and a name */}
-        {schools.map((s) => (
+        {(schools?.length ? schools : dummySchools).map((s) => (
           <Button
-            onClick={() => handleSelect(s.id)}
+            onClick={() => handleSelect("" + s.id)}
             key={s.id}
             variant="outline"
             className={`w-full py-4 h-12 md:h-20 text-sm md:text-xl font-bold ${
-              trialData.campus === s.id
+              trialData.campus === "" + s.id
                 ? "bg-[#2bb573] text-white  hover:bg-[#2bb573] hover:text-white"
                 : "bg-black text-white hover:bg-[#2bb573]/70 hover:text-white/50"
             } hover:cursor-pointer rounded-full`}

@@ -1,7 +1,5 @@
 "use client";
-import { ChevronLeft } from "lucide-react";
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { useTrial } from "@/contexts/trial.context";
 
 import TrialModal from "./TrialModal";

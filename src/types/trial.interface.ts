@@ -6,8 +6,8 @@ export interface ITrial {
   age: number;
   sex: string;
   level: string;
-  feelingDepressed: string;
   lossOfInterest: string;
+  feelingDepressed: string;
   feelingLonely: string;
   suicidalThoughts: string;
   suicidalPlans: string;
