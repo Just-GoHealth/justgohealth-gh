@@ -1,4 +1,5 @@
 "use client";
+import { sendTrialRequest } from "@/actions/trial.action";
 import { ITrial } from "@/types/trial.interface";
 import React, { useState } from "react";
 
@@ -30,12 +31,12 @@ export function TrialProvider({
   const [isFullNameError, setIsFullNameError] = useState(true);
 
   const [trialData, setTrialData] = useState<ITrial>({
-    campus: "",
+    campus: "KNUST",
     reasonForLockin: "",
     timeToExam: "",
-    fullName: "",
-    age: 0,
-    sex: "",
+    fullName: "Asare Foster",
+    age: 18,
+    sex: "male",
     level: "",
     lossOfInterest: "",
     feelingDepressed: "",
@@ -106,8 +107,8 @@ export function TrialProvider({
     }
   };
 
-  const done = () => {
-    console.log(trialData);
+  const done = async () => {
+    await sendTrialRequest(trialData);
   };
 
   return (

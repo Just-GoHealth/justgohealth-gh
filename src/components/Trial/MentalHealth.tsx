@@ -3,8 +3,8 @@ import React from "react";
 import { useTrial } from "@/contexts/trial.context";
 
 import { IModalData } from "@/types/trial.interface";
-import TrialModal from "./TrialModal";
-import { useIsMobile } from "./use-mobile";
+import TrialModal from "../TrialModal";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 const data: IModalData[] = [
   {

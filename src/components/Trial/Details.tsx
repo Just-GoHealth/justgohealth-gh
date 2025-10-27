@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import School from "./Trial/School";
-import Reason from "./Trial/Reason";
-import Profile from "./Trial/Profile";
+import School from "./School";
+import Reason from "./Reason";
+import Profile from "./Profile";
 import { useTrial } from "@/contexts/trial.context";
-import { useIsMobile } from "./use-mobile";
+import { useIsMobile } from "../../hooks/use-mobile";
 import { ISchool } from "@/types/school.interface";
 
 export default function Details({ schools }: { schools: ISchool[] }) {

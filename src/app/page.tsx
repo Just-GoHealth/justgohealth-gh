@@ -14,7 +14,7 @@ import IntroMessageHero from "@/components/IntroMessageHero";
 import GirlHeroMobile from "@/components/GirlHeroMobile";
 import SethHeroMobile from "@/components/SethHeroMobile";
 import DoctorHeroMobile from "@/components/DoctorHeroMobile";
-import { useIsMobile } from "@/components/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { getSchools } from "@/actions/trial.action";
 
 import Trial from "@/components/Trial";
@@ -34,7 +34,7 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const [showTrialModal, setShowTrialModal] = useState(false);
+  const [showTrialModal, setShowTrialModal] = useState(true);
 
   useEffect(() => {
     if (!isPlaying) return;

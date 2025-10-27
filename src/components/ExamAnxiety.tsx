@@ -4,7 +4,7 @@ import { useTrial } from "@/contexts/trial.context";
 
 import TrialModal from "./TrialModal";
 import { IModalData } from "@/types/trial.interface";
-import { useIsMobile } from "./use-mobile";
+import { useIsMobile } from "../hooks/use-mobile";
 
 const data: IModalData[] = [
   {
