@@ -34,7 +34,7 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const [showTrialModal, setShowTrialModal] = useState(true);
+  const [showTrialModal, setShowTrialModal] = useState(false);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -161,7 +161,9 @@ export default function Home() {
                 </h1>
                 <Button
                   className="bg-red-600 hover:cursor-pointer text-2xl text-white px-8 py-6 rounded-full font-medium hover:bg-red-700 transition-colors mt-8"
-                  onClick={() => setShowTrialModal(true)}
+                  onClick={() =>
+                    schools?.length ? setShowTrialModal(true) : null
+                  }
                 >
                   Try it for free
                 </Button>
@@ -216,7 +218,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
               exit={{ opacity: 0, y: 24, transition: { duration: 0.3 } }}
-              onClick={() => setShowTrialModal(true)}
+              onClick={() => (schools?.length ? setShowTrialModal(true) : null)}
               className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20 scale-[0.8] text-xl"
             >
               Try it for free
