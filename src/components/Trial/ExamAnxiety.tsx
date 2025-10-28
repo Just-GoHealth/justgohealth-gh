@@ -16,7 +16,8 @@ const data: IModalData[] = [
   },
   {
     title: "Sleep Problems😴",
-    description: "How often have you been afraid of failing your exams?",
+    description:
+      "How often do you have difficulty sleeping, staying asleep or sleeping too much because of the exams? ",
     options: ["Never", "Occasionally", "Often", "Always"],
     property: "sleepProblems",
     bgColor: "bg-[#ECF1F9]",

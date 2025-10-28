@@ -15,8 +15,7 @@ const generateColor = (color: string) => {
 };
 
 const HealthResults = () => {
-  let { trialResponse: data } = useTrial();
-  data = data;
+  const { trialResponse: data } = useTrial();
 
   // data = data || dataExample;
   const metrics = [
