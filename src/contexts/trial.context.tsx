@@ -1,6 +1,6 @@
 "use client";
 import { sendTrialRequest } from "@/actions/trial.action";
-import { ITrial } from "@/types/trial.interface";
+import { ITrial, ITrialResponse } from "@/types/trial.interface";
 import React, { useCallback, useState } from "react";
 
 type TrialContextType = {
@@ -15,7 +15,7 @@ type TrialContextType = {
   trialData: ITrial;
   done: () => void;
   setInnerStep: React.Dispatch<React.SetStateAction<number>>;
-  trialResponse: any;
+  trialResponse: ITrialResponse;
   cleanUpTrial: () => void;
   isLoading: boolean;
   error: string | null;
@@ -34,7 +34,9 @@ export function TrialProvider({
   const [innerStep, setInnerStep] = useState<number>(0);
   const [isFullNameError, setIsFullNameError] = useState(true);
 
-  const [trialResponse, setTrialResponse] = useState<any>(null);
+  const [trialResponse, setTrialResponse] = useState<ITrialResponse>(
+    {} as ITrialResponse
+  );
   const [trialData, setTrialData] = useState<ITrial>({} as ITrial);
 
   const [isLoading, setIsLoading] = useState(false);
