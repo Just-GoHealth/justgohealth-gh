@@ -112,7 +112,7 @@ const HealthResults = () => {
 
               <div className="flex flex-col md:flex-row items-start md:items-center justify-start gap-4 md:gap-16 mt-4 md:mt-8">
                 <div
-                  className=" p-4 md:p-8 rounded-[20px] text-white gap-4 flex flex-col items-center justify-center"
+                  className=" p-4 px-8 md:p-8 rounded-[20px] text-white gap-4 flex flex-col items-center justify-center"
                   style={{ backgroundColor: generateColor(data.lockedInColor) }}
                 >
                   <p className="font-bold text-xs">Locked In</p>
@@ -255,7 +255,7 @@ const HealthResults = () => {
               <p className="text-3xl text-center font-medium mb-4">Go to the</p>
               <button
                 disabled
-                className="bg-[#993399]/20 hover:bg-[#993399] hover:cursor-pointer h-20 w-full rounded-full flex items-center justify-between px-2"
+                className="bg-[#993399]/20 h-20 w-full rounded-full flex items-center justify-between px-2"
               >
                 <p className="flex-1 text-white text-2xl font-bold">
                   Waiting room

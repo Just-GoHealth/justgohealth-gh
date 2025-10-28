@@ -11,6 +11,8 @@ import ExamPreparation from "./Trial/ExamPreparation";
 import { ISchool } from "@/types/school.interface";
 import HealthResults from "./Trial/HealthResults";
 import TrialNavigation from "./Trial/TrialNavigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 export const Component = ({
   setShowTrialModal,
@@ -19,7 +21,12 @@ export const Component = ({
   setShowTrialModal?: React.Dispatch<React.SetStateAction<boolean>>;
   schools: ISchool[];
 }) => {
-  const { step, error, isLoading } = useTrial();
+  const { step, error } = useTrial();
+
+  useEffect(() => {
+    if (!error) return;
+    toast.error(error);
+  }, [error]);
 
   return (
     <>
