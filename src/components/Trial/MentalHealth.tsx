@@ -8,7 +8,7 @@ import { useIsMobile } from "../../hooks/use-mobile";
 
 const data: IModalData[] = [
   {
-    title: "Loss of Interest ",
+    title: "Loss of Interest😐",
     description:
       "In the past 2 weeks, how often do you have little interest or pleasure in doing things?",
     options: ["Not At All", "A few days ", "Sometimes", "Almost everyday"],
@@ -16,7 +16,7 @@ const data: IModalData[] = [
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Feeling Depressed",
+    title: "Feeling Depressed😞",
     description:
       "In the past 2 weeks, how often do you feel sad, down or hopeless? ",
     options: ["Not At All", "A few days ", "Sometimes", "Almost everyday"],
@@ -24,14 +24,14 @@ const data: IModalData[] = [
     bgColor: "bg-[#ECF1F9]",
   },
   {
-    title: "Loneliness",
+    title: "Loneliness😔",
     description: "In the past 2 weeks, how often do you feel lonely? ",
     options: ["Never", "Sometimes", "Often", "Always"],
     property: "feelingLonely",
     bgColor: "bg-[#F6F9E6]",
   },
   {
-    title: "Suicidal Thoughts ",
+    title: "Suicidal Thoughts🚫",
     description:
       "In the last month, have you wished you were dead or actually had thoughts of killing yourself? ",
     options: ["Yes", "No"],
@@ -39,7 +39,7 @@ const data: IModalData[] = [
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Suicide Plans/Attempts",
+    title: "Suicide Plans/Attempts🚨",
     description:
       "In the last month, have you had plans or tried to kill yourself?",
     options: ["Yes", "No"],

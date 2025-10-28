@@ -34,8 +34,16 @@ const steps = [
 ];
 
 const TrialNavigation = () => {
-  const { step, innerStep, trialData, next, prev, isFullNameError, done } =
-    useTrial();
+  const {
+    step,
+    innerStep,
+    trialData,
+    next,
+    prev,
+    isFullNameError,
+    done,
+    isLoading,
+  } = useTrial();
 
   const trialStepKey = steps[step][innerStep] as keyof ITrial;
   const trialStepValue = trialData[trialStepKey];
@@ -56,11 +64,16 @@ const TrialNavigation = () => {
         <Button
           variant="outline"
           size="sm"
+          disabled={isLoading}
           onClick={() => done()}
-          className="rounded-full text-white py-4 text-2xl font-bold bg-black px-12 h-12"
+          className={`rounded-full text-white py-4 text-2xl font-bold bg-black px-12 h-12 ${
+            isLoading
+              ? "cursor-not-allowed hover:bg-black"
+              : "hover:bg-black/80 cursor-pointer"
+          }`}
           aria-label="Done"
         >
-          Done
+          {isLoading ? "Checking..." : "Done"}
         </Button>
       )}
       {/* The fullName is differet from all other properties as it is a text field and the name needs validation. As such, a state called isFullNameError is used to track that the name is valid in the Name components */}

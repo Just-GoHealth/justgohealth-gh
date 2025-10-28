@@ -32,7 +32,7 @@ const TrialModal = ({
     }
   };
   return (
-    <div className="w-ful  h-full flex flex-col items-center justify-start">
+    <div className="w-ful  h-full flex flex-col items-center justify-start py-3">
       <h3 className="text-[26px] text-center md:text-7xl 2xl:text-[90px] md:mb-4 font-bold text-black">
         {title}
       </h3>

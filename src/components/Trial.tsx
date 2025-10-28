@@ -1,12 +1,12 @@
 "use client";
 
 import Details from "./Trial/Details";
-import ExamAnxiety from "./ExamAnxiety";
+import ExamAnxiety from "./Trial/ExamAnxiety";
 import { TrialProvider, useTrial } from "@/contexts/trial.context";
 import { X } from "lucide-react";
 
 import MentalHealth from "./Trial/MentalHealth";
-import ExamPreparation from "./ExamPreparation";
+import ExamPreparation from "./Trial/ExamPreparation";
 
 import { ISchool } from "@/types/school.interface";
 import HealthResults from "./Trial/HealthResults";
@@ -19,7 +19,7 @@ export const Component = ({
   setShowTrialModal?: React.Dispatch<React.SetStateAction<boolean>>;
   schools: ISchool[];
 }) => {
-  const { step } = useTrial();
+  const { step, error, isLoading } = useTrial();
 
   return (
     <>

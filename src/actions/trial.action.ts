@@ -26,7 +26,6 @@ export const sendTrialRequest = async (data: ITrial) => {
   }
 
   const response = await res.json();
-  console.log(response);
 
   return response.data;
 };

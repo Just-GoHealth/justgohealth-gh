@@ -2,54 +2,54 @@
 import React from "react";
 import { useTrial } from "@/contexts/trial.context";
 
-import TrialModal from "./TrialModal";
+import TrialModal from "../TrialModal";
 import { IModalData } from "@/types/trial.interface";
-import { useIsMobile } from "../hooks/use-mobile";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 const data: IModalData[] = [
   {
-    title: "Worrying",
+    title: "Worrying😬",
     description: "How often do you find yourself worrying about this exam?",
-    options: ["Never", "Occassionally", "Often", "Always"],
+    options: ["Never", "Occasionally", "Often", "Always"],
     property: "examWorrying",
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Sleep Problems ",
+    title: "Sleep Problems😴",
     description: "How often have you been afraid of failing your exams?",
-    options: ["Never", "Occassionally", "Often", "Always"],
+    options: ["Never", "Occasionally", "Often", "Always"],
     property: "sleepProblems",
     bgColor: "bg-[#ECF1F9]",
   },
   {
-    title: "Fear of failure ",
+    title: "Fear of failure😣 ",
     description: "How often do you find yourself worrying about this exam?",
-    options: ["Never", "Occassionally", "Often", "Always"],
+    options: ["Never", "Occasionally", "Often", "Always"],
     property: "fearOfFailure",
     bgColor: "bg-[#F6F9E6]",
   },
   {
-    title: "Feeling Nervous ",
+    title: "Feeling Nervous😰 ",
     description:
       "How often do you get nervous or uneasy before or during exams? ",
-    options: ["Never", "Occassionally", "Often", "Always"],
+    options: ["Never", "Occasionally", "Often", "Always"],
     property: "feelingNervous",
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Sweating or Heart racing ",
+    title: "Sweating or Heart racing😓",
     description:
       "How often do you find yourself sweating, shaking or your heart beating faster during or before exams? ",
-    options: ["Never", "Occassionally", "Often", "Always"],
+    options: ["Never", "Occasionally", "Often", "Always"],
     property: "sweatingOrHeartRacing",
     bgColor: "bg-[#ECF1F9]",
   },
 
   {
-    title: "Stomach Upset ",
+    title: "Stomach Upset 🤢",
     description:
       "How often do you have stomach upset such as nausea, butterflies or needing to use the washroom a lot during or before exams? ",
-    options: ["Never", "Occassionally", "Often", "Always"],
+    options: ["Never", "Occasionally", "Often", "Always"],
     property: "stomachUpset",
     bgColor: "bg-[#F6F9E6]",
   },

@@ -2,13 +2,13 @@
 import React from "react";
 import { useTrial } from "@/contexts/trial.context";
 
-import TrialModal from "./TrialModal";
+import TrialModal from "../TrialModal";
 import { IModalData } from "@/types/trial.interface";
-import { useIsMobile } from "../hooks/use-mobile";
+import { useIsMobile } from "../../hooks/use-mobile";
 
 const data: IModalData[] = [
   {
-    title: "Motivation to Study",
+    title: "Motivation to Study🔥",
     description:
       "How interested or motivated are you in studying the material for this exam?",
     options: ["Not at all", "Slightly", "Moderately", "Very interested "],
@@ -16,10 +16,10 @@ const data: IModalData[] = [
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Focus While Studying",
+    title: "Focus While Studying🧘🏽‍♂",
     description:
       "During studying, how often are you able to stay focused without being easily distracted?",
-    options: ["Never", "Occassionally", "Often", "Always"],
+    options: ["Never", "Occasionally", "Often", "Always"],
     property: "focusWhileStudying",
     bgColor: "bg-[#ECF1F9]",
   },
@@ -32,7 +32,7 @@ const data: IModalData[] = [
     bgColor: "bg-[#F6F9E6]",
   },
   {
-    title: "Active Recall",
+    title: "Active Recall📝",
     description:
       "During studying, how often do you test yourself with Pasco (past or practice questions) or self-quiz rather than only reading the notes? ",
     options: ["Never", "Sometimes", "Often", "Always"],
@@ -40,7 +40,7 @@ const data: IModalData[] = [
     bgColor: "bg-[#FAF5F9]",
   },
   {
-    title: "Last-Minute Studying",
+    title: "Last-Minute Studying😅",
     description:
       "How often do you usually do most of your studying the night before an exam?",
     options: ["Not At All", "A few times", "Frequently", "Almost every exam"],

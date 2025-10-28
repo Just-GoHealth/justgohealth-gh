@@ -1,7 +1,7 @@
 "use client";
 import { sendTrialRequest } from "@/actions/trial.action";
 import { ITrial } from "@/types/trial.interface";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 type TrialContextType = {
   step: number;
@@ -15,6 +15,10 @@ type TrialContextType = {
   trialData: ITrial;
   done: () => void;
   setInnerStep: React.Dispatch<React.SetStateAction<number>>;
+  trialResponse: any;
+  cleanUpTrial: () => void;
+  isLoading: boolean;
+  error: string | null;
 };
 
 const TrialContext = React.createContext<TrialContextType | undefined>(
@@ -30,34 +34,23 @@ export function TrialProvider({
   const [innerStep, setInnerStep] = useState<number>(0);
   const [isFullNameError, setIsFullNameError] = useState(true);
 
-  const [trialData, setTrialData] = useState<ITrial>({
-    campus: "KNUST",
-    reasonForLockin: "",
-    timeToExam: "",
-    fullName: "Asare Foster",
-    age: 18,
-    sex: "male",
-    level: "",
-    lossOfInterest: "",
-    feelingDepressed: "",
-    feelingLonely: "",
-    suicidalThoughts: "",
-    suicidalPlans: "",
-    examWorrying: "",
-    sleepProblems: "",
-    fearOfFailure: "",
-    feelingNervous: "",
-    sweatingOrHeartRacing: "",
-    stomachUpset: "",
-    motivationToStudy: "",
-    focusWhileStudying: "",
-    activeStudying: "",
-    activeRecall: "",
-    lastMinuteStudying: "",
-  });
+  const [trialResponse, setTrialResponse] = useState<any>(null);
+  const [trialData, setTrialData] = useState<ITrial>({} as ITrial);
 
-  const onTrialDataChange = (property: string, value: number | string) => {
-    setTrialData((prev) => ({ ...prev, [property]: value }));
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const onTrialDataChange = useCallback(
+    (property: string, value: number | string) => {
+      setTrialData((prev) => ({ ...prev, [property]: value }));
+    },
+    []
+  );
+
+  const cleanUpTrial = () => {
+    setInnerStep(0);
+    setStep(0);
+    setTrialData({} as ITrial);
   };
 
   const prev = () => {
@@ -108,7 +101,20 @@ export function TrialProvider({
   };
 
   const done = async () => {
-    await sendTrialRequest(trialData);
+    setIsLoading(true);
+    try {
+      setError(null);
+      const response = await sendTrialRequest(trialData);
+
+      setTrialResponse(response);
+      // Set next step
+      setIsLoading(false);
+      setStep(6);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -125,6 +131,10 @@ export function TrialProvider({
         isFullNameError,
         setIsFullNameError,
         next,
+        trialResponse,
+        cleanUpTrial,
+        isLoading,
+        error,
       }}
     >
       {children}
