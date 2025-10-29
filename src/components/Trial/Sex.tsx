@@ -17,7 +17,7 @@ const Sex = ({
   };
   return (
     <div>
-      <h3 className="text-3xl md:text-[80px] text-black/90 font-black mb-6">
+      <h3 className="text-3xl md:text-[60px] 2xl:text-[80px] text-black/90 font-black mb-6">
         What&apos;s your biological sex?
       </h3>
 
