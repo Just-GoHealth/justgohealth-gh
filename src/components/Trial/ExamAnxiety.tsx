@@ -75,7 +75,7 @@ export default function ExamAnxiety() {
         >
           {data.map((d, index: number) => (
             <div
-              className={`rounded-[20px] w-1/6 ${d.bgColor} p-6 md:p-8`}
+              className={`rounded-[20px] overflow-y-auto  w-1/6 ${d.bgColor} p-6 md:p-8`}
               key={index}
             >
               <TrialModal

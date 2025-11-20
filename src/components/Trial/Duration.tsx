@@ -17,7 +17,7 @@ const Duration = () => {
     setInnerStep(0);
   };
   return (
-    <div className="w-full h-full flex flex-col items-center justify-start">
+    <div className="w-full h-auto pb-12 flex flex-col items-center justify-start">
       <h3 className="text-3xl md:text-5xl font-black text-black/90">
         How long before the exam/quiz?
       </h3>
@@ -28,7 +28,7 @@ const Duration = () => {
             key={index}
             onClick={() => handleSelect(`${s[0]} ${s[1]}`)}
             variant="outline"
-            className={`p-4 md:p-12 h-36 w-36 p-12 md:h-56 md:w-56 text-xl font-bold  ${
+            className={`p-4 md:p-12 h-36 w-36 p-12 md:h-48 md:w-48 xl:h-56 xl:w-56 text-xl font-bold  ${
               trialData.timeToExam == `${s[0]} ${s[1]}`
                 ? "bg-[#2bb573] text-white hover:bg-[#2bb573] border-white border-8 ring-8 ring-[#2bb573] hover:text-white"
                 : "bg-black/90 text-white hover:bg-[#2bb573]/70 hover:text-white/50"

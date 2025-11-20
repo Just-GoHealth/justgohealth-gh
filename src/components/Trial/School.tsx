@@ -21,7 +21,7 @@ const School = ({ schools }: { schools: ISchool[] }) => {
     setInnerStep(0);
   };
   return (
-    <div className="w-full h-full flex flex-col items-center justify-start">
+    <div className="w-full h-auto flex flex-col pb-12 items-center justify-start">
       <h3 className="text-3xl md:text-5xl font-black text-black/80">
         Select your current campus:{" "}
       </h3>

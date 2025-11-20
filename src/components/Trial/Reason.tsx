@@ -33,7 +33,7 @@ const Reason = () => {
   return (
     <>
       {step == 0 && (
-        <div className="w-full h-full flex flex-col items-center justify-start">
+        <div className="w-full h-auto pb-4 flex flex-col items-center justify-start">
           <h3 className="text-3xl md:text-5xl font-black text-black/90">
             Why are you locking in right now?
           </h3>
@@ -45,7 +45,7 @@ const Reason = () => {
                 onClick={() => handleReasonSelect(s[3])}
                 variant="outline"
                 disabled={index == 1}
-                className={`p-4 md:p-12 h-50 w-50 md:h-86 md:w-86 text-xl font-bold ${
+                className={`p-4 md:p-12 h-46 w-46 md:w-64 md:h-64 xl:h-78 xl:w-78 text-xl font-bold ${
                   trialData.reasonForLockin == s[3]
                     ? "bg-[#2bb573] text-white  hover:bg-[#2bb573] hover:text-white border-white gap-2 border-8 ring-8 ring-[#2bb573] hover:text-white"
                     : "gap-2 md:gap-6 bg-black/90 text-white hover:bg-[#2bb573]/70 hover:text-white/50"

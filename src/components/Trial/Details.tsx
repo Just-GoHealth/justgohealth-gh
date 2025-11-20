@@ -23,16 +23,16 @@ export default function Details({ schools }: { schools: ISchool[] }) {
       </div>
       <div className="w-full overflow-x-hidden h-[90%] mb-2">
         <div
-          className="w-[300%] md:w-[285%] h-full  flex items-stretch transition-all md:gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
+          className="w-[300%]  md:w-[285%] h-full  flex items-stretch transition-all md:gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
           style={{ marginLeft: `-${step * (isMobile ? 100 : 95)}%` }}
         >
-          <div className="rounded-[20px] w-1/3 bg-[#FAF5F9] p-4 md:p-16">
+          <div className="rounded-[20px] overflow-y-auto w-1/3 bg-[#FAF5F9] p-4 md:p-16">
             <School schools={schools} />
           </div>
-          <div className="rounded-[20px] w-1/3 bg-[#ECF1F9] p-4 md:p-16">
+          <div className="rounded-[20px] overflow-y-auto w-1/3 bg-[#ECF1F9] p-4 md:p-16">
             <Reason />
           </div>
-          <div className="rounded-[20px] w-1/3 bg-[#F6F9E6] p-4 md:p-16">
+          <div className="rounded-[20px] overflow-y-auto w-1/3 bg-[#F6F9E6] p-4 md:p-16">
             <Profile />
           </div>
         </div>

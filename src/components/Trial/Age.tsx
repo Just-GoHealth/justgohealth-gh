@@ -8,6 +8,10 @@ const Age = ({
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const ages = [
+    "12",
+    "13",
+    "14",
+    "15",
     "16",
     "17",
     "18",
@@ -33,7 +37,7 @@ const Age = ({
         How old are you this year?
       </h3>
 
-      <div className="w-full grid grid-cols-3 md:grid-cols-12 items-center justify-between gap-4">
+      <div className="w-full grid grid-cols-3 md:grid-cols-5 xl:grid-cols-8 items-center justify-between gap-4">
         {ages.map((age: string, index: number) => (
           <Button
             key={age}
