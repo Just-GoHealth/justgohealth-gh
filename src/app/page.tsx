@@ -34,7 +34,7 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  const [showTrialModal, setShowTrialModal] = useState(true);
+  const [showTrialModal, setShowTrialModal] = useState(false);
 
   useEffect(() => {
     if (!isPlaying) return;

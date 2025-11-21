@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { useTrial } from "@/contexts/trial.context";
 
 import TrialModal from "../TrialModal";
@@ -60,6 +60,13 @@ export default function ExamAnxiety() {
   const { innerStep } = useTrial(); // 0..2
   const isMobile = useIsMobile();
 
+  const parentRef = React.useRef<HTMLDivElement>(null);
+
+  const innerWidth = useMemo(() => {
+    if (!parentRef.current) return 0;
+    return parentRef?.current?.offsetWidth || 0;
+  }, [parentRef.current]);
+
   return (
     <div className="w-full bg-white p-4 md:p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
       <div className="flex items-center justify-between mb-4">
@@ -68,10 +75,14 @@ export default function ExamAnxiety() {
           {innerStep + 1} /{6}
         </p>
       </div>
-      <div className="w-full overflow-x-hidden h-[90%] mb-2">
+      <div className="w-full overflow-x-hidden h-[90%] mb-2" ref={parentRef}>
         <div
           className="w-[600%] md:w-[570%] h-full  flex items-stretch transition-all md:gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
-          style={{ marginLeft: `-${innerStep * (isMobile ? 100 : 95)}%` }}
+          style={{
+            marginLeft: `-${
+              innerStep * innerWidth * (isMobile ? 1 : 0.95) + innerStep * 6
+            }px`,
+          }}
         >
           {data.map((d, index: number) => (
             <div

@@ -49,13 +49,14 @@ const TrialNavigation = () => {
   const trialStepValue = trialData[trialStepKey];
 
   return (
-    <div className="flex items-center justify-between absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] left-0 w-full px-12 lg:px-40 lg:pr-56 gap-4">
+    <>
+      {/* <div className="flex items-center !bg-[red] justify-between absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] left-0 w-full px-12 lg:px-40 lg:pr-56 gap-4"> */}
       <Button
         variant="outline"
         size="sm"
         onClick={() => prev()}
         disabled={step === 0}
-        className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer"
+        className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer  absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] left-6  md:left-16 xl:left-36"
         aria-label="Previous"
       >
         <ChevronLeft className="!w-6 !h-6 text-white" />
@@ -88,13 +89,14 @@ const TrialNavigation = () => {
           size="sm"
           onClick={() => next()}
           // disabled={step === 0}
-          className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer"
+          className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] right-5 md:right-30 xl:right-60"
           aria-label="Previous"
         >
           <ChevronRight className="!w-6 !h-6 text-white" />
         </Button>
       ) : null}
-    </div>
+      {/* </div> */}
+    </>
   );
 };
 
