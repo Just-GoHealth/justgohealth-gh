@@ -18,7 +18,7 @@ const Duration = () => {
   };
   return (
     <div className="w-full h-auto pb-12 flex flex-col items-center justify-start">
-      <h3 className="text-3xl md:text-5xl font-black text-black/90">
+      <h3 className="text-3xl md:text-4xl xl:text-5xl font-black text-black/90">
         How long before the exam/quiz?
       </h3>
       <div className="w-full flex flex-col md:flex-row items-center justify-center  gap-4 md:gap-10 mt-6 md:mt-16">
@@ -34,7 +34,9 @@ const Duration = () => {
                 : "bg-black/90 text-white hover:bg-[#2bb573]/70 hover:text-white/50"
             } gap-3 flex flex-col items-center justify-center hover:cursor-pointer text-white hover:bg-[#2bb573] hover:text-white rounded-full`}
           >
-            <p className="text-4xl md:text-7xl font-black">{s[0]}</p>
+            <p className="text-4xl md:text-6xl xl:text-7xl font-black">
+              {s[0]}
+            </p>
             <p className="text-xs md:text-base">{s[1]}</p>
           </Button>
         ))}

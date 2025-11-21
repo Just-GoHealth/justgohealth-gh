@@ -22,7 +22,8 @@ export const sendTrialRequest = async (data: ITrial) => {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to send lock in data");
+    const response = await res.json();
+    throw new Error(response?.message ?? "Failed to send lock in data");
   }
 
   const response = await res.json();

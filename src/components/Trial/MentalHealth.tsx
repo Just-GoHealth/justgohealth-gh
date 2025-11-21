@@ -11,7 +11,7 @@ const data: IModalData[] = [
     title: "Loss of Interest😐",
     description:
       "In the past 2 weeks, how often do you have little interest or pleasure in doing things?",
-    options: ["Not At All", "A few days ", "Sometimes", "Almost everyday"],
+    options: ["Not At All", "A few days ", "Sometimes", "Almost every day"],
     property: "lossOfInterest",
     bgColor: "bg-[#FAF5F9]",
   },
@@ -19,7 +19,7 @@ const data: IModalData[] = [
     title: "Feeling Depressed😞",
     description:
       "In the past 2 weeks, how often do you feel sad, down or hopeless? ",
-    options: ["Not At All", "A few days ", "Sometimes", "Almost everyday"],
+    options: ["Not At All", "A few days ", "Sometimes", "Almost every day"],
     property: "feelingDepressed",
     bgColor: "bg-[#ECF1F9]",
   },

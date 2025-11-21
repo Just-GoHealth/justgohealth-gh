@@ -14,7 +14,7 @@ const Grade = () => {
   };
   return (
     <div>
-      <h3 className="text-3xl md:text-[60px] 2xl:text-[80px] text-black/90 leading-2xl md:eading-[80px] font-black mb-6">
+      <h3 className="text-2xl md:text-5xl  xl:text-[60px] 2xl:text-[80px] text-black/90 leading-2xl md:eading-[80px] font-black mb-6">
         What level or form are you currently in?
       </h3>
 

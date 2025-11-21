@@ -25,7 +25,9 @@ export const Component = ({
 
   useEffect(() => {
     if (!error) return;
-    toast.error(error);
+    toast(error, {
+      className: "text-red-500",
+    });
   }, [error]);
 
   return (
@@ -34,7 +36,7 @@ export const Component = ({
 
       {/* Use this for entire questions flow: details , mental health , exam anxiety and exam preparation */}
       {step < 6 && (
-        <div className="w-full h-screen fixed z-50 top-0 left-0 bg-white/50 flex items-center justify-center px-4 lg:px-24  lg:right-8 lg:bottom-8">
+        <div className="w-full  h-screen fixed z-50 top-0 left-0 bg-white/50 flex items-center justify-center px-4 lg:px-24  lg:right-8 lg:bottom-8">
           <button
             onClick={() => setShowTrialModal && setShowTrialModal(false)}
             className="bg-[red] h-8 md:h-10 flex items-center justify-center w-8 md:w-10 hover:cursor-pointer hover:bg-[red]/70 absolute top-2 md:top-4 rounded-full right-2 md:right-4"

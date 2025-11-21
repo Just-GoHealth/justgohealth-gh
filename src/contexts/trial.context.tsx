@@ -108,11 +108,14 @@ export function TrialProvider({
       setError(null);
       const response = await sendTrialRequest(trialData);
 
+      console.log(response);
+
       setTrialResponse(response);
       // Set next step
       setIsLoading(false);
       setStep(6);
     } catch (e) {
+      console.log(e);
       setError((e as Error).message);
     } finally {
       setIsLoading(false);

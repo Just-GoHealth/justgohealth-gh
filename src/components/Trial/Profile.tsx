@@ -17,7 +17,7 @@ const Profile = () => {
 
   const labels = ["Full Name", "Age", "Sex", "Grade/Level"];
   return (
-    <div>
+    <div className="">
       <h3 className="text-3xl md:text-4xl font-[900] text-black/90">
         Profile: <span>{labels[step]}</span>
       </h3>

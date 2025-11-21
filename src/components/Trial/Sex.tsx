@@ -16,12 +16,12 @@ const Sex = ({
     setStep((prev) => ++prev);
   };
   return (
-    <div>
-      <h3 className="text-3xl md:text-[60px] 2xl:text-[80px] text-black/90 font-black mb-6">
+    <div className="">
+      <h3 className="text-2xl md:text-5xl  xl:text-[60px] 2xl:text-[80px] text-black/90 font-black mb-6">
         What&apos;s your biological sex?
       </h3>
 
-      <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12">
+      <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 xl:gap-12">
         {sexOptions.map((sex: string) => (
           <Button
             key={sex}
@@ -33,7 +33,9 @@ const Sex = ({
                 : "bg-black text-white hover:bg-[#2bb573]/70 hover:text-white/50"
             } hover:cursor-pointer rounded-full`}
           >
-            <p className="text-xl md:text-4xl font-black uppercase">{sex}</p>
+            <p className="text-xl md:text-2xl xl:text-4xl font-black uppercase">
+              {sex}
+            </p>
           </Button>
         ))}
       </div>

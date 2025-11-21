@@ -32,12 +32,12 @@ const Age = ({
     setStep((prev) => ++prev);
   };
   return (
-    <div>
-      <h3 className="text-3xl md:text-[60px] 2xl:text-[80px] text-black/90 font-black mb-6">
+    <div className="pb-24">
+      <h3 className="text-2xl md:text-5xl  xl:text-[60px] 2xl:text-[80px] text-black/90 font-black mb-6">
         How old are you this year?
       </h3>
 
-      <div className="w-full grid grid-cols-3 md:grid-cols-5 xl:grid-cols-8 items-center justify-between gap-4">
+      <div className="w-full grid grid-cols-3 md:grid-cols-6 xl:grid-cols-8 items-center mt-6 justify-between gap-4">
         {ages.map((age: string, index: number) => (
           <Button
             key={age}

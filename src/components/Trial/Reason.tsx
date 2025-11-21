@@ -34,7 +34,7 @@ const Reason = () => {
     <>
       {step == 0 && (
         <div className="w-full h-auto pb-4 flex flex-col items-center justify-start">
-          <h3 className="text-3xl md:text-5xl font-black text-black/90">
+          <h3 className="text-3xl md:text-4xl xl:text-5xl font-black text-black/90">
             Why are you locking in right now?
           </h3>
           <div className="w-full flex flex-col md:flex-row items-center justify-center  gap-4 md:gap-8 mt-8">
@@ -53,22 +53,24 @@ const Reason = () => {
               >
                 {trialData.reasonForLockin != s[3] && (
                   <>
-                    <p className="text-sm md:text-base">{s[0]}</p>
+                    <p className="text-sm xl:text-base">{s[0]}</p>
                     <div className="flex items-center justify-between w-full">
-                      <p className="text-sm md:text-base">{s[1]}</p>
-                      <p className="text-sm md:text-base">{s[2]}</p>
+                      <p className="text-sm xl:text-base">{s[1]}</p>
+                      <p className="text-sm xl:text-base">{s[2]}</p>
                     </div>
-                    <p className="text-2xl md:text-4xl font-black">{s[3]}</p>
+                    <p className="text-2xl xl:text-4xl font-black">{s[3]}</p>
                     <div className="flex items-center justify-between w-full">
-                      <p className="text-sm md:text-base">{s[4]}</p>
-                      <p className="text-sm md:text-base">{s[5]}</p>
+                      <p className="text-sm xl:text-base">{s[4]}</p>
+                      <p className="text-sm xl:text-base">{s[5]}</p>
                     </div>
-                    <p className="text-sm md:text-base">{s[6]}</p>
+                    <p className="text-sm xl:text-base">{s[6]}</p>
                   </>
                 )}
                 {trialData.reasonForLockin == s[3] && (
                   <>
-                    <p className="text-2xl md:text-4xl font-black">{s[3]}</p>
+                    <p className="text-2xl md:text-3xl xl:text-4xl font-black">
+                      {s[3]}
+                    </p>
                     <Check className="!w-16 !h-16 md:w-36 md:h-36 text-white" />
                   </>
                 )}

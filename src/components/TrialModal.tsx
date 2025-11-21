@@ -32,11 +32,11 @@ const TrialModal = ({
     }
   };
   return (
-    <div className="w-full pb-24  h-full flex flex-col items-center justify-start py-3">
+    <div className="w-full pb-8  h-auto flex flex-col items-center justify-start py-3">
       <h3 className="text-[26px] text-center md:text-5xl 2xl:text-[80px] md:mb-4 font-bold text-black">
         {title}
       </h3>
-      <p className="max-w-[90%)] text-base 2xl:text-xl mt-2 md:mt-0 md:text-4xl font-medium text-black/90 text-center">
+      <p className="max-w-[90%) text-base xl:text-4xl mt-2 md:mt-0 md:text-2xl font-medium text-black/90 text-center">
         {description}
       </p>
       <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mt-10">

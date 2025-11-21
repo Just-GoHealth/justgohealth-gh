@@ -96,26 +96,26 @@ const HealthResults = () => {
   return (
     <>
       {metrics?.length ? (
-        <div className="h-screen  overflow-y-auto md:overflow-hidden md:h-screen w-full flex flex-col md:flex-row md:items-stretch justify-between">
-          <div className="w-full md:w-7/10 md:h-full">
+        <div className="h-screen  overflow-y-auto xl:overflow-hidden xl:h-screen w-full flex flex-col xl:flex-row xl:items-stretch justify-between">
+          <div className="w-full xl:w-7/10 xl:h-full">
             {/* User details */}
-            <div className="w-full h-auto md:h-[52%] bg-[#F6F9E6] px-6 md:px-24 py-4 md:py-12">
+            <div className="w-full h-auto xl:h-[52%] bg-[#F6F9E6] px-6 xl:px-24 py-4 xl:py-12">
               <div className="">
-                <h3 className="text-2xl md:text-5xl font-bold text-[#993399]">
+                <h3 className="text-2xl xl:text-5xl font-bold text-[#993399]">
                   {data?.fullName} (Health results)
                 </h3>
-                <p className="font-bold text-xl md:text-2xl">
+                <p className="font-bold text-xl xl:text-2xl">
                   {data?.age} year old {data?.sex}, {data?.school}
                 </p>
               </div>
 
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-start gap-4 md:gap-16 mt-4 md:mt-8">
+              <div className="flex flex-col md:flex-row items-start xl:items-center justify-start gap-4 xl:gap-16 mt-4 xl:mt-8">
                 <div
-                  className=" p-4 px-8 md:p-8 rounded-[20px] text-white gap-4 flex flex-col items-center justify-center"
+                  className=" p-4 px-8 xl:p-8 rounded-[20px] text-white gap-4 flex flex-col items-center justify-center"
                   style={{ backgroundColor: generateColor(data.lockedInColor) }}
                 >
                   <p className="font-bold text-xs">Locked In</p>
-                  <h3 className="font-bold text-5xl md:text-7xl">
+                  <h3 className="font-bold text-5xl xl:text-7xl">
                     {Math.round(+data.lockedInScore.split("/")[0] * 100) / 100}
                   </h3>
                   <p className="font-bold text-xs -mt-4">Score</p>
@@ -140,7 +140,7 @@ const HealthResults = () => {
                   ].map(({ key, value, color }) => (
                     <p
                       key={key}
-                      className="text-2xl md:text-3xl font-bold mb-2 md:mb-3"
+                      className="text-2xl xl:text-3xl font-bold mb-2 xl:mb-3"
                     >
                       {key}:{" "}
                       <span className="" style={{ color }}>
@@ -153,13 +153,13 @@ const HealthResults = () => {
             </div>
 
             {/* Metrics */}
-            <div className="w-full h-auto md:h-[48%] bg-white">
-              <div className="flex p-4 p-6 px-4 md:px-12 border-b-3 border-black flex items-center justify-between">
-                <div className="flex flex-col md:flex-row md:items-center md:gap-2">
-                  <h3 className="text-xl md:text-3xl font-bold">
+            <div className="w-full h-auto xl:h-[48%] bg-white">
+              <div className="flex p-4 p-6 px-4 xl:px-12 border-b-3 border-black flex items-center justify-between">
+                <div className="flex flex-col md:flex-row xl:items-center xl:gap-2">
+                  <h3 className="text-xl xl:text-3xl font-bold">
                     {metrics[resultIndex].name}:
                   </h3>
-                  <p className="text-xl md:text-3xl font-bold">
+                  <p className="text-xl xl:text-3xl font-bold">
                     {metrics[resultIndex].description} (
                     {metrics[resultIndex].score})
                   </p>
@@ -173,7 +173,7 @@ const HealthResults = () => {
                     disabled={resultIndex == 0}
                     onClick={() => setResultIndex((prev) => --prev)}
                   >
-                    <ChevronLeft className="!w-6 !h-6 md:!w-9 md:!h-9" />
+                    <ChevronLeft className="!w-6 !h-6 xl:!w-9 xl:!h-9" />
                   </button>
                   <button
                     className={`bg-black hover:cursor-pointer text-white p-2 rounded-full ${
@@ -182,13 +182,13 @@ const HealthResults = () => {
                     disabled={resultIndex >= metrics.length - 1}
                     onClick={() => setResultIndex((prev) => ++prev)}
                   >
-                    <ChevronRight className="!w-6 !h-6 md:!w-9 md:!h-9" />
+                    <ChevronRight className="!w-6 !h-6 xl:!w-9 xl:!h-9" />
                   </button>
                 </div>
               </div>
 
               {/* Slider */}
-              <div className="w-full h-full md:overflow-hidden">
+              <div className="w-full h-full xl:overflow-hidden">
                 <div
                   className={`grid-cols-3 h-full grid items-stretch justify-between transition-all duration-300 ease-in-out`}
                   style={{
@@ -209,12 +209,12 @@ const HealthResults = () => {
                               idx !== metric.items.length - 1
                                 ? "md:border-r-3"
                                 : ""
-                            } border-b-3 md:border-b-0`}
+                            } border-b-3 xl:border-b-0`}
                           >
-                            <h1 className="text-2xl md:text-4xl text-center font-bold">
+                            <h1 className="text-2xl xl:text-4xl text-center font-bold">
                               {item.name}
                             </h1>
-                            <p className="text-base md:text-2xl">
+                            <p className="text-base xl:text-2xl">
                               {item.description}
                             </p>
                             <div
@@ -234,7 +234,7 @@ const HealthResults = () => {
           </div>
 
           {/* Right side. Has the waiting room cta and take test again cta */}
-          <div className="w-full md:w-3/10 bg-white md:h-full p-6 py-10  flex flex-col items-center justify-between">
+          <div className="w-full xl:w-3/10 bg-white xl:h-full p-6 py-10  flex flex-col items-center justify-between">
             <div className="">
               <Image
                 src="/logos/logo-black.png"
@@ -254,7 +254,7 @@ const HealthResults = () => {
               <p className="text-3xl text-center font-medium mb-4">Go to the</p>
               <button
                 disabled
-                className="bg-[#993399]/20 h-20 w-full rounded-full flex items-center justify-between px-2"
+                className="bg-[#993399]/20 h-20 w-full max-w-sm md:mx-auto rounded-full flex items-center justify-between px-2"
               >
                 <p className="flex-1 text-white text-2xl font-bold">
                   Waiting room
@@ -265,7 +265,7 @@ const HealthResults = () => {
               </button>
 
               <div className="w-full mt-36">
-                <p className="text-2xl md:text-3xl font-medium">
+                <p className="text-2xl xl:text-3xl font-medium">
                   Take Lock-In{" "}
                   <button
                     className="font-bold hover:cursor-pointer underline inline-flex items-center"
