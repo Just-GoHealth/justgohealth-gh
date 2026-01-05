@@ -72,7 +72,7 @@ export default function ManifestoPage() {
 
             <p>
               Our target is clear: to build stronger mental health support in
-              Ghanaian schools than even at Harvard University. On Harvard's
+              Ghanaian schools than even at Harvard University. On Harvard&apos;s
               campus, a student has{" "}
               <span className="text-red-600 font-bold">
                 15 options for mental health care, all digital
