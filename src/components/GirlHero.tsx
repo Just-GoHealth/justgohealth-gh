@@ -110,10 +110,10 @@ export default function GirlHero({ isPlaying = true }: { isPlaying?: boolean }) 
           </h2>
 
           {/* SUPPORTING TEXT — CENTERED UNDER LOCK IN */}
-          <div className="mt-8 text-white text-3xl font-bold underline underline-offset-4 space-y-2">
-            <p data-line>Feeling depressed or sad?</p>
-            <p data-line>Screen yourself with our App.</p>
-            <p data-line>Connect with cares.</p>
+          <div className="mt-8 text-red-500 text-3xl font-bold space-y-2">
+            <p data-line className="underline underline-offset-4">Feeling depressed or sad?</p>
+            <p data-line className="underline underline-offset-4">Screen yourself with our App.</p>
+            <p data-line className="underline underline-offset-4">Connect with cares.</p>
           </div>
         </div>
       </div>
