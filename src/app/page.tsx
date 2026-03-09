@@ -1,156 +1,70 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import { Button } from "@/components/ui/button";
-import { PlayIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import GirlHero from "@/components/GirlHero";
 import ContactsModal from "@/components/ContactsModal";
-import { useEffect, useMemo, useState } from "react";
-import SethHero from "@/components/SethHero";
-import DoctorHero from "@/components/DoctorHero";
 import { AnimatePresence, motion } from "framer-motion";
-import IntroMessageHero from "@/components/IntroMessageHero";
-import GirlHeroMobile from "@/components/GirlHeroMobile";
-import SethHeroMobile from "@/components/SethHeroMobile";
-import DoctorHeroMobile from "@/components/DoctorHeroMobile";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { getSchools } from "@/actions/trial.action";
-
-import Trial from "@/components/Trial";
-import { ISchool } from "@/types/school.interface";
+import Trial from "@/components/Trial/Trial";
+import { Badge } from "@/components/ui/badge";
+import AmbassadorPanel from "@/components/ambassador-panel";
+import { useLandingPage } from "@/hooks/use-landing-page";
 
 export default function Home() {
-  const [showContacts, setShowContacts] = useState(false);
-  const [schools, setSchools] = useState<ISchool[]>([]);
-  const isMobile = useIsMobile();
-  const heroes = useMemo(
-    () =>
-      isMobile
-        ? [IntroMessageHero, GirlHeroMobile, SethHeroMobile, DoctorHeroMobile]
-        : [IntroMessageHero, GirlHero, SethHero, DoctorHero],
-    [isMobile]
-  );
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-
-  const [showTrialModal, setShowTrialModal] = useState(false);
-
-  useEffect(() => {
-    if (!isPlaying) return;
-    // Faster rotation: shorter intro and overall slide durations to reduce blank time and
-    // make the hero feel snappier. Desktop: 8s, Mobile intro: 2s, Mobile others: 6s.
-    const id = setInterval(
-      () => {
-        setActiveIndex((i) => (i + 1) % heroes.length);
-      },
-      isMobile ? (activeIndex === 0 ? 2000 : 6000) : 8000
-    );
-    return () => clearInterval(id);
-  }, [isPlaying, heroes.length, isMobile, activeIndex]);
-
-  const CurrentHero = heroes[activeIndex] as React.ComponentType<any>;
-
-  // Fetch schools
-  useEffect(() => {
-    (async function () {
-      const res = await getSchools();
-      setSchools(res);
-    })();
-  }, []);
-
-  const variants = {
-    fadeScale: {
-      initial: { opacity: 0, scale: 0.96 },
-      animate: {
-        opacity: 1,
-        scale: 1,
-        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-      },
-      exit: {
-        opacity: 0,
-        scale: 1.04,
-        transition: { duration: 0.4, ease: "easeInOut" },
-      },
-    },
-    slide: {
-      initial: { x: "8%", opacity: 0 },
-      animate: {
-        x: 0,
-        opacity: 1,
-        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
-      },
-      exit: {
-        x: "-8%",
-        opacity: 0,
-        transition: { duration: 0.4, ease: "easeInOut" },
-      },
-    },
-    rotateReveal: {
-      initial: { rotate: -8, opacity: 0.0, filter: "blur(4px)" },
-      animate: {
-        rotate: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-      },
-      exit: {
-        rotate: 8,
-        opacity: 0,
-        filter: "blur(4px)",
-        transition: { duration: 0.4, ease: "easeInOut" },
-      },
-    },
-  } as const;
-
-  const pickVariantKey = (index: number) =>
-    index % 3 === 0 ? "fadeScale" : index % 3 === 1 ? "slide" : "rotateReveal";
-
+  const {
+    activeIndex,
+    isMobile,
+    schools,
+    setShowContacts,
+    setShowTrialModal,
+    showContacts,
+    showTrialModal,
+  } = useLandingPage();
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Main Content */}
-      <main className="flex flex-col lg:flex-row flex-1">
-        {/* Header elements as part of main content */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 z-10">
-          <Link href="/manifesto">
+    <div className="h-screen flex flex-col bg-[linear-gradient(to_bottom,rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url('/setornam.jpg')] bg-cover bg-center overflow-hidden">
+      {/* Header */}
+      <header className="flex items-center justify-between px-4 py-3 lg:px-6 lg:py-4 z-10 w-full">
+        <Link href="/manifesto">
+          <Button
+            variant="ghost"
+            className="text-white font-medium cursor-pointer hover:opacity-70 transition-opacity text-lg lg:text-2xl"
+          >
+            Manifesto
+          </Button>
+        </Link>
+
+        <div className="flex items-center justify-center flex-1">
+          <Link href="/">
             <Button
               variant="ghost"
-              className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
+              className="cursor-pointer p-0 hover:opacity-100"
             >
-              Manifesto
-            </Button>
-          </Link>
-
-          <div className="flex items-center justify-center flex-1">
-            <Link href="/">
-              <Button
-                variant="ghost"
-                className="cursor-pointer p-0 hover:opacity-100"
-              >
-                <Image
-                  src="/logos/logo-black.png"
-                  alt="JustGo Health Logo"
-                  width={220}
-                  height={40}
-                  className="h-8 lg:h-10 object-contain"
-                />
-              </Button>
-            </Link>
-          </div>
-
-          <Link href="/join-us">
-            <Button
-              variant="ghost"
-              className="text-black cursor-pointer font-medium hover:opacity-70 transition-opacity text-lg lg:text-2xl"
-            >
-              Join Us
+              <Image
+                src="/logos/logo-white.png"
+                alt="JustGo Health Logo"
+                width={250}
+                height={40}
+              />
             </Button>
           </Link>
         </div>
+
+        <Link href="/join-us">
+          <Button
+            variant="ghost"
+            className="text-white cursor-pointer font-medium hover:opacity-70 transition-opacity text-xl"
+          >
+            Join Us
+          </Button>
+        </Link>
+      </header>
+
+      {/* Main Content Grid */}
+      <main className="flex-1 grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
         {/* Left Content Block */}
-        <div className="hidden lg:flex w-2/5 items-center justify-center p-8 lg:p-12 order-2 lg:order-1">
-          <div className="max-w-md w-[300px]">
-            <div className="bg-green-200 px-8 py-22 rounded-lg">
+        <div className="hidden lg:flex items-center p-6">
+          <div className="max-w-xs w-full">
+            <div className="bg-white/80 py-10 rounded-2xl">
               <div className="space-y-2 text-center">
                 <p className="text-black text-2xl">It all starts</p>
                 <p className="text-black text-2xl">with your</p>
@@ -172,60 +86,61 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right Content - Hero slot with animated transitions. Layout/positioning preserved by wrapping motion.div only. */}
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={activeIndex}
-            variants={variants[pickVariantKey(activeIndex)]}
-            // Disable the initial variant for the very first slide so it renders
-            // immediately without waiting for the "initial" animation.
-            initial={activeIndex === 0 ? false : "initial"}
-            animate="animate"
-            exit="exit"
-            className="contents"
-          >
-            <CurrentHero isPlaying={isPlaying} />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Footer elements as part of main content */}
-        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-10">
-          <Button
-            variant="ghost"
-            className="text-black text-xl lg:text-2xl font-medium hover:opacity-70 transition-opacity"
-            onClick={() => setShowContacts(true)}
-          >
-            Contacts
-          </Button>
-
-          <Button
-            onClick={() => setIsPlaying((p) => !p)}
-            className="w-[76px] h-[76px] lg:w-[70px] lg:h-[70px] -mt-8 rounded-full items-center justify-center hover:opacity-90 transition-all"
-            style={{ backgroundColor: "#2b3990" }}
-          >
-            <PlayIcon
-              fill="white"
-              className={`w-22 h-22 ${isPlaying ? "" : "opacity-60"}`}
-            />
-          </Button>
+        {/* Right Content - Ambassador slot */}
+        <div className="ml-auto pr-6">
+          <AmbassadorPanel />
         </div>
-
-        {/* Mobile-only bottom CTA with animation, appears after intro */}
-        <AnimatePresence>
-          {isMobile && activeIndex >= 1 && (
-            <motion.button
-              key="mobile-cta"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
-              exit={{ opacity: 0, y: 24, transition: { duration: 0.3 } }}
-              onClick={() => (schools?.length ? setShowTrialModal(true) : null)}
-              className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20 scale-[0.8] text-xl"
-            >
-              Try it for free
-            </motion.button>
-          )}
-        </AnimatePresence>
       </main>
+
+      {/* Footer */}
+      <footer className="flex items-center justify-between px-6 py-2 z-10 w-full">
+        <Button
+          variant="ghost"
+          className="text-white text-xl font-medium hover:opacity-70 transition-opacity"
+          onClick={() => setShowContacts(true)}
+        >
+          Contacts
+        </Button>
+        <Badge className="p-1.5 px-6 gap-4 bg-primary/80">
+          <Image
+            src={"/sharks-quiz.png"}
+            alt=""
+            width={50}
+            height={50}
+            className="rounded-full bg-white p-1"
+          />
+          <p className="text-base text-white">
+            Designed with experts for the{" "}
+            <span className="font-bold">Sharks Quiz Season 9</span>
+          </p>
+        </Badge>
+
+        <Badge className="bg-transparent p-0">
+          <Image
+            src={"/sharks-quiz.png"}
+            alt=""
+            width={60}
+            height={50}
+            className="rounded-full bg-white p-1"
+          />
+        </Badge>
+      </footer>
+
+      {/* Mobile-only bottom CTA with animation, appears after intro */}
+      <AnimatePresence>
+        {isMobile && activeIndex >= 1 && (
+          <motion.button
+            key="mobile-cta"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
+            exit={{ opacity: 0, y: 24, transition: { duration: 0.3 } }}
+            onClick={() => (schools?.length ? setShowTrialModal(true) : null)}
+            className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-red-600 text-white px-8 py-4 rounded-full font-medium shadow-md z-20 scale-[0.8] text-xl"
+          >
+            Try it for free
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Contacts Modal */}
       <ContactsModal

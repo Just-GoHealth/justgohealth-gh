@@ -1,9 +1,12 @@
+import React from "react";
+import { ISchool } from "./school.interface";
+
 export interface ITrial {
-  campus: string;
+  campus: string | number;
   reasonForLockin: string;
   timeToExam: string;
   fullName: string;
-  age: number;
+  age: string | number;
   sex: string;
   level: string;
   lossOfInterest: string;
@@ -30,11 +33,12 @@ export interface IModalData {
   options: string[];
   property: keyof ITrial;
   bgColor: string;
+  icon?: any;
 }
 
 export interface ITrialResponse {
   fullName: string;
-  age: number;
+  age: string;
   sex: string;
   school: string;
   generalMentalHealth: string;
@@ -73,4 +77,9 @@ export interface ITrialResponse {
   lockedInScore: string;
   lockedInScoreDescription: string;
   lockedInColor: string;
+}
+
+export interface TrialContentProps {
+  setShowTrialModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  schools: ISchool[];
 }

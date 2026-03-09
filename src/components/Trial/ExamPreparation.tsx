@@ -1,81 +1,54 @@
 "use client";
-import React from "react";
 import { useTrial } from "@/contexts/trial.context";
-
-import TrialModal from "../TrialModal";
-import { IModalData } from "@/types/trial.interface";
 import { useIsMobile } from "../../hooks/use-mobile";
-
-const data: IModalData[] = [
-  {
-    title: "Motivation to Study🔥",
-    description:
-      "How interested or motivated are you in studying the material for this exam?",
-    options: ["Not at all", "Slightly", "Moderately", "Very interested "],
-    property: "motivationToStudy",
-    bgColor: "bg-[#FAF5F9]",
-  },
-  {
-    title: "Focus While Studying🧘🏽‍♂",
-    description:
-      "During studying, how often are you able to stay focused without being easily distracted?",
-    options: ["Never", "Occasionally", "Often", "Always"],
-    property: "focusWhileStudying",
-    bgColor: "bg-[#ECF1F9]",
-  },
-  {
-    title: "Active Studying",
-    description:
-      "During studying, how often do you rephrase ideas into your own words, summarize or explain the material to yourself or others? ",
-    options: ["Never", "Sometimes", "Often", "Always"],
-    property: "activeStudying",
-    bgColor: "bg-[#F6F9E6]",
-  },
-  {
-    title: "Active Recall📝",
-    description:
-      "During studying, how often do you test yourself with Pasco (past or practice questions) or self-quiz rather than only reading the notes? ",
-    options: ["Never", "Sometimes", "Often", "Always"],
-    property: "activeRecall",
-    bgColor: "bg-[#FAF5F9]",
-  },
-  {
-    title: "Last-Minute Studying😅",
-    description:
-      "How often do you usually do most of your studying the night before an exam?",
-    options: ["Not At All", "A few times", "Frequently", "Almost every exam"],
-    property: "lastMinuteStudying",
-    bgColor: "bg-[#ECF1F9]",
-  },
-];
+import { EXAM_PREP_MODAL_DATA, EXAM_PREP_ACCENTS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import TrialModal from "./trial-modal";
 
 export default function ExamPreparation() {
-  const { innerStep } = useTrial(); // 0..2
-
+  const { innerStep } = useTrial();
   const isMobile = useIsMobile();
+  const N = EXAM_PREP_MODAL_DATA.length;
+
   return (
-    <div className="w-full bg-white p-4 md:p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="font-black text-3xl md:text-5xl">Exam Preparation</h1>
-        <p className="text-white mb-4 bg-[red] tracking-tighter text-sm rounded-full w-8 h-8 flex items-center justify-center">
-          {innerStep + 1} /{5}
-        </p>
+    <div className="w-full h-full flex flex-col">
+      <div className="flex items-center gap-1.5 mb-7 shrink-0">
+        <div className="flex items-center gap-1.5">
+          {EXAM_PREP_MODAL_DATA.map((_, i) => (
+            <div
+              key={i}
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-300",
+                i === innerStep ? "w-6" : "w-1.5",
+              )}
+              style={{
+                backgroundColor:
+                  i <= innerStep ? EXAM_PREP_ACCENTS[i] : "#E8E4DF",
+              }}
+            />
+          ))}
+        </div>
+        <span className="ml-auto text-xs font-semibold text-[#A8A29E]">
+          {innerStep + 1} / {N}
+        </span>
       </div>
-      <div className="w-full overflow-x-hidden h-[90%] mb-2">
+
+      <div className="flex-1 overflow-x-hidden min-h-0">
         <div
-          className="w-[500%] md:w-[475%] h-full  flex items-stretch transition-all md:gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
+          className="w-[500%] md:w-[475%] h-full flex items-stretch md:gap-2 transition-all duration-300 ease-in-out"
           style={{ marginLeft: `-${innerStep * (isMobile ? 100 : 95)}%` }}
         >
-          {data.map((d, index: number) => (
+          {EXAM_PREP_MODAL_DATA.map((d, i) => (
             <div
-              className={`rounded-[20px] overflow-y-auto  w-1/5 ${d.bgColor} p-6 md:p-8`}
-              key={index}
+              key={i}
+              className="w-1/5 h-full overflow-y-auto rounded-3xl relative no-scrollbar pb-2"
             >
+              <div className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl" />
               <TrialModal
-                isComplete={index == data.length - 1}
+                isComplete={i === N - 1}
                 {...d}
-                description={d.description as string}
-                isLast={index === data.length - 1}
+                isLast={i === N - 1}
+                accent={EXAM_PREP_ACCENTS[i]}
               />
             </div>
           ))}

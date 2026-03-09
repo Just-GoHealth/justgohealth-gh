@@ -21,7 +21,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
       <div
         className={`bg-white rounded-[28px] shadow-xl mx-auto relative border-red-500 border-[5px] ${
           isMobile
-            ? "p-6 max-w-[440px] w-[calc(100%-2rem)] mx-4 scale-[0.99] overflow-auto max-h-[90vh]"
+            ? "p-6 max-w-110 w-[calc(100%-2rem)] mx-4 scale-[0.99] overflow-auto max-h-[90vh]"
             : "p-10 max-w-xl w-[calc(100%-4rem)]"
         }`}
         onClick={(e) => e.stopPropagation()}
@@ -135,7 +135,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
                   onClick={() =>
                     window.open(
                       "https://www.instagram.com/justgo_health/",
-                      "_blank"
+                      "_blank",
                     )
                   }
                   className={`flex items-center gap-2 bg-gray-800 text-white px-3 py-1.5 rounded-full hover:bg-gray-700 transition-colors ${
@@ -150,7 +150,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
                   onClick={() =>
                     window.open(
                       "https://www.linkedin.com/company/justgotech/",
-                      "_blank"
+                      "_blank",
                     )
                   }
                   className={`flex items-center gap-2 bg-gray-800 text-white px-3 py-1.5 rounded-full hover:bg-gray-700 transition-colors ${

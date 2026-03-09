@@ -1,44 +1,37 @@
-import React from "react";
-import { Button } from "../ui/button";
 import { useTrial } from "@/contexts/trial.context";
+import { Check } from "lucide-react";
+import { TRIAL_SEX_OPTIONS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-const Sex = ({
-  setStep,
-}: {
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-}) => {
-  const sexOptions = ["Male", "Female"];
-
+const Sex = () => {
   const { onTrialDataChange, trialData } = useTrial();
-  const handleSexChange = (sex: string) => {
-    // Handle sex change logic here
-    onTrialDataChange("sex", sex);
-    setStep((prev) => ++prev);
-  };
-  return (
-    <div className="">
-      <h3 className="text-2xl md:text-5xl  xl:text-[60px] 2xl:text-[80px] text-black/90 font-black mb-6">
-        What&apos;s your biological sex?
-      </h3>
 
-      <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 xl:gap-12">
-        {sexOptions.map((sex: string) => (
-          <Button
-            key={sex}
-            onClick={() => handleSexChange(sex)}
-            variant="outline"
-            className={`w-full md:w-1/2 py-4 h-20 text-xl font-bold ${
-              trialData.sex === sex
-                ? "bg-[#2bb573] text-white  hover:bg-[#2bb573] hover:text-white"
-                : "bg-black text-white hover:bg-[#2bb573]/70 hover:text-white/50"
-            } hover:cursor-pointer rounded-full`}
+  return (
+    <div className="flex flex-col gap-2.5">
+      {TRIAL_SEX_OPTIONS.map(({ label, emoji, color }) => {
+        const selected = trialData.sex === label;
+        return (
+          <button
+            key={label}
+            onClick={() => onTrialDataChange("sex", label)}
+            className={cn(
+              "w-full py-4 px-5 rounded-2xl text-left font-semibold text-base transition-all duration-200 flex items-center gap-4 border",
+              selected
+                ? ""
+                : "bg-white border-border text-muted-foreground hover:bg-muted-foreground/5",
+            )}
+            style={{
+              backgroundColor: selected ? `${color}12` : undefined,
+              borderColor: selected ? color : undefined,
+              color: selected ? color : undefined,
+            }}
           >
-            <p className="text-xl md:text-2xl xl:text-4xl font-black uppercase">
-              {sex}
-            </p>
-          </Button>
-        ))}
-      </div>
+            <span className="text-xl w-7 text-center">{emoji}</span>
+            <span className="flex-1">{label}</span>
+            {selected && <Check size={15} />}
+          </button>
+        );
+      })}
     </div>
   );
 };

@@ -1,39 +1,40 @@
-import React from "react";
-import { Button } from "../ui/button";
 import { useTrial } from "@/contexts/trial.context";
+import { Check } from "lucide-react";
+import { TRIAL_GRADE_GROUPS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 const Grade = () => {
-  const grades = ["1", "2", "3", "4", "5", "6"];
+  const { onTrialDataChange, trialData } = useTrial();
 
-  const { onTrialDataChange, trialData, setStep, setInnerStep } = useTrial();
-  const handleGradeChange = (grade: string) => {
-    // Handle grade change logic here
-    onTrialDataChange("level", grade);
-    setStep((prev) => ++prev);
-    setInnerStep(0);
-  };
   return (
-    <div>
-      <h3 className="text-2xl md:text-5xl  xl:text-[60px] 2xl:text-[80px] text-black/90 leading-2xl md:eading-[80px] font-black mb-6">
-        What level or form are you currently in?
-      </h3>
-
-      <div className="w-full md:w-4/5 grid grid-cols-3 md:flex items-center justify-start gap-4">
-        {grades.map((grade: string) => (
-          <Button
-            key={grade}
-            onClick={() => handleGradeChange(grade)}
-            variant="outline"
-            className={`h-18 md:h-20 w-18 md:w-20 text-xl font-bold bg-white/90 gap-3 flex flex-col items-center justify-center hover:cursor-pointer text-black border-3 ${
-              trialData.level == grade
-                ? "bg-[#2bb573] border-[#2bb573] text-white hover:bg-[#2bb573] hover:text-white"
-                : "hover:border-[#2bb573] border-black hover:bg-[#2bb573] hover:text-white"
-            } rounded-full`}
-          >
-            <p className="text-xl font-black">{grade}</p>
-          </Button>
-        ))}
-      </div>
+    <div className="overflow-y-auto space-y-4 no-scrollbar">
+      {TRIAL_GRADE_GROUPS.map(({ label, items }) => (
+        <div key={label}>
+          <p className="text-[10px] font-black tracking-widest uppercase mb-2 text-[#C4BDB6]">
+            {label}
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {items.map((grade) => {
+              const selected = trialData.level === grade;
+              return (
+                <button
+                  key={grade}
+                  onClick={() => onTrialDataChange("level", grade)}
+                  className={cn(
+                    "py-3 px-3 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-between gap-1 border",
+                    selected
+                      ? "bg-primary text-white border-primary"
+                      : "bg-white border-border text-muted-foreground hover:bg-muted-foreground/5",
+                  )}
+                >
+                  <span className="truncate">{grade}</span>
+                  {selected && <Check size={12} className="shrink-0" />}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

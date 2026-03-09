@@ -33,6 +33,7 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-success: var(--success);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -43,7 +44,6 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -52,7 +52,8 @@
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
+  --primary: #955aa4;
+  --success: #2bb673;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
@@ -86,7 +87,8 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.92 0.004 286.32);
+  --primary: #955aa4;
+  --success: #2bb673;
   --primary-foreground: oklch(0.21 0.006 285.885);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
@@ -119,20 +121,168 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'BRHendrix-Regular', sans-serif;
+    font-family: "BRHendrix-Regular", sans-serif;
   }
 }
 
 @font-face {
-  font-family: 'BRHendrix-Regular';
-  src: local("BRHendrix"), url('/fonts/brhendrix/font/BRHendrix-Regular-BF6556d1b5096f9.woff') format('woff');
+  font-family: "BRHendrix-Regular";
+  src:
+    local("BRHendrix"),
+    url("/fonts/brhendrix/font/BRHendrix-Regular-BF6556d1b5096f9.woff")
+      format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'BRHendrix-Bold';
-  src: local("BRHendrix"), url('/fonts/brhendrix/font/BRHendrix-Bold-BF6556d1b5459d3.woff') format('woff');
+  font-family: "BRHendrix-Bold";
+  src:
+    local("BRHendrix"),
+    url("/fonts/brhendrix/font/BRHendrix-Bold-BF6556d1b5459d3.woff")
+      format("woff");
   font-weight: 700;
   font-style: normal;
+}
+
+/* Header animations */
+.ap-meet {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: apSlideLeft 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+.ap-name {
+  opacity: 0;
+  transform: translateY(30px) skewX(-3deg);
+  animation: apNameReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+  position: relative;
+}
+.ap-name::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #00e676, transparent);
+  animation: apLineExpand 0.7s ease 1.1s forwards;
+}
+.ap-badge {
+  opacity: 0;
+  animation: apBadgeFade 0.6s ease 1.8s forwards;
+}
+
+/* Row / icon entrance */
+.ap-row-enter {
+  animation: apItemIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.ap-icon-enter {
+  animation: apIconIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Highlight bar internals */
+.ap-bar::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 18%;
+  bottom: 18%;
+  width: 2px;
+  border-radius: 2px;
+
+  animation: apBorderPulse 1.3s ease-in-out infinite;
+}
+.ap-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  animation: apShimmer 2.2s ease-in-out infinite;
+}
+
+/* Panel shimmer sweep */
+.ap-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40%;
+  pointer-events: none;
+  animation: apScanline 5s ease-in-out 1.2s infinite;
+}
+
+/* Replay icon spin */
+.ap-replay-spin {
+  animation: apReplaySpin 0.45s ease forwards;
+}
+
+@keyframes apSlideLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes apNameReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) skewX(0deg);
+  }
+}
+@keyframes apLineExpand {
+  to {
+    width: 100%;
+  }
+}
+@keyframes apItemIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes apIconIn {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+@keyframes apBadgeFade {
+  to {
+    opacity: 0.07;
+  }
+}
+@keyframes apBorderPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes apShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+@keyframes apScanline {
+  0% {
+    top: -40%;
+  }
+  100% {
+    top: 120%;
+  }
+}
+@keyframes apReplaySpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@utility no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 }

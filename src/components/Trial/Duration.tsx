@@ -1,45 +1,107 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
 import { useTrial } from "@/contexts/trial.context";
-
-const durations = [
-  ["24", "Hours"],
-  ["7", "Days"],
-  ["3", "Weeks"],
-];
+import { Check, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { EXAM_DURATIONS } from "@/lib/constants";
 
 const Duration = () => {
-  const { onTrialDataChange, setStep, setInnerStep, trialData } = useTrial();
+  const { onTrialDataChange, trialData, next } = useTrial();
 
-  const handleSelect = (id: string) => {
-    onTrialDataChange("timeToExam", id);
-    setStep((prev) => ++prev);
-    setInnerStep(0);
+  const handleSelect = (value: string) => {
+    onTrialDataChange("timeToExam", value);
   };
+
   return (
-    <div className="w-full h-auto pb-12 flex flex-col items-center justify-start">
-      <h3 className="text-3xl md:text-4xl xl:text-5xl font-black text-black/90">
-        How long before the exam/quiz?
+    <div className="w-full h-full flex flex-col">
+      <div className="flex items-center gap-2 mb-1">
+        <Clock size={14} className="text-primary" />
+        <p className="text-xs font-bold tracking-widest uppercase text-primary">
+          Time Frame
+        </p>
+      </div>
+      <h3 className="text-2xl font-medium leading-tight mb-8 mt-1 tracking-[-0.02em]">
+        How long until your exam?
       </h3>
-      <div className="w-full flex flex-col md:flex-row items-center justify-center  gap-4 md:gap-10 mt-6 md:mt-16">
-        {/** Use a schools array of objects so each campus has an id and a name */}
-        {durations.map((s: string[], index: number) => (
-          <Button
-            key={index}
-            onClick={() => handleSelect(`${s[0]} ${s[1]}`)}
-            variant="outline"
-            className={`p-4 md:p-12 h-36 w-36 p-12 md:h-48 md:w-48 xl:h-56 xl:w-56 text-xl font-bold  ${
-              trialData.timeToExam == `${s[0]} ${s[1]}`
-                ? "bg-[#2bb573] text-white hover:bg-[#2bb573] border-white border-8 ring-8 ring-[#2bb573] hover:text-white"
-                : "bg-black/90 text-white hover:bg-[#2bb573]/70 hover:text-white/50"
-            } gap-3 flex flex-col items-center justify-center hover:cursor-pointer text-white hover:bg-[#2bb573] hover:text-white rounded-full`}
-          >
-            <p className="text-4xl md:text-6xl xl:text-7xl font-black">
-              {s[0]}
-            </p>
-            <p className="text-xs md:text-base">{s[1]}</p>
-          </Button>
-        ))}
+
+      <div className="flex-1 flex items-center justify-start -mx-6 px-6 overflow-x-auto no-scrollbar scroll-smooth">
+        <div className="flex justify-between w-full pb-8">
+          {EXAM_DURATIONS.map(({ label, value, icon: Icon, color, bg }) => {
+            const selected = trialData.timeToExam === value;
+            return (
+              <button
+                key={value}
+                onClick={() => handleSelect(value)}
+                className={cn(
+                  "relative flex flex-col items-center justify-between p-5 rounded-4xl transition-all duration-500 group",
+                  "w-32 md:w-36 aspect-3/4 shrink-0",
+                  "border-2 text-center",
+                )}
+                style={{
+                  backgroundColor: selected ? bg : "#FFFFFF",
+                  borderColor: selected ? color : "#F0EDE8",
+                  boxShadow: selected
+                    ? `0 16px 32px ${color}15, inset 0 0 0 1px ${color}20`
+                    : "0 4px 12px rgba(0,0,0,0.03)",
+                }}
+              >
+                {/* Visual indicator of selection */}
+                <div
+                  className={cn(
+                    "absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300",
+                    selected ? "scale-100 opacity-100" : "scale-50 opacity-0",
+                  )}
+                  style={{ backgroundColor: color }}
+                >
+                  <Check size={12} className="text-white" />
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 flex flex-col items-center justify-center gap-3">
+                  <div
+                    className={cn(
+                      "w-12 h-12 rounded-2xl flex items-center justify-center text-2xl transition-transform duration-500 group-hover:scale-110",
+                      selected ? "bg-white shadow-md" : "bg-[#FAF8F4]",
+                    )}
+                  >
+                    <Icon
+                      size={24}
+                      style={{ color: selected ? color : "#A8A29E" }}
+                      strokeWidth={2.5}
+                    />
+                  </div>
+                  <div>
+                    <p
+                      className="text-xs font-black leading-tight mb-0.5"
+                      style={{ color: selected ? color : "#1C1917" }}
+                    >
+                      {label}
+                    </p>
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-[#A8A29E]">
+                      {value}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom line decorator */}
+                <div
+                  className={cn(
+                    "w-6 h-0.5 rounded-full transition-all duration-500",
+                    selected
+                      ? "opacity-100 scale-x-100"
+                      : "opacity-0 scale-x-50",
+                  )}
+                  style={{ backgroundColor: color }}
+                />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Hint for scrolling */}
+      <div className="flex items-center gap-2 mt-4 text-[#A8A29E] text-[10px] font-bold uppercase tracking-widest animate-pulse">
+        <div className="h-px flex-1 bg-linear-to-r from-transparent to-[#F0EDE8]" />
+        Scroll to explore
+        <div className="h-px flex-1 bg-linear-to-l from-transparent to-[#F0EDE8]" />
       </div>
     </div>
   );

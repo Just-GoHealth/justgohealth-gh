@@ -1,92 +1,57 @@
 "use client";
-import React, { useMemo } from "react";
 import { useTrial } from "@/contexts/trial.context";
+import {
+  GENERAL_MENTAL_HEALTH_MODAL_DATA,
+  GENERAL_MENTAL_HEALTH_ACCENTS,
+} from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import TrialModal from "./trial-modal";
 
-import { IModalData } from "@/types/trial.interface";
-import TrialModal from "../TrialModal";
-import { useIsMobile } from "../../hooks/use-mobile";
-
-const data: IModalData[] = [
-  {
-    title: "Loss of Interest😐",
-    description:
-      "In the past 2 weeks, how often do you have little interest or pleasure in doing things?",
-    options: ["Not At All", "A few days ", "Sometimes", "Almost every day"],
-    property: "lossOfInterest",
-    bgColor: "bg-[#FAF5F9]",
-  },
-  {
-    title: "Feeling Depressed😞",
-    description:
-      "In the past 2 weeks, how often do you feel sad, down or hopeless? ",
-    options: ["Not At All", "A few days ", "Sometimes", "Almost every day"],
-    property: "feelingDepressed",
-    bgColor: "bg-[#ECF1F9]",
-  },
-  {
-    title: "Loneliness😔",
-    description: "In the past 2 weeks, how often do you feel lonely? ",
-    options: ["Never", "Sometimes", "Often", "Always"],
-    property: "feelingLonely",
-    bgColor: "bg-[#F6F9E6]",
-  },
-  {
-    title: "Suicidal Thoughts🚫",
-    description:
-      "In the last month, have you wished you were dead or actually had thoughts of killing yourself? ",
-    options: ["Yes", "No"],
-    property: "suicidalThoughts",
-    bgColor: "bg-[#FAF5F9]",
-  },
-  {
-    title: "Suicide Plans/Attempts🚨",
-    description:
-      "In the last month, have you had plans or tried to kill yourself?",
-    options: ["Yes", "No"],
-    property: "suicidalPlans",
-    bgColor: "bg-[#ECF1F9]",
-  },
-];
 export default function MentalHealth() {
-  const { innerStep } = useTrial(); // 0..2
-  const isMobile = useIsMobile();
-
-  const parentRef = React.useRef<HTMLDivElement>(null);
-
-  const innerWidth = useMemo(() => {
-    if (!parentRef.current) return 0;
-    return parentRef?.current?.offsetWidth || 0;
-  }, [parentRef.current]);
+  const { innerStep } = useTrial();
+  const N = GENERAL_MENTAL_HEALTH_MODAL_DATA.length;
 
   return (
-    <div className="w-full bg-white p-4 md:p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="font-black text-3xl md:text-5xl">
-          General Mental Health
-        </h1>
-        <p className="text-white mb-4 bg-[red] tracking-tighter text-sm rounded-full w-8 h-8 flex items-center justify-center">
-          {innerStep + 1} /{5}
-        </p>
+    <div className="w-full h-full flex flex-col">
+      <div className="flex items-center gap-1.5 mb-2 shrink-0">
+        <div className="flex items-center gap-1.5">
+          {GENERAL_MENTAL_HEALTH_MODAL_DATA.map((_, i) => (
+            <div
+              key={i}
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-300",
+                i === innerStep ? "w-6" : "w-1.5",
+              )}
+              style={{
+                backgroundColor:
+                  i <= innerStep ? GENERAL_MENTAL_HEALTH_ACCENTS[i] : "#E8E4DF",
+              }}
+            />
+          ))}
+        </div>
+        <span className="ml-auto text-xs font-semibold text-muted-foreground">
+          {innerStep + 1} / {N}
+        </span>
       </div>
-      <div className="w-full overflow-x-hidden h-[90%] mb-2" ref={parentRef}>
+
+      <div className="flex-1 overflow-hidden">
         <div
-          className="w-[500%] md:w-[475%] h-full  flex items-stretch transition-all md:gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
+          className="flex h-full transition-transform duration-300 ease-in-out"
           style={{
-            marginLeft: `-${
-              innerStep * innerWidth * (isMobile ? 1 : 0.95) + innerStep * 6
-            }px`,
+            width: `${N * 100}%`,
+            transform: `translateX(-${innerStep * (100 / N)}%)`,
           }}
         >
-          {data.map((d, index: number) => (
+          {GENERAL_MENTAL_HEALTH_MODAL_DATA.map((d, i) => (
             <div
-              className={`rounded-[20px] overflow-y-auto  w-1/5 ${d.bgColor} p-6 md:p-8`}
-              key={index}
+              key={i}
+              className="h-full overflow-y-auto rounded-3xl relative no-scrollbar"
+              style={{ width: `${100 / N}%` }}
             >
               <TrialModal
                 {...d}
-                key={index}
-                description={d.description as string}
-                isLast={index === data.length - 1}
+                isLast={i === N - 1}
+                accent={GENERAL_MENTAL_HEALTH_ACCENTS[i]}
               />
             </div>
           ))}

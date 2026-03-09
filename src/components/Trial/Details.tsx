@@ -1,51 +1,39 @@
 "use client";
-import React, { useMemo } from "react";
+import { useTrial } from "@/contexts/trial.context";
+import { ISchool } from "@/types/school.interface";
 import School from "./School";
 import Reason from "./Reason";
 import Profile from "./Profile";
-import { useTrial } from "@/contexts/trial.context";
-import { useIsMobile } from "../../hooks/use-mobile";
-import { ISchool } from "@/types/school.interface";
+
+const panelBgs = ["#FAF5FF", "#FFF5F7", "#F0FBF5"];
+const panelColors = [
+  "rgba(153,51,153,0.15)",
+  "rgba(232,54,93,0.15)",
+  "rgba(43,181,115,0.15)",
+];
 
 export default function Details({ schools }: { schools: ISchool[] }) {
-  const { step } = useTrial(); // 0..2
-  const isMobile = useIsMobile();
-  const parentRef = React.useRef<HTMLDivElement>(null);
-
-  const innerWidth = useMemo(() => {
-    if (!parentRef.current) return 0;
-    return parentRef?.current?.offsetWidth || 0;
-  }, [parentRef.current]);
+  const { step } = useTrial(); // 0=Campus 1=Reason 2=Profile
 
   return (
-    <div className="w-full bg-white p-4 md:p-6 rounded-[30px]  border-[5px] border-gray-100 h-[90dvh]">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="font-black text-2xl md:text-4xl xl:text-5xl">
-          Personalize Your Mental Health
-        </h1>
-        <p className="text-white mb-4 bg-[red] tracking-tighter text-sm rounded-full w-8 h-8 flex items-center justify-center">
-          {step + 1}/{3}
-        </p>
-      </div>
-      <div className="w-full overflow-x-hidden h-[90%] mb-2" ref={parentRef}>
-        <div
-          className="w-[300%]  md:w-[285%] h-full  flex items-stretch transition-all md:gap-8 duration-300 ease-in-out justify-between overflow-y-auto"
-          style={{
-            marginLeft: `-${
-              step * innerWidth * (isMobile ? 1 : 0.95) + step * 12
-            }px`,
-          }}
-        >
-          <div className="rounded-[20px] overflow-y-auto w-1/3 bg-[#FAF5F9] p-4 md:p-6 xl:p-16">
-            <School schools={schools} />
+    <div className="w-full h-full overflow-hidden rounded-3xl">
+      {/* translateX moves entire 300%-wide strip by one panel width per step */}
+      <div
+        className="flex h-full w-[300%] transition-transform duration-300 ease-in-out rounded-3xl"
+        style={{ transform: `translateX(-${step * 33.333}%)` }}
+      >
+        {[
+          <School key={0} schools={schools} />,
+          <Reason key={1} />,
+          <Profile key={2} />,
+        ].map((panel, i) => (
+          <div
+            key={i}
+            className="w-1/3 h-full overflow-y-auto rounded-3xl p-5 md:p-7"
+          >
+            {panel}
           </div>
-          <div className="rounded-[20px] overflow-y-auto w-1/3 bg-[#ECF1F9] p-4 md:p-6 xl:p-16">
-            <Reason />
-          </div>
-          <div className="rounded-[20px] overflow-y-auto w-1/3 bg-[#F6F9E6] p-4 md:p-6 xl:p-16">
-            <Profile />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

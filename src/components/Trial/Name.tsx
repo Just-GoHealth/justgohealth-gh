@@ -1,78 +1,79 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-
-import Image from "next/image";
+import React, { useState, useEffect, useRef } from "react";
 import { useTrial } from "@/contexts/trial.context";
+import { User } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const Name = ({
   setStep,
 }: {
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { onTrialDataChange, trialData, setIsFullNameError, isFullNameError } =
-    useTrial();
+  const { onTrialDataChange, setIsFullNameError, trialData, step } = useTrial();
+  const [value, setValue] = useState(trialData.fullName || "");
+  const [touched, setTouched] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [name, setName] = useState(trialData.fullName || "");
-  const errors = { fullname: "" };
+  const isValid = value.trim().split(" ").filter(Boolean).length >= 2;
 
-  const isLoading = false;
-  const handleNameChange = () => {
-    // Handle name change logic here
-    onTrialDataChange("fullName", name);
-    setStep((prev) => ++prev);
+  // Only focus when the Profile panel is actually the active step (step === 2)
+  useEffect(() => {
+    if (step === 2) {
+      const t = setTimeout(() => inputRef.current?.focus(), 350); // after slide animation
+      return () => clearTimeout(t);
+    }
+  }, [step]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = e.target.value;
+    setValue(v);
+    const valid = v.trim().split(" ").filter(Boolean).length >= 2;
+    setIsFullNameError(!valid);
+    onTrialDataChange("fullName", v);
   };
 
-  useEffect(() => {
-    // Validate name and add to trialData
-    onTrialDataChange("fullName", name);
-    setIsFullNameError(/^[A-Za-z][A-Za-z' -]{3,}$/.test(name) ? false : true);
-  }, [name, onTrialDataChange, setIsFullNameError]);
-  return (
-    <div>
-      <h3 className="text-2xl md:text-5xl  xl:text-[60px] 2xl:text-[80px] text-black/90 font-black mb-6">
-        What&apos;s your official name?
-      </h3>
-      <div
-        className={`flex rounded-2xl p-1 h-16 md:h-22 gap-2 overflow-hidden backdrop-blur-sm  ${
-          isFullNameError ? "bg-red-600" : "bg-[#2bb573]"
-        }  border border-white/30 shadow-lg`}
-      >
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="Jimmy Stephen Newton"
-          className={`flex-1 px-2 md:px-6 py-5 bg-white rounded-xl text-gray-700 font-semibold text-xl md:text-3xl placeholder-gray-500 focus:outline-none ${
-            isFullNameError ? "text-red-600" : "text-green-600"
-          }`}
-        />
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && isValid) setStep((p) => ++p);
+  };
 
-        <Button
-          type="submit"
-          onClick={() => handleNameChange()}
-          className={`hidden md:block px-2 md:px-6 h-auto hover:cursor-pointer bg-transparent duration-300 ${
-            !errors?.fullname && !isLoading
-              ? " text-white transform hover:black/50"
-              : "bg-gray-400/50 text-gray-500 cursor-not-allowed"
-          }`}
-        >
-          {isLoading ? (
-            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          ) : (
-            <Image
-              src="/arrow-horizontal.png"
-              alt="Submit"
-              width={24}
-              height={24}
-              className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1"
-            />
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="relative">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2">
+          <User
+            size={16}
+            className={cn(
+              "transition-colors duration-200",
+              isValid ? "text-primary" : "text-[#C8C3BD]",
+            )}
+          />
+        </div>
+        <input
+          ref={inputRef}
+          type="text"
+          value={value}
+          placeholder="e.g. Kwame Mensah"
+          onChange={handleChange}
+          onBlur={() => setTouched(true)}
+          onKeyDown={handleKeyDown}
+          autoFocus={false}
+          className={cn(
+            "w-full pl-11 pr-5 py-4 rounded-2xl text-base font-semibold outline-none transition-all duration-200 bg-white border-[1.5px] text-[#1C1917] placeholder:text-[#C4BDB6]",
+            touched && !isValid
+              ? "border-destructive shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
+              : isValid
+                ? "border-primary/50"
+                : "border-border",
           )}
-        </Button>
+        />
       </div>
-      {isFullNameError && (
-        <p className="text-xs md:text-base text-red-600 mt-2">
-          Name should be at least 4 characters and not contain and foreign
-          characters
+      {touched && !isValid && (
+        <p className="text-xs font-semibold text-[#E8365D]">
+          Please enter your first and last name
+        </p>
+      )}
+      {isValid && (
+        <p className="text-xs font-semibold text-[#2bb573]">
+          ✓ Looking good — tap Next to continue
         </p>
       )}
     </div>

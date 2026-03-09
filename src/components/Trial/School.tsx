@@ -1,46 +1,91 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
+import { useState, useMemo } from "react";
 import { useTrial } from "@/contexts/trial.context";
 import { ISchool } from "@/types/school.interface";
-
-const dummySchools = [
-  { id: "campus-a", name: "Campus A" },
-  { id: "campus-b", name: "Campus B" },
-  { id: "campus-c", name: "Campus C" },
-  { id: "campus-d", name: "Campus D" },
-  { id: "campus-e", name: "Campus E" },
-  { id: "campus-f", name: "Campus F" },
-];
+import { Check, MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { DEFAULT_CAMPUSES } from "@/lib/constants";
 
 const School = ({ schools }: { schools: ISchool[] }) => {
-  const { onTrialDataChange, setStep, setInnerStep, trialData } = useTrial();
+  const { onTrialDataChange, trialData } = useTrial();
+  const list = schools?.length ? schools : DEFAULT_CAMPUSES;
+
+  const [selectedType, setSelectedType] = useState<string>("All");
+
+  const types = useMemo(() => {
+    return ["All", "SHS", "JHS", "College"];
+  }, []);
+
+  const filteredList = useMemo(() => {
+    if (selectedType === "All") return list;
+    return list.filter((s: any) => s.type === selectedType);
+  }, [list, selectedType]);
 
   const handleSelect = (id: string) => {
     onTrialDataChange("campus", id);
-    setStep((prev) => ++prev);
-    setInnerStep(0);
   };
+
   return (
-    <div className="w-full h-auto flex flex-col pb-12 items-center justify-start">
-      <h3 className="text-3xl md:text-4xl xl:text-5xl font-black text-black/80">
-        Select your current campus:{" "}
+    <div className="w-full h-full flex flex-col ">
+      <div className="flex items-center gap-2 mb-1">
+        <MapPin size={14} className="text-[#993399]" />
+        <p className="text-xs font-bold tracking-widest uppercase text-primary">
+          Your Campus
+        </p>
+      </div>
+      <h3 className="text-2xl font-medium leading-tight mt-2 mb-6 tracking-[-0.02em]">
+        Where do you study?
       </h3>
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:mt-6 mt-12">
-        {/** Use a schools array of objects so each campus has an id and a name */}
-        {(schools?.length ? schools : dummySchools).map((s) => (
-          <Button
-            onClick={() => handleSelect("" + s.id)}
-            key={s.id}
-            variant="outline"
-            className={`w-full py-4 h-12 md:h-20 whitespace-normal text-sm md:text-base xl:text-xl font-bold ${
-              trialData.campus === "" + s.id
-                ? "bg-[#2bb573] text-white  hover:bg-[#2bb573] hover:text-white"
-                : "bg-black text-white hover:bg-[#2bb573]/70 hover:text-white/50"
-            } hover:cursor-pointer rounded-full`}
-          >
-            {s.name}
-          </Button>
-        ))}
+
+      {types.length > 1 && (
+        <div className="flex items-center gap-2 mb-4 overflow-x-auto no-scrollbar pb-1 shrink-0">
+          {types.map((type) => (
+            <button
+              key={type}
+              onClick={() => setSelectedType(type)}
+              className={cn(
+                "px-4 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap",
+                selectedType === type
+                  ? "bg-primary text-white"
+                  : "bg-muted text-muted-foreground hover:bg-muted-foreground/10",
+              )}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 overflow-y-auto pr-1 no-scrollbar">
+        {filteredList.length > 0 ? (
+          filteredList.map((s) => {
+            const selected = trialData.campus === "" + s.id;
+            return (
+              <button
+                key={s.id}
+                onClick={() => handleSelect("" + s.id)}
+                className={cn(
+                  "w-full py-3.5 px-4 rounded-2xl text-left font-semibold text-sm transition-all duration-200 flex items-center justify-between group",
+                  selected
+                    ? "bg-primary text-white"
+                    : " border border-muted text-muted-foreground hover:bg-muted-foreground/5",
+                )}
+              >
+                <span>{s.name}</span>
+                {selected && (
+                  <span className="w-5 h-5 rounded-full bg-white/25 flex items-center justify-center shrink-0">
+                    <Check size={11} className="text-white" />
+                  </span>
+                )}
+              </button>
+            );
+          })
+        ) : (
+          <div className="col-span-2 w-full py-8 px-6 rounded-2xl border border-muted bg-muted/50 text-center">
+            <div className="text-muted-foreground text-sm">
+              No schools found in this category
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

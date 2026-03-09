@@ -22,7 +22,7 @@ type TrialContextType = {
 };
 
 const TrialContext = React.createContext<TrialContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function TrialProvider({
@@ -35,7 +35,7 @@ export function TrialProvider({
   const [isFullNameError, setIsFullNameError] = useState(true);
 
   const [trialResponse, setTrialResponse] = useState<ITrialResponse>(
-    {} as ITrialResponse
+    {} as ITrialResponse,
   );
   const [trialData, setTrialData] = useState<ITrial>({} as ITrial);
 
@@ -46,7 +46,7 @@ export function TrialProvider({
     (property: string, value: number | string) => {
       setTrialData((prev) => ({ ...prev, [property]: value }));
     },
-    []
+    [],
   );
 
   const cleanUpTrial = () => {
@@ -56,49 +56,45 @@ export function TrialProvider({
   };
 
   const prev = () => {
-    // Check the step and then set the last inner step of the previous component
-    if (step === 0) return;
+    if (step === 0 && innerStep === 0) return;
+
     if (innerStep > 0) {
       setInnerStep(innerStep - 1);
+    } else {
+      const prevStep = step - 1;
+
+      // Look up the max inner steps for the step we are going backward to
+      const stepLimits: Record<number, number> = {
+        0: 0,
+        1: 1,
+        2: 3,
+        3: 4,
+        4: 5,
+        5: 4,
+      };
+
+      setStep(prevStep);
+      setInnerStep(stepLimits[prevStep] || 0);
     }
-
-    // console.log(innerStep);
-    if (innerStep == 0) {
-      // Check current step and setInnerStep as required
-      if (step == 1) setInnerStep(0);
-      if (step == 2) setInnerStep(1);
-      if (step == 3) setInnerStep(3);
-      if (step == 4) setInnerStep(4);
-      if (step == 5) setInnerStep(5);
-      setStep(step - 1);
-    }
   };
 
-  const moveToNextStep = () => {
-    setInnerStep(0);
-    setStep((prev) => ++prev);
-  };
-
-  const moveToNextInnerStep = () => {
-    setInnerStep((prev) => ++prev);
-  };
   const next = () => {
-    // We skipped the first step which is 0 and started with step 1 because step
-    const data = [
-      [0, 0],
-      [1, 1],
-      [2, 3],
-      [3, 4],
-      [4, 5],
-      [5, 5],
-    ];
+    const stepLimits: Record<number, number> = {
+      0: 0, // Campus: 1 sub-step
+      1: 1, // Reason & Duration: 2 sub-steps
+      2: 3, // Profile: 4 sub-steps
+      3: 4, // Mental Health: 5 sub-steps
+      4: 5, // Exam Anxiety: 6 sub-steps
+      5: 4, // Exam Prep: 5 sub-steps
+    };
 
-    for (let i = 0; i < data.length; i++) {
-      if (step == data[i][0]) {
-        if (innerStep == data[i][1]) moveToNextStep();
-        else moveToNextInnerStep();
-        break;
-      }
+    const maxInner = stepLimits[step] || 0;
+
+    if (innerStep < maxInner) {
+      setInnerStep((prev) => prev + 1);
+    } else {
+      setInnerStep(0);
+      setStep((prev) => prev + 1);
     }
   };
 
@@ -106,9 +102,14 @@ export function TrialProvider({
     setIsLoading(true);
     try {
       setError(null);
-      const response = await sendTrialRequest(trialData);
 
-      console.log(response);
+      const normalizedData = {
+        ...trialData,
+        campus: Number(trialData.campus),
+        age: Number(trialData.age),
+      };
+
+      const response = await sendTrialRequest(normalizedData);
 
       setTrialResponse(response);
       // Set next step

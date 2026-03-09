@@ -1,8 +1,11 @@
-import React from "react";
-import { Button } from "../ui/button";
 import { useTrial } from "@/contexts/trial.context";
-
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
+  Sparkles,
+} from "lucide-react";
 import { ITrial } from "@/types/trial.interface";
 
 const steps = [
@@ -45,58 +48,84 @@ const TrialNavigation = () => {
     isLoading,
   } = useTrial();
 
-  const trialStepKey = steps[step][innerStep] as keyof ITrial;
+  const trialStepKey = steps[step]?.[innerStep] as keyof ITrial;
   const trialStepValue = trialData[trialStepKey];
 
+  const canAdvance =
+    !(step === 5 && innerStep === 4) &&
+    ((trialStepKey !== "fullName" && trialStepValue) ||
+      (trialStepKey === "fullName" && !isFullNameError));
+
+  const showDone =
+    step === 5 && innerStep === 4 && trialData.lastMinuteStudying;
+
   return (
-    <>
-      {/* <div className="flex items-center !bg-[red] justify-between absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] left-0 w-full px-12 lg:px-40 lg:pr-56 gap-4"> */}
-      <Button
-        variant="outline"
-        size="sm"
+    <div
+      className="absolute bottom-0 left-0 right-0 px-6 md:px-10 py-5 flex items-center justify-between"
+      style={{
+        background: "linear-gradient(to top, #FAF8F4 65%, transparent)",
+        pointerEvents: "none",
+      }}
+    >
+      {/* Prev */}
+      <button
         onClick={() => prev()}
         disabled={step === 0}
-        className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer  absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] left-6  md:left-16 xl:left-36"
-        aria-label="Previous"
+        className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 shadow-sm"
+        style={{
+          backgroundColor: step === 0 ? "#F5F2EE" : "#FFFFFF",
+          color: step === 0 ? "#C8C3BD" : "#44403C",
+          cursor: step === 0 ? "not-allowed" : "pointer",
+          pointerEvents: "auto",
+          border: "1.5px solid #E8E4DF",
+        }}
       >
-        <ChevronLeft className="!w-6 !h-6 text-white" />
-      </Button>
-      {step == 5 && innerStep == 4 && trialData.lastMinuteStudying && (
-        <Button
-          variant="outline"
-          size="sm"
+        <ChevronLeft size={17} />
+      </button>
+
+      {/* Done */}
+      {showDone && (
+        <button
           disabled={isLoading}
           onClick={() => done()}
-          className={`rounded-full text-white py-4 text-2xl font-bold bg-black px-12 h-12 ${
-            isLoading
-              ? "cursor-not-allowed hover:bg-black"
-              : "hover:bg-black/80 cursor-pointer"
-          }`}
-          aria-label="Done"
+          className="flex items-center gap-2 px-7 py-3 rounded-full font-bold text-sm transition-all duration-200"
+          style={{
+            background: isLoading
+              ? "#E8E4DF"
+              : "linear-gradient(135deg, #993399, #C654C6)",
+            color: isLoading ? "#A89F96" : "#FFFFFF",
+            cursor: isLoading ? "not-allowed" : "pointer",
+            pointerEvents: "auto",
+          }}
         >
-          {isLoading ? "Checking..." : "Done"}
-        </Button>
+          {isLoading ? (
+            <Loader2 size={15} className="animate-spin" />
+          ) : (
+            <Check size={15} />
+          )}
+          {isLoading ? "Analysing…" : "See My Results"}
+        </button>
       )}
-      {/* The fullName is differet from all other properties as it is a text field and the name needs validation. As such, a state called isFullNameError is used to track that the name is valid in the Name components */}
-      {/* When the stepKey is fullName make sure the isFullNameError is false before showing the button , but if stepKey is not fullName check for just value and proceed */}
-      {/* Also note that on step 5 , innerStep4 , there will be a done button to replace the next button hence don't show the button */}
-      {/* Also note that the steps data at the top is used to get the key of the current page and used to get the value also. Steps follow the screen order so change accordingly  */}
-      {!(step === 5 && innerStep === 4) &&
-      ((trialStepKey !== "fullName" && trialStepValue) ||
-        (trialStepKey === "fullName" && !isFullNameError)) ? (
-        <Button
-          variant="outline"
-          size="sm"
+
+      {/* Next */}
+      {canAdvance ? (
+        <button
           onClick={() => next()}
-          // disabled={step === 0}
-          className="rounded-full bg-black w-12 h-12 hover:bg-black/80 cursor-pointer absolute bottom-[10dvh] md:bottom-[10dvh] xl:bottom-[10dvh] right-5 md:right-30 xl:right-60"
-          aria-label="Previous"
+          className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200"
+          style={{
+            background: "linear-gradient(135deg, #993399, #C654C6)",
+            color: "#FFFFFF",
+            cursor: "pointer",
+            pointerEvents: "auto",
+            boxShadow: "0 4px 16px rgba(153,51,153,0.3)",
+          }}
         >
-          <ChevronRight className="!w-6 !h-6 text-white" />
-        </Button>
-      ) : null}
-      {/* </div> */}
-    </>
+          <ChevronRight size={17} />
+        </button>
+      ) : (
+        <div className="w-10 h-10" />
+      )}
+    </div>
   );
 };
 

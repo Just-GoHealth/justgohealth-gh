@@ -1,86 +1,120 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import Duration from "./Duration";
 import { useTrial } from "@/contexts/trial.context";
 import { Check } from "lucide-react";
-
-const reasons = [
-  ["WASSCE", "BECE", "NSMQ", "Exam/Quiz", "GPA/CWA", "INTERVIEW", "DEFENSE"],
-  [
-    "BREAKUP",
-    "FAILURE",
-    "DEATH",
-    "After A Loss",
-    "STRESS",
-    "GRIEF",
-    "REJECTION",
-  ],
-];
+import { cn } from "@/lib/utils";
+import { LOCK_IN_REASONS } from "@/lib/constants";
+import Duration from "./Duration";
 
 const Reason = () => {
-  const {
-    onTrialDataChange,
-    innerStep: step,
-    setInnerStep: setStep,
-    trialData,
-  } = useTrial();
-  // const [step, setStep] = useState(innerStep || 0);
+  const { onTrialDataChange, innerStep, trialData, next } = useTrial();
 
   const handleReasonSelect = (reason: string) => {
     onTrialDataChange("reasonForLockin", reason);
-    setStep((prev) => ++prev);
   };
+
+  if (innerStep === 1) return <Duration />;
+
   return (
-    <>
-      {step == 0 && (
-        <div className="w-full h-auto pb-4 flex flex-col items-center justify-start">
-          <h3 className="text-3xl md:text-4xl xl:text-5xl font-black text-black/90">
-            Why are you locking in right now?
-          </h3>
-          <div className="w-full flex flex-col md:flex-row items-center justify-center  gap-4 md:gap-8 mt-8">
-            {/** Use a schools array of objects so each campus has an id and a name */}
-            {reasons.map((s: string[], index: number) => (
-              <Button
-                key={index}
-                onClick={() => handleReasonSelect(s[3])}
-                variant="outline"
-                disabled={index == 1}
-                className={`p-4 md:p-12 h-46 w-46 md:w-64 md:h-64 xl:h-78 xl:w-78 text-xl font-bold ${
-                  trialData.reasonForLockin == s[3]
-                    ? "bg-[#2bb573] text-white  hover:bg-[#2bb573] hover:text-white border-white gap-2 border-8 ring-8 ring-[#2bb573] hover:text-white"
-                    : "gap-2 md:gap-6 bg-black/90 text-white hover:bg-[#2bb573]/70 hover:text-white/50"
-                } cursor-not-allowed flex flex-col items-center justify-center hover:cursor-pointer rounded-full`}
+    <div className="w-full h-full flex flex-col">
+      <p className="text-xs font-bold tracking-widest uppercase mb-1 text-primary">
+        Your Reason
+      </p>
+      <h3 className="text-2xl  font-medium leading-tight mb-6 mt-1  tracking-[-0.02em]">
+        Why are you locking in?
+      </h3>
+
+      <div className="flex flex-col md:flex-row gap-12 md:gap-32 flex-1 items-center justify-center">
+        {LOCK_IN_REASONS.map(
+          ({ tags, primary, emoji, color, lightBg, ringColor, desc }) => {
+            const selected = trialData.reasonForLockin === primary;
+            return (
+              <button
+                key={primary}
+                onClick={() => handleReasonSelect(primary)}
+                className="relative flex flex-col items-center justify-center text-center transition-all duration-300 group w-[clamp(180px,38%,240px)] aspect-square rounded-full shrink-0 p-5 hover:bg-transparent!"
+                style={{
+                  backgroundColor: selected ? `${color}12` : lightBg,
+                  border: `3px solid ${selected ? color : ringColor}`,
+                  boxShadow: selected
+                    ? `0 0 0 8px ${color}15, 0 16px 48px ${color}25`
+                    : `0 0 0 6px ${ringColor}, 0 4px 20px rgba(0,0,0,0.07)`,
+                }}
               >
-                {trialData.reasonForLockin != s[3] && (
-                  <>
-                    <p className="text-sm xl:text-base">{s[0]}</p>
-                    <div className="flex items-center justify-between w-full">
-                      <p className="text-sm xl:text-base">{s[1]}</p>
-                      <p className="text-sm xl:text-base">{s[2]}</p>
-                    </div>
-                    <p className="text-2xl xl:text-4xl font-black">{s[3]}</p>
-                    <div className="flex items-center justify-between w-full">
-                      <p className="text-sm xl:text-base">{s[4]}</p>
-                      <p className="text-sm xl:text-base">{s[5]}</p>
-                    </div>
-                    <p className="text-sm xl:text-base">{s[6]}</p>
-                  </>
-                )}
-                {trialData.reasonForLockin == s[3] && (
-                  <>
-                    <p className="text-2xl md:text-3xl xl:text-4xl font-black">
-                      {s[3]}
-                    </p>
-                    <Check className="!w-16 !h-16 md:w-36 md:h-36 text-white" />
-                  </>
-                )}
-              </Button>
-            ))}
-          </div>
-        </div>
-      )}
-      {step == 1 && <Duration />}
-    </>
+                {/* Floating tag chips — orbit the circle */}
+                <div
+                  className={cn(
+                    "absolute inset-0 rounded-full pointer-events-none transition-opacity duration-300",
+                    selected ? "opacity-0" : "opacity-100",
+                  )}
+                >
+                  {tags.slice(0, 6).map((tag, ti) => {
+                    // Evenly distribute around the circle edge
+                    const angle = (ti / 6) * 360 - 90;
+                    const rad = (angle * Math.PI) / 180;
+                    // Position as %, offset from center (50%) + radius (52% to sit just outside)
+                    const x = 50 + 56 * Math.cos(rad);
+                    const y = 50 + 56 * Math.sin(rad);
+                    return (
+                      <span
+                        key={tag}
+                        className="absolute text-[9px] font-black px-1.5 py-0.5 rounded-full whitespace-nowrap border"
+                        style={{
+                          left: `${x}%`,
+                          top: `${y}%`,
+                          transform: "translate(-50%, -50%)",
+                          backgroundColor: `${color}15`,
+                          color: color,
+                          borderColor: `${color}25`,
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    );
+                  })}
+                </div>
+
+                {/* Center content */}
+                <div className="relative z-10 flex flex-col items-center gap-2">
+                  {selected ? (
+                    <>
+                      <div
+                        className="w-12 h-12 rounded-full flex items-center justify-center mb-1"
+                        style={{ backgroundColor: `${color}20` }}
+                      >
+                        <Check size={22} strokeWidth={3} style={{ color }} />
+                      </div>
+                      <span className="text-3xl leading-none mb-1">
+                        {emoji}
+                      </span>
+                      <p
+                        className="text-base font-black leading-tight"
+                        style={{ color }}
+                      >
+                        {primary}
+                      </p>
+                      <p className="text-[10px] font-medium leading-tight px-2 text-[#78716C]">
+                        {desc}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-3xl leading-none mb-1">
+                        {emoji}
+                      </span>
+                      <p className="text-base font-black leading-tight text-[#1C1917]">
+                        {primary}
+                      </p>
+                      <p className="text-[10px] font-medium leading-tight px-2 text-[#78716C]">
+                        {desc}
+                      </p>
+                    </>
+                  )}
+                </div>
+              </button>
+            );
+          },
+        )}
+      </div>
+    </div>
   );
 };
 
